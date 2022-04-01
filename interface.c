@@ -20,14 +20,13 @@ void drawMap(){
 	int mapX=0;
 	//int maxY=tailleCurrent.y;
 	int maxX=tailleNext.x;
-	bool NEXT=true;
+	bool NEXT=false;
 	char** pDrawnMap=nextMap;
 	char carActuel;
 	for(y=0;y<tailleCurrent.y+tailleNext.y;y++){
-		
 		for(x=0;x<maxX;x++){
-			
 			carActuel=*(*(pDrawnMap+mapY)+mapX);
+			
 			switch (carActuel){
 				case '#':
 					glColor3f(1.0f,1.0f,1.0f);
@@ -62,16 +61,18 @@ void drawMap(){
 			}
 			mapX++;
 		}
+		
 		mapX=0;
-		if(y>=tailleCurrent.y&&NEXT){
+		if(y<tailleNext.y-1||NEXT){
+			mapY++;
+		}
+		else{
+			
 			pDrawnMap=currentMap;
 			mapY=0;
 			maxX=tailleCurrent.x;
-			NEXT=false;
+			NEXT=true;
 		}
-		else{
-			mapY++;
-		};
 		
 	}	
 
@@ -79,7 +80,7 @@ void drawMap(){
 
 void drawJoueur(){
 	
-	glColor3f(0.2f,0.2f,0.8f);
+	glColor3f(1.0f,0.2f,0.8f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glTranslatef(j.pos.x*TILE_SIZE,j.pos.y*TILE_SIZE,0.0f);

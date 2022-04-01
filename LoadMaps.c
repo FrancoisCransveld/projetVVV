@@ -120,9 +120,12 @@ void loadMaps(int *tMapX,int* tMapY){
 	
 	return;
 }
-J loadJoueur(int select){
+Joueur loadJoueur(int select){
 	
 	Joueur J;
+	int x=0;
+	int y=0;
+	char c=' ';
 	FILE* fNewMap=NULL;
 	switch(select){
 		case 0:
@@ -134,23 +137,29 @@ J loadJoueur(int select){
 		default:
 			break;
 	}
-	
 	if(fNewMap==NULL){
 		printf("Le fichier n'a pu être ouvert\n");
 		//exit(ERROR_EXIT);
 	}
 	else{
+	//printf("JX=%d JY=%d",J.pos.x,J.pos.y);
 	do{
-		for(x=0;x<tMapX;x++){
+		x=0;
+		do{
 			c=fgetc(fNewMap);
 			if(c=='j'){
 				J.pos.x=x;
 				J.pos.y=y;
+				//printf("JX=%d JY=%d",J.pos.x,J.pos.y);
 			}
-		}
-		fgetc(fNewMap);
+			//printf("%c",c);
+			x++;
+		}while(c!='\n'&&c!=EOF);
 		y++;
 	}while(c!=EOF);
+	fclose(fNewMap);
+	//printf("JX=%d JY=%d",J.pos.x,J.pos.y);
 	}
-	
+	J.vie=3;
+	return J;
 }
