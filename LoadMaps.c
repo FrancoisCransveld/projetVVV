@@ -120,3 +120,37 @@ void loadMaps(int *tMapX,int* tMapY){
 	
 	return;
 }
+J loadJoueur(int select){
+	
+	Joueur J;
+	FILE* fNewMap=NULL;
+	switch(select){
+		case 0:
+			fNewMap=fopen("map1.txt","r");
+			break;
+		case 1:
+			fNewMap=fopen("map2.txt","r");
+			break;
+		default:
+			break;
+	}
+	
+	if(fNewMap==NULL){
+		printf("Le fichier n'a pu être ouvert\n");
+		//exit(ERROR_EXIT);
+	}
+	else{
+	do{
+		for(x=0;x<tMapX;x++){
+			c=fgetc(fNewMap);
+			if(c=='j'){
+				J.pos.x=x;
+				J.pos.y=y;
+			}
+		}
+		fgetc(fNewMap);
+		y++;
+	}while(c!=EOF);
+	}
+	
+}

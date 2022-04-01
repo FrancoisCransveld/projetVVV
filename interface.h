@@ -3,6 +3,10 @@
 
 #include "jeu.h"
 #include "LoadMaps.h"
-void interface();
 
+#define TILE_SIZE 32.0
+
+void interface(int nb);
+void drawMap(void);
+void drawJoueur(void);
 #endif

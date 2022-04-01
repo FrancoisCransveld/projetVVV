@@ -6,5 +6,10 @@ struct coordonnee{
 	int y;
 };
 typedef struct coordonnee Coordonnee;
-
+struct joueur{
+	Coordonnee pos;
+	int vie;
+	//other
+};
+typedef struct joueur Joueur;
 #endif
