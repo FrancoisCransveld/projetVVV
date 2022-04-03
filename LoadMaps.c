@@ -142,23 +142,20 @@ Joueur loadJoueur(int select){
 		//exit(ERROR_EXIT);
 	}
 	else{
-	//printf("JX=%d JY=%d",J.pos.x,J.pos.y);
 	do{
 		x=0;
 		do{
 			c=fgetc(fNewMap);
 			if(c=='j'){
 				J.pos.x=x;
-				J.pos.y=y;
-				//printf("JX=%d JY=%d",J.pos.x,J.pos.y);
+				J.pos.y=y+tailleNext.y;
+
 			}
-			//printf("%c",c);
 			x++;
 		}while(c!='\n'&&c!=EOF);
 		y++;
 	}while(c!=EOF);
 	fclose(fNewMap);
-	//printf("JX=%d JY=%d",J.pos.x,J.pos.y);
 	}
 	J.vie=3;
 	return J;

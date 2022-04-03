@@ -38,15 +38,20 @@ int main (int argc,char* argv[]){
 	
 	int t_map_X=0;
 	int t_map_Y=0;
+	loadMaps(&t_map_X, &t_map_Y);
 	j=loadJoueur(0);
 	srand(time(NULL));
-	loadMaps(&t_map_X, &t_map_Y);
 	glutInit(&argc,argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA );
 	glutInitWindowSize(t_map_X*TILE_SIZE, t_map_Y*TILE_SIZE);
 	glutCreateWindow("VeloVsVoiture");
 	initRendering();
 	glutReshapeFunc(handleResize);
+	/*glMatrixMode( GL_MODELVIEW );
+    	glPopMatrix();
+    	glLoadIdentity(); 
+    	glTranslatef( 0.0f, tailleNext.y*TILE_SIZE, 0.f );
+    	glPushMatrix();*/
 	glutDisplayFunc(Display);
 	glutMainLoop();
 	return 0;

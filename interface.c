@@ -74,8 +74,8 @@ void drawMap(){
 			NEXT=true;
 		}
 		
-	}	
-
+	}
+	
 }
 
 void drawJoueur(){
@@ -96,6 +96,7 @@ void drawJoueur(){
 
 }
 void interface(int nb){
+	
 	drawMap();
 	drawJoueur();
 }
