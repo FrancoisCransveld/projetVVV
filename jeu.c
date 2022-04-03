@@ -8,4 +8,50 @@
 #include <stdio.h>
 #include "jeu.h"
 //#include "LoadMaps.h"
+#include "loadMap.h"
+#include "drawMap.h"
+#include "player.h"
+bool UP = false;
+bool LEFT = false;
+bool RIGHT = false;
+bool DOWN = false;
+bool ESCAPE = false;
 
+void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les input
+{
+	switch(key)
+	{
+		case 27:
+			exit(0);
+		case'z':
+			UP = true;
+			break;
+		case'q':
+			LEFT = true;
+			break;
+		case'd':
+			RIGHT = true;
+			break;
+		case's':
+			DOWN = true;
+			break;
+	}	
+}
+void KeyboardSpecial(int key, int x, int y)  // fonction allant gérer les input
+{
+	switch(key)
+	{
+		case GLUT_KEY_UP:
+			UP = true;
+			break;
+		case GLUT_KEY_LEFT:
+			LEFT = true;
+			break;
+		case GLUT_KEY_RIGHT:
+			RIGHT = true;
+			break;
+		case GLUT_KEY_DOWN:
+			DOWN = true;
+			break;
+	}	
+}

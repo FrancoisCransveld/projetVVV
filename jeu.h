@@ -12,4 +12,6 @@ struct joueur{
 	//other
 };
 typedef struct joueur Joueur;
+void KeyboardSpecial(int key, int x, int y);
+void Keyboard(unsigned char key, int x, int y);
 #endif
