@@ -11,6 +11,7 @@
 #include "LoadMaps.h"
 #include "interface.h"
 #include "jeu.h"
+#include "joueur.h"
 
 void drawMap(){
 

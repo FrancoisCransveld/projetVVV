@@ -6,12 +6,8 @@ struct coordonnee{
 	int y;
 };
 typedef struct coordonnee Coordonnee;
-struct joueur{
-	Coordonnee pos;
-	int vie;
-	//other
-};
-typedef struct joueur Joueur;
+
 void KeyboardSpecial(int key, int x, int y);
 void Keyboard(unsigned char key, int x, int y);
+void jeu( Joueur j);
 #endif

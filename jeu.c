@@ -7,10 +7,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "jeu.h"
-//#include "LoadMaps.h"
-#include "loadMap.h"
-#include "drawMap.h"
-#include "player.h"
+#include "loadMaps.h"
+#include "interface.h"
+#include "joueur.h"
 bool UP = false;
 bool LEFT = false;
 bool RIGHT = false;
@@ -54,4 +53,41 @@ void KeyboardSpecial(int key, int x, int y)  // fonction allant gérer les input
 			DOWN = true;
 			break;
 	}	
+}
+void jeu( Joueur j)
+{
+
+	
+	//drawWall(mX, mY);			//afficher la carte
+	//drawPlayer(p);
+	glutKeyboardFunc(Keyboard);		//fonction de glut gérant le clavier
+	glutSpecialFunc(KeyboardSpecial);
+	//glutTimerFunc(500, InputLoop, 1);
+	if (LEFT == true)
+	{
+		
+		moveLeft(p);		//va se déplacer vers la gauche si on appuie sur q
+		LEFT = false;
+		
+	}
+	if (RIGHT == true)
+	{
+		moveRight(p);		//va se déplacer vers la droite si on apppuie sur d
+		RIGHT = false;
+	}
+	if (UP == true)
+	{
+		moveUp(p);
+		UP = false;
+	}
+	
+	if (DOWN == true)
+	{
+		
+                moveDown(p);
+		DOWN = false;
+	}
+	//glutTimerFunc(500, InputLoop, 1);
+	glutPostRedisplay();
+	
 }

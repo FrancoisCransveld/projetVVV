@@ -47,11 +47,11 @@ void tailleMap(int* tMapX, int* tMapY, int select){
 };
 
 //Fonction qui charge le fichier texte représentant une carte une variable globale map
-void loadMap(int tMapX, int tMapY, int select){
+void loadMap(int tMapX, int tMapY, Selection select){
 	
 	printf("X :%d Y :%d\n",tMapX,tMapY);
 	FILE* fNewMap=NULL;
-	switch(select){
+	switch(select.s){
 		case 0:
 			fNewMap=fopen("map1.txt","r");
 			break;
@@ -68,7 +68,6 @@ void loadMap(int tMapX, int tMapY, int select){
 	}
 	else{
 		char c;
-		nextMap=malloc(sizeof(char*)*tMapY);
 		int x=0;
 		int y=0;
 		*(nextMap)=malloc(sizeof(char*)*tMapX);
@@ -82,6 +81,7 @@ void loadMap(int tMapX, int tMapY, int select){
 			y++;
 		}while(c!=EOF);
 		y=0;
+		
 		//currentMap=nextMap;
 		do{
 
@@ -98,18 +98,31 @@ void loadMap(int tMapX, int tMapY, int select){
 void loadMaps(int *tMapX,int* tMapY){
 	//int* tMapX;
 	//int* tMapY;
-	int select[2]={0,1};
+	int nombreMap=2;
+	niveauA=malloc(sizeof(Selection)*nombreMap);
+	niveauA[0].s=0;
+	niveauA[0].Next.U=true;
+	niveauA[0].Next.D=false;
+	niveauA[0].Next.R=false;
+	niveauA[0].Next.L=false;
+	niveauA[1].s=1;
+	niveauA[1].Next.U=false;
+	niveauA[1].Next.D=false;
+	niveauA[1].Next.R=false;
+	niveauA[1].Next.L=false;
 	int i=0;
 	do{
-		tailleMap(tMapX,tMapY,select[i]);
+		tailleMap(tMapX,tMapY,niveauA[i].s);
 		tailleNext.x=*tMapX;
 		tailleNext.y=*tMapY;
 		
-		loadMap(*tMapX,*tMapY,select[i]);
+		loadMap(*tMapX,*tMapY,niveauA[i]);
 		if(currentMap==NULL){
 			currentMap=nextMap;
 			tailleCurrent.x=tailleNext.x;
 			tailleCurrent.y=tailleNext.y;
+			camera.x=tailleCurrent.x/2;//position initiale de la camera affichant une map complète au centre. 
+			camera.y=tailleCurrent.y/2;
 			tailleNext.x=0;
 			tailleNext.y=0;
 			printf("X :%d Y :%d\n",tailleCurrent.x,tailleCurrent.y);
@@ -119,6 +132,14 @@ void loadMaps(int *tMapX,int* tMapY){
 	}while(nextMap==NULL);
 	
 	return;
+}
+void LoadNext(){
+
+	tailleMap(tMapX,tMapY,niveauA[i].s);
+	tailleNext.x=*tMapX;
+	tailleNext.y=*tMapY;
+	loadMap(*tMapX,*tMapY,niveauA[i]);
+	
 }
 Joueur loadJoueur(int select){
 	

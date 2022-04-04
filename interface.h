@@ -3,8 +3,11 @@
 
 #include "jeu.h"
 #include "LoadMaps.h"
+#include "joueur.h"
 
-#define TILE_SIZE 32.0
+#define TILE_SIZE 64.0
+
+Coordonnee camera;
 
 void interface(int nb);
 void drawMap(void);

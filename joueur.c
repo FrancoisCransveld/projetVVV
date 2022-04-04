@@ -1,72 +1,79 @@
-void moveLeft(player p)		//la fonction va vérifier si on peut se déplacer vers la gauche et le faire le cas échéant
+#ifdef __APPLE_CC__
+#include <OpenGL/OpenGL.h>
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+#include <stdlib.h>
+#include <stdio.h>
+#include "jeu.h"
+#include "loadMaps.h"
+#include "interface.h"
+#include "joueur.h"
+
+void moveLeft(Joueur j)		//la fonction va vérifier si on peut se déplacer vers la gauche et le faire le cas échéant
 {
 	int x = 0, y = 0;
 
-	x = p->pos.x-1;
-	y = p->pos.y;
+	x = j->pos.x-1;
+	y = j->pos.y;
 	
-
-	if (*(*(map + y) + x)!='#')
+	if (*(*(currentMap + y) + x)!='#')
 	{
-		p->pos.x = x;
+		j->pos.x = x;
 	}
 
 }
-
-void moveRight(player p)		//la fonction va vérifier si on peut se déplacer vers la droite et le faire le cas échéant
+void moveRight(Joueur j)		//la fonction va vérifier si on peut se déplacer vers la droite et le faire le cas échéant
 {
 	int x = 0, y = 0;
 
 
-	x = p->pos.x+1;
-	y = p->pos.y;
-
-
-	if (*(*(map + y) + (x+1))!='#')
+	x = j->pos.x+1;
+	y = j->pos.y;
+	
+	if (*(*(currentMap + y) + (x+1))!='#')
 	{
-		p->pos.x = x;
+		j->pos.x = x;
 	}
 
 }
-
-
-
-void moveUp(player p)
+void moveUp(Joueur j)
 {
  int  x = 0, y = 0;
       
-	x = p->pos.x;
-	y = p->pos.y-1;
+	x = j->pos.x;
+	y = j->pos.y-1;
 
-	if (*(*(map + y) + x)!='#')//attention a changer
-	{
+	if (*(*(currentMap + y) + x)!='#'){//attention a changer
+		j->pos.y = y;
 		if(y>=20||(*(*(map + 0)+20)=='#')){
-			p->pos.y = y;
+			//j->pos.y = y;
 			printf("\npos y: %d\n",y+1);
 		}
 		else{
 			printf("\npos y: %d\n",y+1);
-			loadMap(41, 40, p);
+			loadMap();
 		}
 	}     
 	
 }
-
-void moveDown(player p)
+void moveDown(Joueur j)
 {
  int  x = 0, y = 0;
  
-   x = p->pos.x;
-   y = p->pos.y+1;
-   if (*(*(map + (y+1)) + x) !='#')
-      {
-		if(y<38){
-			p->pos.y = y;
+   x = j->pos.x;
+   y = j->pos.y+1;
+   
+   if (*(*(currentMap + (y+1)) + x) !='#'){
+		j->pos.y = y;
+		if(y<tailleCurrent.y-20){
+			//j->pos.y = y;
 			printf("\npos y: %d\n",y+1);
 		}
 		else{
 			printf("\npos y: %d\n",y+1);
-			loadMap(41, 40, p);
+			loadMap();
 		}
       }
 }

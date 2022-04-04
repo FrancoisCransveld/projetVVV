@@ -10,6 +10,7 @@
 #include "LoadMaps.h"
 #include "interface.h"
 #include "jeu.h"
+#include "joueur.h"
 
 //#include ""
 void initRendering()
