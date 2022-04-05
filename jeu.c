@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "jeu.h"
-#include "loadMaps.h"
+#include "LoadMaps.h"
 #include "interface.h"
 #include "joueur.h"
 bool UP = false;
@@ -54,7 +54,7 @@ void KeyboardSpecial(int key, int x, int y)  // fonction allant gérer les input
 			break;
 	}	
 }
-void jeu( Joueur j)
+void jeu()
 {
 
 	
@@ -66,25 +66,25 @@ void jeu( Joueur j)
 	if (LEFT == true)
 	{
 		
-		moveLeft(p);		//va se déplacer vers la gauche si on appuie sur q
+		moveLeft(j);		//va se déplacer vers la gauche si on appuie sur q
 		LEFT = false;
 		
 	}
 	if (RIGHT == true)
 	{
-		moveRight(p);		//va se déplacer vers la droite si on apppuie sur d
+		moveRight(j);		//va se déplacer vers la droite si on apppuie sur d
 		RIGHT = false;
 	}
 	if (UP == true)
 	{
-		moveUp(p);
+		moveUp(j);
 		UP = false;
 	}
 	
 	if (DOWN == true)
 	{
 		
-                moveDown(p);
+                moveDown(j);
 		DOWN = false;
 	}
 	//glutTimerFunc(500, InputLoop, 1);

@@ -20,11 +20,11 @@ void drawMap(){
 	int x;
 	int mapX=0;
 	//int maxY=tailleCurrent.y;
-	int maxX=tailleNext.x;
+	int maxX=nextMap.taille.x;
 	bool NEXT=false;
-	char** pDrawnMap=nextMap;
+	char** pDrawnMap=nextMap.c;
 	char carActuel;
-	for(y=0;y<tailleCurrent.y+tailleNext.y;y++){
+	for(y=0;y<currentMap.taille.y+nextMap.taille.y;y++){
 		for(x=0;x<maxX;x++){
 			carActuel=*(*(pDrawnMap+mapY)+mapX);
 			
@@ -64,14 +64,14 @@ void drawMap(){
 		}
 		
 		mapX=0;
-		if(y<tailleNext.y-1||NEXT){
+		if(y<nextMap.taille.y-1||NEXT){
 			mapY++;
 		}
 		else{
 			
-			pDrawnMap=currentMap;
+			pDrawnMap=currentMap.c;
 			mapY=0;
-			maxX=tailleCurrent.x;
+			maxX=currentMap.taille.x;
 			NEXT=true;
 		}
 		

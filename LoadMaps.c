@@ -7,7 +7,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "LoadMaps.h"
-#include "jeu.h"
+//#include "jeu.h"
+#include "interface.h"
 
 //calcul la taille d'une carte
 void tailleMap(int* tMapX, int* tMapY, int select){
@@ -47,7 +48,8 @@ void tailleMap(int* tMapX, int* tMapY, int select){
 };
 
 //Fonction qui charge le fichier texte représentant une carte une variable globale map
-void loadMap(int tMapX, int tMapY, Selection select){
+void loadMap(int tMapX, int tMapY, SelectionMap select){
+	
 	
 	printf("X :%d Y :%d\n",tMapX,tMapY);
 	FILE* fNewMap=NULL;
@@ -67,22 +69,25 @@ void loadMap(int tMapX, int tMapY, Selection select){
 		//exit(ERROR_EXIT);
 	}
 	else{
+		printf("Le fichier ouvert\n");
+		char** loadedMap=malloc(sizeof(char *)*tMapY);
 		char c;
 		int x=0;
 		int y=0;
-		*(nextMap.c)=malloc(sizeof(char*)*tMapX);
+		*(loadedMap)=malloc(sizeof(char*)*tMapX);
 		do{
-			*((nextMap.c)+y)=malloc(sizeof(char*)*tMapX);
+			*((loadedMap)+y)=malloc(sizeof(char*)*tMapX);
 			for(x=0;x<tMapX;x++){
 				c=fgetc(fNewMap);
-				*(*((nextMap.c)+y)+x)=c;
+				*(*((loadedMap)+y)+x)=c;
 			}
 			fgetc(fNewMap);
 			y++;
 		}while(c!=EOF);
 		y=0;
 		
-		//currentMap=nextMap;
+		nextMap.c=loadedMap;
+		
 		do{
 
 			for(x=0;x<tMapX;x++){
@@ -99,37 +104,39 @@ void loadMaps(int *tMapX,int* tMapY){
 	//int* tMapX;
 	//int* tMapY;
 	int nombreMap=2;
-	niveauA=malloc(sizeof(Selection)*nombreMap);
-	niveauA[0].s=0;
-	niveauA[0].Next=0;
-	niveauA[1].s=1;
-	niveauA[1].Next=4;
+	niveauA.Nmap=malloc(sizeof(SelectionMap)*nombreMap);
+	niveauA.Nmap[0].s=0;
+	niveauA.Nmap[0].Next=0;
+	niveauA.Nmap[0].loadStatus=false;
+	niveauA.Nmap[1].s=1;
+	niveauA.Nmap[1].Next=5;
+	niveauA.Nmap[1].loadStatus=false;
 	int i=0;
 	do{
-		tailleMap(tMapX,tMapY,niveauA[i].s);
-		tailleNext.x=*tMapX;
-		tailleNext.y=*tMapY;
+		tailleMap(tMapX,tMapY,niveauA.Nmap[i].s);
+		nextMap.taille.x=*tMapX;
+		nextMap.taille.y=*tMapY;
 		
-		loadMap(*tMapX,*tMapY,niveauA[i]);
-		if(currentMap==NULL){
+		loadMap(*tMapX,*tMapY,niveauA.Nmap[i]);
+		if(currentMap.c==NULL){
 			currentMap=nextMap;
-			tailleCurrent.x=tailleNext.x;
-			tailleCurrent.y=tailleNext.y;
-			camera.x=tailleCurrent.x/2;//position initiale de la camera affichant une map complète au centre. 
-			camera.y=tailleCurrent.y/2;
-			tailleNext.x=0;
-			tailleNext.y=0;
-			printf("X :%d Y :%d\n",tailleCurrent.x,tailleCurrent.y);
-			nextMap=NULL;
+			camera.x=currentMap.taille.x/2;//position initiale de la camera affichant une map complète au centre. 
+			camera.y=currentMap.taille.y/2;
+			nextMap.taille.x=0;
+			nextMap.taille.y=0;
+			//printf("X :%d Y :%d\n",tailleCurrent.x,tailleCurrent.y);
+			nextMap.c=NULL;
 		}
 		i++;
-	}while(nextMap==NULL);
+	}while(nextMap.c==NULL);
+	
+	niveauA.current=0;
 	
 	return;
 }
 void LoadNext(){
 	
-	int nextLoad;
+	/*int nextLoad;
 	if(currentMap.Num.Next==j.dir){
 		nextLoad=currentMap.Num.s+1;
 		if(currentMap.Num.Next==0||currentMap.Num.Next==2){
@@ -141,10 +148,10 @@ void LoadNext(){
 	}
 	
 	tailleMap(tMapX,tMapY,niveauA[nextLoad].s);
-	tailleNext.x=*tMapX;
-	tailleNext.y=*tMapY;
+	nextMap.taille.x=*tMapX;
+	nextMap.taille.y=*tMapY;
 	loadMap(*tMapX,*tMapY,niveauA[nextLoad]);
-	if(
+	if(*/
 }
 Joueur loadJoueur(int select){
 	
@@ -174,7 +181,7 @@ Joueur loadJoueur(int select){
 			c=fgetc(fNewMap);
 			if(c=='j'){
 				J.pos.x=x;
-				J.pos.y=y+tailleNext.y;
+				J.pos.y=y+nextMap.taille.y;
 
 			}
 			x++;

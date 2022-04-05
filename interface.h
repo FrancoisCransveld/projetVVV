@@ -5,7 +5,7 @@
 #include "LoadMaps.h"
 #include "joueur.h"
 
-#define TILE_SIZE 64.0
+#define TILE_SIZE 16.0
 
 Coordonnee camera;
 
