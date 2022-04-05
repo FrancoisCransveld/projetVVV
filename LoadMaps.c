@@ -70,12 +70,12 @@ void loadMap(int tMapX, int tMapY, Selection select){
 		char c;
 		int x=0;
 		int y=0;
-		*(nextMap)=malloc(sizeof(char*)*tMapX);
+		*(nextMap.c)=malloc(sizeof(char*)*tMapX);
 		do{
-			*(nextMap+y)=malloc(sizeof(char*)*tMapX);
+			*((nextMap.c)+y)=malloc(sizeof(char*)*tMapX);
 			for(x=0;x<tMapX;x++){
 				c=fgetc(fNewMap);
-				*(*(nextMap+y)+x)=c;
+				*(*((nextMap.c)+y)+x)=c;
 			}
 			fgetc(fNewMap);
 			y++;
@@ -86,7 +86,7 @@ void loadMap(int tMapX, int tMapY, Selection select){
 		do{
 
 			for(x=0;x<tMapX;x++){
-				printf("%c",*(*(nextMap+y)+x));
+				printf("%c",*(*((nextMap.c)+y)+x));
 			}
 			printf("\n");
 			y++;
