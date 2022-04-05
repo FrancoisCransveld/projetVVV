@@ -20,6 +20,7 @@ void moveLeft(Joueur j)		//la fonction va vérifier si on peut se déplacer vers
 	
 	if (*(*(currentMap + y) + x)!='#')
 	{
+		j->dir=3;
 		j->pos.x = x;
 	}
 
@@ -34,6 +35,7 @@ void moveRight(Joueur j)		//la fonction va vérifier si on peut se déplacer ver
 	
 	if (*(*(currentMap + y) + (x+1))!='#')
 	{
+		j->dir=1;
 		j->pos.x = x;
 	}
 
@@ -46,6 +48,7 @@ void moveUp(Joueur j)
 	y = j->pos.y-1;
 
 	if (*(*(currentMap + y) + x)!='#'){//attention a changer
+		j->dir=0;
 		j->pos.y = y;
 		if(y>=20||(*(*(map + 0)+20)=='#')){
 			//j->pos.y = y;
@@ -66,8 +69,9 @@ void moveDown(Joueur j)
    y = j->pos.y+1;
    
    if (*(*(currentMap + (y+1)) + x) !='#'){
+		j->dir=2;
 		j->pos.y = y;
-		if(y<tailleCurrent.y-20){
+		if(y<tailleCurrent.y-22){
 			//j->pos.y = y;
 			printf("\npos y: %d\n",y+1);
 		}

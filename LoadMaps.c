@@ -101,15 +101,9 @@ void loadMaps(int *tMapX,int* tMapY){
 	int nombreMap=2;
 	niveauA=malloc(sizeof(Selection)*nombreMap);
 	niveauA[0].s=0;
-	niveauA[0].Next.U=true;
-	niveauA[0].Next.D=false;
-	niveauA[0].Next.R=false;
-	niveauA[0].Next.L=false;
+	niveauA[0].Next=0;
 	niveauA[1].s=1;
-	niveauA[1].Next.U=false;
-	niveauA[1].Next.D=false;
-	niveauA[1].Next.R=false;
-	niveauA[1].Next.L=false;
+	niveauA[1].Next=4;
 	int i=0;
 	do{
 		tailleMap(tMapX,tMapY,niveauA[i].s);
@@ -134,12 +128,23 @@ void loadMaps(int *tMapX,int* tMapY){
 	return;
 }
 void LoadNext(){
-
-	tailleMap(tMapX,tMapY,niveauA[i].s);
+	
+	int nextLoad;
+	if(currentMap.Num.Next==j.dir){
+		nextLoad=currentMap.Num.s+1;
+		if(currentMap.Num.Next==0||currentMap.Num.Next==2){
+			currentMap=nextMap;
+			currentMap=
+		}
+	else{
+		nextLoad=currentMap.Num.s-1;
+	}
+	
+	tailleMap(tMapX,tMapY,niveauA[nextLoad].s);
 	tailleNext.x=*tMapX;
 	tailleNext.y=*tMapY;
-	loadMap(*tMapX,*tMapY,niveauA[i]);
-	
+	loadMap(*tMapX,*tMapY,niveauA[nextLoad]);
+	if(
 }
 Joueur loadJoueur(int select){
 	
