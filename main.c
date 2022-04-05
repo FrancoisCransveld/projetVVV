@@ -23,7 +23,7 @@ void handleResize(int width,int heigth)
 	glViewport(0, 0, width, heigth);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(0, width, heigth, 0);
+	gluOrtho2D(TILE_SIZE*(camera.x)-width/2, TILE_SIZE*(camera.x)+width/2, TILE_SIZE*(camera.y)+heigth/2, TILE_SIZE*(camera.y)-heigth/2);
 }
 
 void Display()
@@ -48,11 +48,6 @@ int main (int argc,char* argv[]){
 	glutCreateWindow("VeloVsVoiture");
 	initRendering();
 	glutReshapeFunc(handleResize);
-	/*glMatrixMode( GL_MODELVIEW );
-    	glPopMatrix();
-    	glLoadIdentity(); 
-    	glTranslatef( 0.0f, tailleNext.y*TILE_SIZE, 0.f );
-    	glPushMatrix();*/
 	glutDisplayFunc(Display);
 	glutMainLoop();
 	return 0;

@@ -129,7 +129,7 @@ void loadMaps(int *tMapX,int* tMapY){
 		}
 		i++;
 	}while(nextMap.c==NULL);
-	
+	camera.y+=nextMap.taille.y;
 	niveauA.current=0;
 	
 	return;
