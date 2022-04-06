@@ -86,12 +86,20 @@ void loadMap(int tMapX, int tMapY, SelectionMap select){
 		}while(c!=EOF);
 		y=0;
 		
-		nextMap.c=loadedMap;
+		if(currentMap.c==NULL){
+			currentMap.c=loadedMap;
+		}
+		else if(niveauA.Nmap[niveauA.current].Next%2==0){ //||niveauA.Nmap[niveauA.current].Next==2){
+			nextMap.c=loadedMap;
+		}
+		else if(niveauA.Nmap[niveauA.current].Next==1||niveauA.Nmap[niveauA.current].Next==3){
+			nextLRMap.c=loadedMap;
+		}
 		
 		do{
 
 			for(x=0;x<tMapX;x++){
-				printf("%c",*(*((nextMap.c)+y)+x));
+				printf("%c",*(*((loadedMap)+y)+x));
 			}
 			printf("\n");
 			y++;
