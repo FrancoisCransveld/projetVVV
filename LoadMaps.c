@@ -46,14 +46,15 @@ void tailleMap(int* tMapX, int* tMapY, int select){
 	fclose(fNewMap);
 	return ;
 };
-
-//Fonction qui charge le fichier texte représentant une carte une variable globale map
-void loadMap(int tMapX, int tMapY, SelectionMap select){
+//PRE:en entrée la fonction reçoit la taille de la carte à charger, la structure du niveau niveauA, et un int select qui correspond au numéro 
+//dans le tableau de la map sélectionné
+//Fonction qui charge le fichier texte représentant une carte, dans une variable globale map. 
+void loadMap(int tMapX, int tMapY, TabNiveau niveauA, int select){
 	
 	
 	printf("X :%d Y :%d\n",tMapX,tMapY);
 	FILE* fNewMap=NULL;
-	switch(select.s){
+	switch(niveauA.Nma[select]){
 		case 0:
 			fNewMap=fopen("map1.txt","r");
 			break;
@@ -86,14 +87,24 @@ void loadMap(int tMapX, int tMapY, SelectionMap select){
 		}while(c!=EOF);
 		y=0;
 		
-		if(currentMap.c==NULL){
+		if(currentMap.c==NULL||select==niveauA.current){
 			currentMap.c=loadedMap;
 		}
-		else if(niveauA.Nmap[niveauA.current].Next%2==0){ //||niveauA.Nmap[niveauA.current].Next==2){
-			nextMap.c=loadedMap;
+		else if(select>niveauA.current){
+			else if(niveauA.Nmap[select-1].Next==0||niveauA.Nmap[select-1].Next==2){
+				nextMap.c=loadedMap;
+			}
+			else if(niveauA.Nmap[select-1].Next==1||niveauA.Nmap[select-1].Next==3){
+				nextLRMap.c=loadedMap;
+			}
 		}
-		else if(niveauA.Nmap[niveauA.current].Next==1||niveauA.Nmap[niveauA.current].Next==3){
-			nextLRMap.c=loadedMap;
+		else{
+			else if(niveauA.Nmap[select].Next==0||niveauA.Nmap[select].Next==2){
+				nextMap.c=loadedMap;
+			}
+			else if(niveauA.Nmap[select].Next==1||niveauA.Nmap[select].Next==3){
+				nextLRMap.c=loadedMap;
+			}
 		}
 		
 		do{
