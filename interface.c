@@ -12,7 +12,102 @@
 #include "interface.h"
 #include "jeu.h"
 #include "joueur.h"
-
+void drawNext(){
+	
+	if(
+	int y;
+	int x;
+	int maxX=nextMap.taille.x;
+	char** pDrawnMap=currentMap.c;
+	char carActuel;
+	for(y=0;y<currentMap.taille.y;y++){
+		for(x=0;x<currentMap.taille.x;x++){
+			carActuel=*(*(pDrawnMap+y)+x);
+			
+			switch (carActuel){
+				case '#':
+					glColor3f(1.0f,1.0f,1.0f);
+					glMatrixMode(GL_MODELVIEW);
+					glLoadIdentity();
+					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+					
+					glVertex2f(0.0,0.0);
+					glVertex2f(TILE_SIZE,0.0f);
+					glVertex2f(TILE_SIZE,TILE_SIZE);
+					glVertex2f(0.0f,TILE_SIZE);
+					
+					glEnd();
+					break;
+				case ' ' :
+					glColor3f(0.0f,1.0f,0.0f);
+					glMatrixMode(GL_MODELVIEW);
+					glLoadIdentity();
+					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+					
+					glVertex2f(0.0,0.0);
+					glVertex2f(TILE_SIZE,0.0f);
+					glVertex2f(TILE_SIZE,TILE_SIZE);
+					glVertex2f(0.0f,TILE_SIZE);
+	
+					glEnd();
+					break;
+			}
+		}
+		
+	}
+	
+}
+void drawCurrent(){
+	int y;
+	int x;
+	int maxX=currentMap.taille.x;
+	char** pDrawnMap=currentMap.c;
+	char carActuel;
+	for(y=0;y<currentMap.taille.y;y++){
+		for(x=0;x<currentMap.taille.x;x++){
+			carActuel=*(*(pDrawnMap+y)+x);
+			
+			switch (carActuel){
+				case '#':
+					glColor3f(1.0f,1.0f,1.0f);
+					glMatrixMode(GL_MODELVIEW);
+					glLoadIdentity();
+					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+					
+					glVertex2f(0.0,0.0);
+					glVertex2f(TILE_SIZE,0.0f);
+					glVertex2f(TILE_SIZE,TILE_SIZE);
+					glVertex2f(0.0f,TILE_SIZE);
+					
+					glEnd();
+					break;
+				case ' ' :
+					glColor3f(0.0f,1.0f,0.0f);
+					glMatrixMode(GL_MODELVIEW);
+					glLoadIdentity();
+					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+					
+					glVertex2f(0.0,0.0);
+					glVertex2f(TILE_SIZE,0.0f);
+					glVertex2f(TILE_SIZE,TILE_SIZE);
+					glVertex2f(0.0f,TILE_SIZE);
+	
+					glEnd();
+					break;
+			}
+		}
+		
+	}
+	
+}
 void drawMap(){
 
 	int y;
