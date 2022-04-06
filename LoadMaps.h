@@ -41,7 +41,7 @@ Map nextLRMap;
 TabNiveau niveauA; // tableau des niveaux aléatoirement choisis
 
 void loadMaps(int* tMapX, int* tMapy);
-void loadMap(int tMapX, int tMapy,SelectionMap select);
+void loadMap(int tMapX, int tMapy,TabNiveau niveauA, int select);
 void LoadNext();
 void tailleMap(int* tMapX,int* tMapY,int selectedMap);
 Joueur loadJoueur(int select);

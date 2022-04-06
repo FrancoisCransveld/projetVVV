@@ -54,7 +54,7 @@ void loadMap(int tMapX, int tMapY, TabNiveau niveauA, int select){
 	
 	printf("X :%d Y :%d\n",tMapX,tMapY);
 	FILE* fNewMap=NULL;
-	switch(niveauA.Nma[select]){
+	switch(niveauA.Nmap[select].s){
 		case 0:
 			fNewMap=fopen("map1.txt","r");
 			break;
@@ -89,29 +89,39 @@ void loadMap(int tMapX, int tMapY, TabNiveau niveauA, int select){
 		
 		if(currentMap.c==NULL||select==niveauA.current){
 			currentMap.c=loadedMap;
+			currentMap.taille.x=tMapX;
+			currentMap.taille.y=tMapY; 
 			currentMap.previous=false;
 			niveauA.current=select;
 		}
 		else if(select>niveauA.current){
-			else if(niveauA.Nmap[select-1].Next==0||niveauA.Nmap[select-1].Next==2){
+			if(niveauA.Nmap[select-1].Next==0||niveauA.Nmap[select-1].Next==2){
 				nextMap.c=loadedMap;
+				nextMap.taille.x=tMapX; 
+				nextMap.taille.y=tMapY; 
 				nextMap.previous=false;
 				niveauA.next=select;
 			}
 			else if(niveauA.Nmap[select-1].Next==1||niveauA.Nmap[select-1].Next==3){
 				nextLRMap.c=loadedMap;
+				nextLRMap.taille.x=tMapX; 
+				nextLRMap.taille.y=tMapY; 
 				nextLRMap.previous=false;
 				niveauA.nextLR=select;
 			}
 		}
 		else if(select<niveauA.current){
-			else if(niveauA.Nmap[select].Next==0||niveauA.Nmap[select].Next==2){
+			if(niveauA.Nmap[select].Next==0||niveauA.Nmap[select].Next==2){
 				nextMap.c=loadedMap;
+				nextMap.taille.x=tMapX; 
+				nextMap.taille.y=tMapY; 
 				nextMap.previous=true;
 				niveauA.next=select;
 			}
 			else if(niveauA.Nmap[select].Next==1||niveauA.Nmap[select].Next==3){
 				nextLRMap.c=loadedMap;
+				nextLRMap.taille.x=tMapX; 
+				nextLRMap.taille.y=tMapY; 
 				nextLRMap.previous=true;
 				niveauA.nextLR=select;
 			}
@@ -144,22 +154,20 @@ void loadMaps(int *tMapX,int* tMapY){
 	int i=0;
 	do{
 		tailleMap(tMapX,tMapY,niveauA.Nmap[i].s);
-		nextMap.taille.x=*tMapX;
-		nextMap.taille.y=*tMapY;
-		
-		loadMap(*tMapX,*tMapY,niveauA.Nmap[i]);
-		if(currentMap.c==NULL){
+		loadMap(*tMapX,*tMapY,niveauA, i);
+		/*if(currentMap.c==NULL){
 			currentMap=nextMap;
 			camera.x=currentMap.taille.x/2;//position initiale de la camera affichant une map complète au centre. 
 			camera.y=currentMap.taille.y/2;
 			nextMap.taille.x=0;
 			nextMap.taille.y=0;
-			//printf("X :%d Y :%d\n",tailleCurrent.x,tailleCurrent.y);
+			printf("truc mauc X :%d Y :%d\n",currentMap.taille.x,currentMap.taille.y);
 			nextMap.c=NULL;
-		}
+		}*/
+		camera.x=currentMap.taille.x/2;//position initiale de la camera affichant une map complète au centre. 
+		camera.y=currentMap.taille.y/2;
 		i++;
 	}while(nextMap.c==NULL);
-	camera.y+=nextMap.taille.y;
 	
 	return;
 }
