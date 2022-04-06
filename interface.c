@@ -262,7 +262,12 @@ void drawCurrent(){
 void drawMap(){
 	
 	drawCurrent();
-	drawNext();
+	if(nextMap.c!=NULL){
+		drawNext();
+	}
+	if(nextLRMap.c!=NULL){
+		drawNextLR();
+	}
 	
 }
 
