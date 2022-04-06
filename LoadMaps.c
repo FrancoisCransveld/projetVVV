@@ -89,24 +89,34 @@ void loadMap(int tMapX, int tMapY, TabNiveau niveauA, int select){
 		
 		if(currentMap.c==NULL||select==niveauA.current){
 			currentMap.c=loadedMap;
+			currentMap.previous=false;
+			niveauA.current=select;
 		}
 		else if(select>niveauA.current){
 			else if(niveauA.Nmap[select-1].Next==0||niveauA.Nmap[select-1].Next==2){
 				nextMap.c=loadedMap;
+				nextMap.previous=false;
+				niveauA.next=select;
 			}
 			else if(niveauA.Nmap[select-1].Next==1||niveauA.Nmap[select-1].Next==3){
 				nextLRMap.c=loadedMap;
+				nextLRMap.previous=false;
+				niveauA.nextLR=select;
 			}
 		}
-		else{
+		else if(select<niveauA.current){
 			else if(niveauA.Nmap[select].Next==0||niveauA.Nmap[select].Next==2){
 				nextMap.c=loadedMap;
+				nextMap.previous=true;
+				niveauA.next=select;
 			}
 			else if(niveauA.Nmap[select].Next==1||niveauA.Nmap[select].Next==3){
 				nextLRMap.c=loadedMap;
+				nextLRMap.previous=true;
+				niveauA.nextLR=select;
 			}
 		}
-		
+		niveauA.Nmap[select].loadStatus=true; //on confirme que cette map du niveau est chargée.
 		do{
 
 			for(x=0;x<tMapX;x++){
@@ -124,12 +134,13 @@ void loadMaps(int *tMapX,int* tMapY){
 	//int* tMapY;
 	int nombreMap=2;
 	niveauA.Nmap=malloc(sizeof(SelectionMap)*nombreMap);
-	niveauA.Nmap[0].s=0;
-	niveauA.Nmap[0].Next=0;
-	niveauA.Nmap[0].loadStatus=false;
+	niveauA.Nmap[0].s=0;		// le numéro de cette carte est le 0
+	niveauA.Nmap[0].Next=0;	// la sortie de cette carte est vers le haut
+	niveauA.Nmap[0].loadStatus=false;//cette map n'est pas chargée en mémoire
 	niveauA.Nmap[1].s=1;
-	niveauA.Nmap[1].Next=5;
+	niveauA.Nmap[1].Next=5;	//cette carte n'a pas de sortie
 	niveauA.Nmap[1].loadStatus=false;
+	niveauA.current=0;
 	int i=0;
 	do{
 		tailleMap(tMapX,tMapY,niveauA.Nmap[i].s);
@@ -149,7 +160,6 @@ void loadMaps(int *tMapX,int* tMapY){
 		i++;
 	}while(nextMap.c==NULL);
 	camera.y+=nextMap.taille.y;
-	niveauA.current=0;
 	
 	return;
 }

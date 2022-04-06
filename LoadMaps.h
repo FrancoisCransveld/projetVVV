@@ -19,13 +19,16 @@ typedef struct selectionMap SelectionMap;
 
 struct tabNiveau{
 	SelectionMap* Nmap;
-	int current;
+	int current;//le numéro dans le tableau de la map qui est chargée dans currentMap
+	int next;  //le numéro dans le tableau de la map qui est chargée dans nextMap
+	int nextLR;//le numéro dans le tableau de la map qui est chargée dans nextLRMap
 };
 typedef struct tabNiveau TabNiveau;
 
 struct map{
 	char** c;
-	Coordonnee taille; 
+	Coordonnee taille;
+	bool previous; 
 };
 typedef struct map Map;
 //#define Nombre_de_carte 1
