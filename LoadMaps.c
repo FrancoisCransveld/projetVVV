@@ -9,13 +9,13 @@
 #include "LoadMaps.h"
 //#include "jeu.h"
 #include "interface.h"
-
-//calcul la taille d'une carte
-void tailleMap(int* tMapX, int* tMapY, int select){
+//PRE:prend en argument deux pointeurs d'int pour renvoiyer la taille trouvée et un int qui correspond à la map qui devrai être traitée dans niveauA.Nmap[select]
+//POST:calcul la taille d'une carte et renvoie cette taille via les argument d'entrée tMapX et tMapY
+void tailleMap(int* tMapX, int* tMapY, TabNiveau niveauA, int select){
 	int x=0;
 	int y=0;
 	FILE* fNewMap=NULL;
-	switch(select){
+	switch(niveauA.Nmap[select].s){
 		case 0:
 			fNewMap=fopen("map1.txt","r");
 			break;
@@ -138,6 +138,17 @@ void loadMap(int tMapX, int tMapY, TabNiveau niveauA, int select){
 	}
 	fclose(fNewMap);
 };
+//PRE: aucun pré-requis
+//POST:initialisation d'une structure Map à zero pointeur tableau sur NULL et taille x, y à 0 et previous sur false.
+Map initialisation_Map(){
+	Map initMap;
+	initMap.c=NULL;
+	initMap.taille.x=0;
+	initMap.taille.y=0;
+	initMap.previous=false;
+	return (initMap);
+};
+
 //Fait initialement une sélection de map aléatoirement et charge les maps nécessaire au jeux au fur et a mesure 
 void loadMaps(int *tMapX,int* tMapY){
 	//int* tMapX;
@@ -152,6 +163,7 @@ void loadMaps(int *tMapX,int* tMapY){
 	niveauA.Nmap[1].loadStatus=false;
 	niveauA.current=0;
 	int i=0;
+	nextLRMap=initialisation_Map;
 	do{
 		tailleMap(tMapX,tMapY,niveauA.Nmap[i].s);
 		loadMap(*tMapX,*tMapY,niveauA, i);
@@ -190,14 +202,17 @@ void LoadNext(){
 	loadMap(*tMapX,*tMapY,niveauA[nextLoad]);
 	if(*/
 }
+//PRE:Pas vraiment nécessaire pour le moment mais originellement cette foncton devait prendre un argument en entrée pour savoir ou charger la pos joueur (dans quel map)
+//POST:Récupération de la position du joueur dans la map de niveauA.Nmap[0] (pour le moment)
 Joueur loadJoueur(int select){
 	
-	Joueur J;
+	Joueur J;	//déclaration d'une variable joueur locale
 	int x=0;
 	int y=0;
 	char c=' ';
+	bool END=true; //variable booleen pour sortir de la double boucle dés que l'on a trouver la position du joueur
 	FILE* fNewMap=NULL;
-	switch(select){
+	switch(select){    //probablement pas utile, on verra si on modifie la fonction avec la sauvegarde de partie en cours
 		case 0:
 			fNewMap=fopen("map1.txt","r");
 			break;
@@ -212,19 +227,19 @@ Joueur loadJoueur(int select){
 		//exit(ERROR_EXIT);
 	}
 	else{
-	do{
+	do{	//boucle parcourrant tous le fichier pour retrouver la position du joueur dans la carte
 		x=0;
 		do{
 			c=fgetc(fNewMap);
 			if(c=='j'){
 				J.pos.x=x;
 				J.pos.y=y;
-
+				END=false;
 			}
 			x++;
-		}while(c!='\n'&&c!=EOF);
+		}while(c!='\n'&&c!=EOF&&END);
 		y++;
-	}while(c!=EOF);
+	}while(c!=EOF&&END);
 	fclose(fNewMap);
 	}
 	J.vie=3;
