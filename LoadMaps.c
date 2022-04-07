@@ -138,12 +138,14 @@ void loadMap(int tMapX, int tMapY, TabNiveau niveauA, int select){
 	}
 	fclose(fNewMap);
 };
-//initialisation d'une structure Map à zero pointeur tableau sur NULL et taille x, y à 0
+//PRE: aucun pré-requis
+//POST:initialisation d'une structure Map à zero pointeur tableau sur NULL et taille x, y à 0 et previous sur false.
 Map initialisation_Map(){
 	Map initMap;
 	initMap.c=NULL;
 	initMap.taille.x=0;
 	initMap.taille.y=0;
+	initMap.previous=false;
 	return (initMap);
 };
 
@@ -200,14 +202,17 @@ void LoadNext(){
 	loadMap(*tMapX,*tMapY,niveauA[nextLoad]);
 	if(*/
 }
+//PRE:Pas vraiment nécessaire pour le moment mais originellement cette foncton devait prendre un argument en entrée pour savoir ou charger la pos joueur (dans quel map)
+//POST:Récupération de la position du joueur dans la map de niveauA.Nmap[0] (pour le moment)
 Joueur loadJoueur(int select){
 	
-	Joueur J;
+	Joueur J;	//déclaration d'une variable joueur locale
 	int x=0;
 	int y=0;
 	char c=' ';
+	bool END=true; //variable booleen pour sortir de la double boucle dés que l'on a trouver la position du joueur
 	FILE* fNewMap=NULL;
-	switch(select){
+	switch(select){    //probablement pas utile, on verra si on modifie la fonction avec la sauvegarde de partie en cours
 		case 0:
 			fNewMap=fopen("map1.txt","r");
 			break;
@@ -222,19 +227,19 @@ Joueur loadJoueur(int select){
 		//exit(ERROR_EXIT);
 	}
 	else{
-	do{
+	do{	//boucle parcourrant tous le fichier pour retrouver la position du joueur dans la carte
 		x=0;
 		do{
 			c=fgetc(fNewMap);
 			if(c=='j'){
 				J.pos.x=x;
 				J.pos.y=y;
-
+				END=false;
 			}
 			x++;
-		}while(c!='\n'&&c!=EOF);
+		}while(c!='\n'&&c!=EOF&&END);
 		y++;
-	}while(c!=EOF);
+	}while(c!=EOF&&END);
 	fclose(fNewMap);
 	}
 	J.vie=3;
