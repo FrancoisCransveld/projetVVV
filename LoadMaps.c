@@ -138,6 +138,15 @@ void loadMap(int tMapX, int tMapY, TabNiveau niveauA, int select){
 	}
 	fclose(fNewMap);
 };
+//initialisation d'une structure Map à zero pointeur tableau sur NULL et taille x, y à 0
+Map initialisation_Map(){
+	Map initMap;
+	initMap.c=NULL;
+	initMap.taille.x=0;
+	initMap.taille.y=0;
+	return (initMap);
+};
+
 //Fait initialement une sélection de map aléatoirement et charge les maps nécessaire au jeux au fur et a mesure 
 void loadMaps(int *tMapX,int* tMapY){
 	//int* tMapX;
@@ -152,6 +161,7 @@ void loadMaps(int *tMapX,int* tMapY){
 	niveauA.Nmap[1].loadStatus=false;
 	niveauA.current=0;
 	int i=0;
+	nextLRMap=initialisation_Map;
 	do{
 		tailleMap(tMapX,tMapY,niveauA.Nmap[i].s);
 		loadMap(*tMapX,*tMapY,niveauA, i);
