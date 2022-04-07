@@ -18,6 +18,7 @@ bool ESCAPE = false;
 
 void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les input
 {
+	printf("Keyboard \n");
 	switch(key)
 	{
 		case 27:
@@ -35,9 +36,10 @@ void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les in
 			DOWN = true;
 			break;
 	}	
-}
+};
 void KeyboardSpecial(int key, int x, int y)  // fonction allant gérer les input
 {
+	printf("KeyboardSpecial \n");
 	switch(key)
 	{
 		case GLUT_KEY_UP:
@@ -53,41 +55,41 @@ void KeyboardSpecial(int key, int x, int y)  // fonction allant gérer les input
 			DOWN = true;
 			break;
 	}	
-}
+};
+//glutTimerFunc(500, InputLoop, 1);
+void upDateKeyboard(int i){
+	jeu();
+	glutTimerFunc(50, upDateKeyboard, 0);
+};
 void jeu()
 {
-
-	
-	//drawWall(mX, mY);			//afficher la carte
-	//drawPlayer(p);
 	glutKeyboardFunc(Keyboard);		//fonction de glut gérant le clavier
 	glutSpecialFunc(KeyboardSpecial);
-	//glutTimerFunc(500, InputLoop, 1);
 	if (LEFT == true)
 	{
 		
 		moveLeft(j);		//va se déplacer vers la gauche si on appuie sur q
 		LEFT = false;
-		
+		printf("LEFT ");
 	}
 	if (RIGHT == true)
 	{
+		printf("RIGHT ");
 		moveRight(j);		//va se déplacer vers la droite si on apppuie sur d
 		RIGHT = false;
 	}
 	if (UP == true)
 	{
+		printf("UP ");
 		moveUp(j);
 		UP = false;
 	}
 	
 	if (DOWN == true)
 	{
-		
+		printf("DOWN ");
                 moveDown(j);
 		DOWN = false;
 	}
-	//glutTimerFunc(500, InputLoop, 1);
 	glutPostRedisplay();
-	
-}
+};

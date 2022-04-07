@@ -49,7 +49,7 @@ int main (int argc,char* argv[]){
 	initRendering();
 	glutReshapeFunc(handleResize);
 	glutDisplayFunc(Display);
-	jeu();
+	glutTimerFunc(50, upDateKeyboard, 0);
 	glutMainLoop();
 	return 0;
 }

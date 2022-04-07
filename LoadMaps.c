@@ -190,11 +190,11 @@ void loadMaps(int *tMapX,int* tMapY){
 			printf("truc mauc X :%d Y :%d\n",currentMap.taille.x,currentMap.taille.y);
 			nextMap.c=NULL;
 		}*/
-		camera.x=currentMap.taille.x/2;//position initiale de la camera affichant une map complète au centre. 
-		camera.y=currentMap.taille.y/2;
+		
 		i++;
 	}while(i<3);
-	
+	camera.x=currentMap.taille.x/2;//position initiale de la camera affichant une map complète au centre. 
+	camera.y=currentMap.taille.y/2;
 	return;
 }
 void LoadNext(){

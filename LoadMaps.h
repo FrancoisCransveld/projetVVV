@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "jeu.h"
-#include "joueur.h"
 
 //structure destinée à soit renseigner la direction dans laquel se dirige le joueur,soit renseigner où se trouve la prochaine map.
 //enum direction{Up, Right, Down, Left, fin};
@@ -44,6 +43,7 @@ void loadMaps(int* tMapX, int* tMapy);
 void loadMap(int tMapX, int tMapy,TabNiveau* niveauA, int select);
 void LoadNext();
 void tailleMap(int* tMapX,int* tMapY,TabNiveau niveauA, int selectedMap);
+#include "joueur.h"
 Joueur loadJoueur(int select);
 void initialisation_Map(Map* initMap);
 #endif

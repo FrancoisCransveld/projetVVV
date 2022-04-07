@@ -18,15 +18,15 @@
 //Post:Fonction qui dessine la map nextMap; c'est dans cette fonction qu'on détermine ou dessinner NextMap par rapport à current
 void drawNext(){
 	
-	printf("drawNext ");
-	printf("etat Map :%d %d",nextMap.taille.x, nextMap.taille.y);
+	//printf("drawNext ");
+	//printf("etat Map :%d %d",nextMap.taille.x, nextMap.taille.y);
 	if(nextMap.previous){
 		printf(" previous: true");
 	}
 	else{
 		printf(" previous: false");
 	}
-	printf("etat niveauA : \n  -niveauA.next: %d\n  -niveauA.current: %d\n  -niveauA.nextLR: %d",niveauA.next,niveauA.current,niveauA.nextLR);
+	//printf("etat niveauA : \n  -niveauA.next: %d\n  -niveauA.current: %d\n  -niveauA.nextLR: %d",niveauA.next,niveauA.current,niveauA.nextLR);
 	int y=0;
 	int x=0;
 	int minX=0;
@@ -82,7 +82,7 @@ void drawNext(){
 	//ok jusque là, à priori
 	char** pDrawnMap=nextMap.c;
 	char carActuel;
-	printf("taille x, y: %d, %d et MaxX ,Y : %d %d\n",minX,minY,maxX,maxY);
+	//printf("taille x, y: %d, %d et MaxX ,Y : %d %d\n",minX,minY,maxX,maxY);
 	for(y=minY;y<maxY;y++){
 		for(x=minX;x<maxX;x++){
 			carActuel=*(*(pDrawnMap+y-minY)+x-minX);
@@ -128,15 +128,15 @@ void drawNext(){
 //Post:Fonction qui dessine la map nextLRMap; c'est dans cette fonction qu'on détermine ou dessinner NextLRMap par rapport à current et next
 void drawNextLR(){
 	
-	printf("drawNextLR ");
-	printf("etat Map :%d %d",nextLRMap.taille.x, nextLRMap.taille.y);
+	//printf("drawNextLR ");
+	//printf("etat Map :%d %d",nextLRMap.taille.x, nextLRMap.taille.y);
 	if(nextLRMap.previous){
 		printf(" previous: true");
 	}
 	else{
 		printf(" previous: false");
 	}
-	printf("etat niveauA : \n  -niveauA.next: %d\n  -niveauA.current: %d\n  -niveauA.nextLR: %d",niveauA.next,niveauA.current,niveauA.nextLR);
+	//printf("etat niveauA : \n  -niveauA.next: %d\n  -niveauA.current: %d\n  -niveauA.nextLR: %d",niveauA.next,niveauA.current,niveauA.nextLR);
 	int y=0;
 	int x=0;
 	int minX=0;
@@ -192,7 +192,7 @@ void drawNextLR(){
 	
 	char** pDrawnMap=nextLRMap.c;
 	char carActuel;
-	printf("taille x, y: %d, %d et MaxX ,Y : %d %d\n",minX,minY,maxX,maxY);
+	//printf("taille x, y: %d, %d et MaxX ,Y : %d %d\n",minX,minY,maxX,maxY);
 	for(y=minY;y<maxY;y++){
 		for(x=minX;x<maxX;x++){
 			carActuel=*(*(pDrawnMap+y-minY)+x-minX);

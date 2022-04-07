@@ -12,10 +12,10 @@ struct joueur{
 typedef struct joueur Joueur;
 Joueur j;
 
-void replacement_joueur(int x, int y, int* mjX, int* mjY, char** map);
-void moveLeft(Joueur j);
-void moveRight(Joueur j);
-void moveUp(Joueur j);
-void moveDown(Joueur j);
+void replacement_joueur(int x, int y, Map* map);
+void moveLeft();
+void moveRight();
+void moveUp();
+void moveDown();
 
 #endif
