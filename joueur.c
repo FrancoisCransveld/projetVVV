@@ -10,7 +10,75 @@
 //#include "LoadMaps.h"
 #include "interface.h"
 #include "joueur.h"
-
+void replacement_joueur(int x, int y, int* mjX, int* mjY, char** map){
+	
+	
+ //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
+	//recherche position par rapport à current 
+	if(x>=0||x<currentMap.taille.y){	   //position horizontale entre 0 et taille currentMap
+		if(y<0||y>=currentMap.taille.y){  //position verticale en dehors 0 et taille currentMap
+			map=nextMap.c;       //j est juste au dessus ou en dessous de currentMap, donc dans nextMap
+			*mjX=x;				//x ne change pas
+			if(y<0){			//si au dessus, alors la position dans nextMap est à la fin, donc à la taille de next+y (y est négatif)
+				*mjY=y+nextMap.taille.y;
+			}		
+			else{			//si en dessous, alors la position dans nextMap est au début, donc à y-la hauteur de current	
+				*mjY=y-currentMap.taille.y;
+			}
+		}
+		else{				//j est entre les limites de currentMap
+			map=currentMap.c;
+			*mjX=x;
+			*mjY=y;
+		}
+	}
+	else{					    //position horizontale en dehors de 0 et taille currentMap
+		if((y<0||y>=currentMap.taille.y)){  //position verticale en dehors 0 et taille currentMap
+							//j est à la fois en dehors horizontalement et verticalement des limites de currentMap
+			if(niveauA.next==niveauA.current+1||niveauA.next==niveauA.current-1){// si la première map après current est nextMap
+				map=nextLRMap.c;
+				if(x<0){
+					*mjX=x+nextLRMap.taille.x;//si a gauche, alors la position dans nextLRMap est à la fin, donc à la taille de nextLR+x (x est négatif)
+				}
+				else{
+					*mjX=x-currentMap.taille.x;//si a droite, alors la position dans nextMap est au début, donc à x-la largeur de current
+				}
+				if(y<0){			//si au dessus, alors la position dans nextMap est à la fin, donc à la taille de next+y (y est négatif)
+					*mjY=y+nextLRMap.taille.y;
+				}		
+				else{			//si en dessous, alors la position dans nextMap est au début, donc à y-la hauteur de current	
+					*mjY=y-currentMap.taille.y;
+				}
+			}
+			else{
+				map=nextMap.c;
+				if(x<0){
+					*mjX=x+nextMap.taille.x;//si a gauche, alors la position dans nextLRMap est à la fin, donc à la taille de nextLR+x (x est négatif)
+				}
+				else{
+					*mjX=x-currentMap.taille.x;//si a droite, alors la position dans nextMap est au début, donc à x-la largeur de current
+				}
+				if(y<0){			//si au dessus, alors la position dans nextMap est à la fin, donc à la taille de next+y (y est négatif)
+					*mjY=y+nextMap.taille.y;
+				}		
+				else{			//si en dessous, alors la position dans nextMap est au début, donc à y-la hauteur de current	
+					*mjY=y-currentMap.taille.y;
+				}
+			}
+		}
+		else{					//j est juste à gauche ou droite de currentMap, donc dans nextLRMap
+			map=nextLRMap.c;
+			*mjY=y;				//y ne change pas
+			if(x<0){
+				*mjX=x+nextLRMap.taille.x;//si a gauche, alors la position dans nextLRMap est à la fin, donc à la taille de nextLR+x (x est négatif)
+			}
+			else{
+				*mjX=x-currentMap.taille.x;//si a droite, alors la position dans nextMap est au début, donc à x-la largeur de current
+			}
+		}
+	}
+	return ;
+}
 void moveLeft(Joueur j){		//la fonction va vérifier si on peut se déplacer vers la gauche et le faire le cas échéant
 
 	int x = 0, y = 0;
@@ -18,11 +86,12 @@ void moveLeft(Joueur j){		//la fonction va vérifier si on peut se déplacer ver
 	x = j.pos.x-1;
 	y = j.pos.y;
 	
-	char** MapJoueur;
+	char** MapJoueur=NULL;
 	int mjX, mjY; //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
+	replacement_joueur(x,y,&mjX,&mjY,MapJoueur);
 	//recherche position par rapport à current 
-	if((x>=0||x<currentMap.taille.y){	   //position horizontale entre 0 et taille currentMap
-		if((y<0||y>=currentMap.taille.y){  //position verticale en dehors 0 et taille currentMap
+	/*if(x>=0||x<currentMap.taille.y){	   //position horizontale entre 0 et taille currentMap
+		if(y<0||y>=currentMap.taille.y){  //position verticale en dehors 0 et taille currentMap
 			MapJoueur=nextMap.c;       //j est juste au dessus ou en dessous de currentMap, donc dans nextMap
 			mjX=x;				//x ne change pas
 			if(y<0){			//si au dessus, alors la position dans nextMap est à la fin, donc à la taille de next+y (y est négatif)
@@ -41,7 +110,7 @@ void moveLeft(Joueur j){		//la fonction va vérifier si on peut se déplacer ver
 	else{					    //position horizontale en dehors de 0 et taille currentMap
 		if((y<0||y>=currentMap.taille.y)){  //position verticale en dehors 0 et taille currentMap
 							//j est à la fois en dehors horizontalement et verticalement des limites de currentMap
-			if(niveauA.next==niveau.current+1||niveauA.next==niveau.current-1){// si la première map après current est nextMap
+			if(niveauA.next==niveauA.current+1||niveauA.next==niveauA.current-1){// si la première map après current est nextMap
 				MapJoueur=nextLRMap.c;
 				if(x<0){
 					mjX=x+nextLRMap.taille.x;//si a gauche, alors la position dans nextLRMap est à la fin, donc à la taille de nextLR+x (x est négatif)
@@ -82,8 +151,8 @@ void moveLeft(Joueur j){		//la fonction va vérifier si on peut se déplacer ver
 				mjX=x-currentMap.taille.x;//si a droite, alors la position dans nextMap est au début, donc à x-la largeur de current
 			}
 		}
-	}
-	if (*(*(MapJoueur + MJY) + MJX)!='#')
+	}*/
+	if (*(*(MapJoueur + mjY) + mjX)!='#')
 	{
 		j.dir=3;
 		j.pos.x = x;
@@ -98,6 +167,9 @@ void moveRight(Joueur j)		//la fonction va vérifier si on peut se déplacer ver
 	x = j.pos.x+1;
 	y = j.pos.y;
 	
+	char** MapJoueur=NULL;
+	int mjX, mjY; //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
+	replacement_joueur(x,y,&mjX,&mjY,MapJoueur);
 	if (*(*(currentMap.c + y) + (x+1))!='#')
 	{
 		j.dir=1;
@@ -111,6 +183,10 @@ void moveUp(Joueur j)
       
 	x = j.pos.x;
 	y = j.pos.y-1;
+	
+	char** MapJoueur=NULL;
+	int mjX, mjY; //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
+	replacement_joueur(x,y,&mjX,&mjY,MapJoueur);
 
 	if (*(*(currentMap.c + y) + x)!='#'){//attention a changer
 		j.dir=0;
@@ -133,6 +209,9 @@ void moveDown(Joueur j)
    x = j.pos.x;
    y = j.pos.y+1;
    
+   char** MapJoueur=NULL;
+	int mjX, mjY; //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
+	replacement_joueur(x,y,&mjX,&mjY,MapJoueur);
    if (*(*(currentMap.c + (y+1)) + x) !='#'){
 		j.dir=2;
 		j.pos.y = y;
@@ -145,5 +224,5 @@ void moveDown(Joueur j)
 			//loadMap();
 		}
       }
-}
+};
 //void movePlayer(

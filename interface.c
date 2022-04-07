@@ -18,6 +18,15 @@
 //Post:Fonction qui dessine la map nextMap; c'est dans cette fonction qu'on détermine ou dessinner NextMap par rapport à current
 void drawNext(){
 	
+	printf("drawNext ");
+	printf("etat Map :%d %d",nextMap.taille.x, nextMap.taille.y);
+	if(nextMap.previous){
+		printf(" previous: true");
+	}
+	else{
+		printf(" previous: false");
+	}
+	printf("etat niveauA : \n  -niveauA.next: %d\n  -niveauA.current: %d\n  -niveauA.nextLR: %d",niveauA.next,niveauA.current,niveauA.nextLR);
 	int y=0;
 	int x=0;
 	int minX=0;
@@ -27,7 +36,7 @@ void drawNext(){
 	
 	//Décalage de la hauteur (y)
 	//Dans tous les cas
-	if(nextMap.previous){		//si next map est une map suivant bien la map current dans l'ordre du tableau niveauA (comprendre que du coups on vient de currentMap ou nextLRMap)
+	if(!nextMap.previous){		//si next map est une map suivant bien la map current dans l'ordre du tableau niveauA (comprendre que du coups on vient de currentMap ou nextLRMap)
 		if(niveauA.Nmap[niveauA.next-1].Next==0){	//si la sortie de la map qui se trouve juste avant est vers le haut
 			minY-=nextMap.taille.y;			//on dessine nextmap au coordonnée y=-hauteur nextMap jusque 0 
 			maxY=0;
@@ -70,12 +79,13 @@ void drawNext(){
 			maxX+=currentMap.taille.x;
 		}
 	}
-	
+	//ok jusque là, à priori
 	char** pDrawnMap=nextMap.c;
 	char carActuel;
+	printf("taille x, y: %d, %d et MaxX ,Y : %d %d\n",minX,minY,maxX,maxY);
 	for(y=minY;y<maxY;y++){
 		for(x=minX;x<maxX;x++){
-			carActuel=*(*(pDrawnMap+y)+x);
+			carActuel=*(*(pDrawnMap+y-minY)+x-minX);
 			
 			switch (carActuel){	//switch sur la valeur du char à l'emplacement [x].[y] dans nextMap
 				case '#':	//cas des bords de la carte
@@ -116,8 +126,17 @@ void drawNext(){
 }
 //Pre: reçoit en argument nextLRMap et niveauA
 //Post:Fonction qui dessine la map nextLRMap; c'est dans cette fonction qu'on détermine ou dessinner NextLRMap par rapport à current et next
-vovoid drawNextLR(){
+void drawNextLR(){
 	
+	printf("drawNextLR ");
+	printf("etat Map :%d %d",nextLRMap.taille.x, nextLRMap.taille.y);
+	if(nextLRMap.previous){
+		printf(" previous: true");
+	}
+	else{
+		printf(" previous: false");
+	}
+	printf("etat niveauA : \n  -niveauA.next: %d\n  -niveauA.current: %d\n  -niveauA.nextLR: %d",niveauA.next,niveauA.current,niveauA.nextLR);
 	int y=0;
 	int x=0;
 	int minX=0;
@@ -127,7 +146,7 @@ vovoid drawNextLR(){
 	
 	//Décalage de la largeur (x)
 	//Dans tous les cas
-	if(nextLRMap.previous){		//si nextLR map est une map suivant bien la map current dans l'ordre du tableau niveauA (comprendre que du coups on vient de currentMap ou nextLRMap)
+	if(!nextLRMap.previous){		//si nextLR map est une map suivant bien la map current dans l'ordre du tableau niveauA (comprendre que du coups on vient de currentMap ou nextLRMap)
 		if(niveauA.Nmap[niveauA.nextLR-1].Next==1){	//si la sortie de la map qui se trouve juste avant est vers la droite
 			minX+=currentMap.taille.x;		//on dessine nextmap au coordonnée x=largeur currentMap jusque largeur currentMap+nextLRMap 
 			maxX+=currentMap.taille.x;
@@ -173,9 +192,10 @@ vovoid drawNextLR(){
 	
 	char** pDrawnMap=nextLRMap.c;
 	char carActuel;
+	printf("taille x, y: %d, %d et MaxX ,Y : %d %d\n",minX,minY,maxX,maxY);
 	for(y=minY;y<maxY;y++){
 		for(x=minX;x<maxX;x++){
-			carActuel=*(*(pDrawnMap+y)+x);
+			carActuel=*(*(pDrawnMap+y-minY)+x-minX);
 			switch (carActuel){	//switch sur la valeur du char à l'emplacement [x].[y] dans nextLRMap
 				case '#':	//cas des bords de la carte
 					glColor3f(1.0f,1.0f,1.0f); //couleurs blanche
@@ -214,6 +234,8 @@ vovoid drawNextLR(){
 	
 }
 void drawCurrent(){
+
+	printf("drawCurrent\n");
 	int y;
 	int x;
 	char** pDrawnMap=currentMap.c;
@@ -261,6 +283,7 @@ void drawCurrent(){
 }
 void drawMap(){
 	
+	printf("drawMap\n");
 	drawCurrent();
 	if(nextMap.c!=NULL){
 		drawNext();
@@ -273,6 +296,7 @@ void drawMap(){
 
 void drawJoueur(){
 	
+	printf("drawJoueur\n");
 	glColor3f(1.0f,0.2f,0.8f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -290,6 +314,7 @@ void drawJoueur(){
 }
 void interface(int nb){
 	
+	printf("Interface\n");
 	drawMap();
 	drawJoueur();
 }

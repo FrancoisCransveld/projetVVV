@@ -12,6 +12,7 @@
 //PRE:prend en argument deux pointeurs d'int pour renvoiyer la taille trouvée et un int qui correspond à la map qui devrai être traitée dans niveauA.Nmap[select]
 //POST:calcul la taille d'une carte et renvoie cette taille via les argument d'entrée tMapX et tMapY
 void tailleMap(int* tMapX, int* tMapY, TabNiveau niveauA, int select){
+	printf("tailleMap\n");
 	int x=0;
 	int y=0;
 	FILE* fNewMap=NULL;
@@ -21,6 +22,9 @@ void tailleMap(int* tMapX, int* tMapY, TabNiveau niveauA, int select){
 			break;
 		case 1:
 			fNewMap=fopen("map2.txt","r");
+			break;
+		case 2:
+			fNewMap=fopen("map3.txt","r");
 			break;
 		default:
 			break;
@@ -49,17 +53,20 @@ void tailleMap(int* tMapX, int* tMapY, TabNiveau niveauA, int select){
 //PRE:en entrée la fonction reçoit la taille de la carte à charger, la structure du niveau niveauA, et un int select qui correspond au numéro 
 //dans le tableau de la map sélectionné
 //Fonction qui charge le fichier texte représentant une carte, dans une variable globale map. 
-void loadMap(int tMapX, int tMapY, TabNiveau niveauA, int select){
+void loadMap(int tMapX, int tMapY, TabNiveau* niveauA, int select){
 	
-	
+	printf("loadMap\n");
 	printf("X :%d Y :%d\n",tMapX,tMapY);
 	FILE* fNewMap=NULL;
-	switch(niveauA.Nmap[select].s){
+	switch(niveauA->Nmap[select].s){
 		case 0:
 			fNewMap=fopen("map1.txt","r");
 			break;
 		case 1:
 			fNewMap=fopen("map2.txt","r");
+			break;
+		case 2:
+			fNewMap=fopen("map3.txt","r");
 			break;
 		default:
 			break;
@@ -87,46 +94,46 @@ void loadMap(int tMapX, int tMapY, TabNiveau niveauA, int select){
 		}while(c!=EOF);
 		y=0;
 		
-		if(currentMap.c==NULL||select==niveauA.current){
+		if(currentMap.c==NULL||select==niveauA->current){
 			currentMap.c=loadedMap;
 			currentMap.taille.x=tMapX;
 			currentMap.taille.y=tMapY; 
 			currentMap.previous=false;
-			niveauA.current=select;
+			niveauA->current=select;
 		}
-		else if(select>niveauA.current){
-			if(niveauA.Nmap[select-1].Next==0||niveauA.Nmap[select-1].Next==2){
+		else if(select>niveauA->current){
+			if(niveauA->Nmap[select-1].Next==0||niveauA->Nmap[select-1].Next==2){
 				nextMap.c=loadedMap;
 				nextMap.taille.x=tMapX; 
 				nextMap.taille.y=tMapY; 
 				nextMap.previous=false;
-				niveauA.next=select;
+				niveauA->next=select;
 			}
-			else if(niveauA.Nmap[select-1].Next==1||niveauA.Nmap[select-1].Next==3){
+			else if(niveauA->Nmap[select-1].Next==1||niveauA->Nmap[select-1].Next==3){
 				nextLRMap.c=loadedMap;
 				nextLRMap.taille.x=tMapX; 
 				nextLRMap.taille.y=tMapY; 
 				nextLRMap.previous=false;
-				niveauA.nextLR=select;
+				niveauA->nextLR=select;
 			}
 		}
-		else if(select<niveauA.current){
-			if(niveauA.Nmap[select].Next==0||niveauA.Nmap[select].Next==2){
+		else if(select<niveauA->current){
+			if(niveauA->Nmap[select].Next==0||niveauA->Nmap[select].Next==2){
 				nextMap.c=loadedMap;
 				nextMap.taille.x=tMapX; 
 				nextMap.taille.y=tMapY; 
 				nextMap.previous=true;
-				niveauA.next=select;
+				niveauA->next=select;
 			}
-			else if(niveauA.Nmap[select].Next==1||niveauA.Nmap[select].Next==3){
+			else if(niveauA->Nmap[select].Next==1||niveauA->Nmap[select].Next==3){
 				nextLRMap.c=loadedMap;
 				nextLRMap.taille.x=tMapX; 
 				nextLRMap.taille.y=tMapY; 
 				nextLRMap.previous=true;
-				niveauA.nextLR=select;
+				niveauA->nextLR=select;
 			}
 		}
-		niveauA.Nmap[select].loadStatus=true; //on confirme que cette map du niveau est chargée.
+		niveauA->Nmap[select].loadStatus=true; //on confirme que cette map du niveau est chargée.
 		do{
 
 			for(x=0;x<tMapX;x++){
@@ -137,36 +144,43 @@ void loadMap(int tMapX, int tMapY, TabNiveau niveauA, int select){
 		}while(y<tMapY);
 	}
 	fclose(fNewMap);
+	
 };
 //PRE: aucun pré-requis
 //POST:initialisation d'une structure Map à zero pointeur tableau sur NULL et taille x, y à 0 et previous sur false.
-Map initialisation_Map(){
-	Map initMap;
-	initMap.c=NULL;
-	initMap.taille.x=0;
-	initMap.taille.y=0;
-	initMap.previous=false;
-	return (initMap);
+void initialisation_Map(Map* initMap){
+	
+	initMap->c=NULL;
+	initMap->taille.x=0;
+	initMap->taille.y=0;
+	initMap->previous=false;
+	return ;
 };
 
 //Fait initialement une sélection de map aléatoirement et charge les maps nécessaire au jeux au fur et a mesure 
 void loadMaps(int *tMapX,int* tMapY){
 	//int* tMapX;
 	//int* tMapY;
-	int nombreMap=2;
+	int nombreMap=3;
+	initialisation_Map(&nextLRMap);
+	initialisation_Map(&nextMap);
+	initialisation_Map(&currentMap);
 	niveauA.Nmap=malloc(sizeof(SelectionMap)*nombreMap);
 	niveauA.Nmap[0].s=0;		// le numéro de cette carte est le 0
 	niveauA.Nmap[0].Next=0;	// la sortie de cette carte est vers le haut
 	niveauA.Nmap[0].loadStatus=false;//cette map n'est pas chargée en mémoire
 	niveauA.Nmap[1].s=1;
-	niveauA.Nmap[1].Next=5;	//cette carte n'a pas de sortie
+	niveauA.Nmap[1].Next=1;	//cette carte n'a pas de sortie
 	niveauA.Nmap[1].loadStatus=false;
+	niveauA.Nmap[2].s=2;
+	niveauA.Nmap[2].Next=5;	//cette carte n'a pas de sortie
+	niveauA.Nmap[2].loadStatus=false;
 	niveauA.current=0;
 	int i=0;
-	nextLRMap=initialisation_Map;
+	initialisation_Map(&nextLRMap);
 	do{
-		tailleMap(tMapX,tMapY,niveauA.Nmap[i].s);
-		loadMap(*tMapX,*tMapY,niveauA, i);
+		tailleMap(tMapX,tMapY,niveauA, i);
+		loadMap(*tMapX,*tMapY,&niveauA, i);
 		/*if(currentMap.c==NULL){
 			currentMap=nextMap;
 			camera.x=currentMap.taille.x/2;//position initiale de la camera affichant une map complète au centre. 
@@ -179,7 +193,7 @@ void loadMaps(int *tMapX,int* tMapY){
 		camera.x=currentMap.taille.x/2;//position initiale de la camera affichant une map complète au centre. 
 		camera.y=currentMap.taille.y/2;
 		i++;
-	}while(nextMap.c==NULL);
+	}while(i<3);
 	
 	return;
 }
@@ -206,6 +220,7 @@ void LoadNext(){
 //POST:Récupération de la position du joueur dans la map de niveauA.Nmap[0] (pour le moment)
 Joueur loadJoueur(int select){
 	
+	printf("loadJoueur\n");
 	Joueur J;	//déclaration d'une variable joueur locale
 	int x=0;
 	int y=0;
@@ -219,11 +234,15 @@ Joueur loadJoueur(int select){
 		case 1:
 			fNewMap=fopen("map2.txt","r");
 			break;
+		case 2:
+			fNewMap=fopen("map3.txt","r");
+			break;
 		default:
 			break;
 	}
 	if(fNewMap==NULL){
-		printf("Le fichier n'a pu être ouvert\n");
+		printf("Le fichier n'a pu être ouvert loadJoueur\n");
+		
 		//exit(ERROR_EXIT);
 	}
 	else{
