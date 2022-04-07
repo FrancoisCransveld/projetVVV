@@ -9,13 +9,13 @@
 #include "LoadMaps.h"
 //#include "jeu.h"
 #include "interface.h"
-
-//calcul la taille d'une carte
-void tailleMap(int* tMapX, int* tMapY, int select){
+//PRE:prend en argument deux pointeurs d'int pour renvoiyer la taille trouvée et un int qui correspond à la map qui devrai être traitée dans niveauA.Nmap[select]
+//POST:calcul la taille d'une carte et renvoie cette taille via les argument d'entrée tMapX et tMapY
+void tailleMap(int* tMapX, int* tMapY, TabNiveau niveauA, int select){
 	int x=0;
 	int y=0;
 	FILE* fNewMap=NULL;
-	switch(select){
+	switch(niveauA.Nmap[select].s){
 		case 0:
 			fNewMap=fopen("map1.txt","r");
 			break;
