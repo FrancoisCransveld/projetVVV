@@ -218,7 +218,7 @@ Joueur loadJoueur(int select){
 			c=fgetc(fNewMap);
 			if(c=='j'){
 				J.pos.x=x;
-				J.pos.y=y+nextMap.taille.y;
+				J.pos.y=y;
 
 			}
 			x++;

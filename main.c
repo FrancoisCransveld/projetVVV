@@ -49,6 +49,7 @@ int main (int argc,char* argv[]){
 	initRendering();
 	glutReshapeFunc(handleResize);
 	glutDisplayFunc(Display);
+	jeu();
 	glutMainLoop();
 	return 0;
 }
