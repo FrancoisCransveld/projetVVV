@@ -9,6 +9,7 @@
 #include "LoadMaps.h"
 //#include "jeu.h"
 #include "interface.h"
+
 //PRE:prend en argument deux pointeurs d'int pour renvoiyer la taille trouvée et un int qui correspond à la map qui devrai être traitée dans niveauA.Nmap[select]
 //POST:calcul la taille d'une carte et renvoie cette taille via les argument d'entrée tMapX et tMapY
 void tailleMap(int* tMapX, int* tMapY, TabNiveau niveauA, int select){
@@ -181,6 +182,7 @@ void loadMaps(int *tMapX,int* tMapY){
 	do{
 		tailleMap(tMapX,tMapY,niveauA, i);
 		loadMap(*tMapX,*tMapY,&niveauA, i);
+	
 		/*if(currentMap.c==NULL){
 			currentMap=nextMap;
 			camera.x=currentMap.taille.x/2;//position initiale de la camera affichant une map complète au centre. 
@@ -190,9 +192,9 @@ void loadMaps(int *tMapX,int* tMapY){
 			printf("truc mauc X :%d Y :%d\n",currentMap.taille.x,currentMap.taille.y);
 			nextMap.c=NULL;
 		}*/
-		
 		i++;
 	}while(i<3);
+	loadEnnemi(liste, 0);
 	camera.x=currentMap.taille.x/2;//position initiale de la camera affichant une map complète au centre. 
 	camera.y=currentMap.taille.y/2;
 	return;
@@ -263,4 +265,74 @@ Joueur loadJoueur(int select){
 	}
 	J.vie=3;
 	return J;
-}
+};
+void loadEnnemi(ListeEnnemi* liste, int select){
+	
+	printf("loadEnnemi\n");
+	Coordonnee e;	//tampon coordonnée des ennemis
+	int x=0;
+	int y=0;
+	char c=' ';
+	//bool END=true; //variable booleen pour sortir de la double boucle dés que l'on a trouver la position du joueur
+	FILE* fNewMap=NULL;
+	switch(select){    //probablement pas utile, on verra si on modifie la fonction avec la sauvegarde de partie en cours
+		case 0:
+			fNewMap=fopen("map1.txt","r");
+			break;
+		case 1:
+			fNewMap=fopen("map2.txt","r");
+			break;
+		case 2:
+			fNewMap=fopen("map3.txt","r");
+			break;
+		default:
+			break;
+	}
+	if(fNewMap==NULL){
+		printf("Le fichier n'a pu être ouvert loadJoueur\n");
+		
+		//exit(ERROR_EXIT);
+	}
+	else{
+	do{	//boucle parcourrant tous le fichier pour retrouver la position des ennemis dans la carte
+		x=0;
+		do{
+			c=fgetc(fNewMap);
+			switch(c){    //probablement pas utile, on verra si on modifie la fonction avec la sauvegarde de partie en cours
+				case 'm':
+					e.x=x;
+					e.y=y;
+					char Nmoto[MAX_NOM]={"moto"};
+					nouvel_ennemi(liste, Nmoto,3, e, moto);
+					break;
+				case 'v':
+					e.x=x;
+					e.y=y;
+					char Nvoiture[MAX_NOM]={"voiture"};
+					nouvel_ennemi(liste, Nvoiture,5, e, voiture);
+					break;
+				case 'c':
+					e.x=x;
+					e.y=y;
+					char Ncamion[MAX_NOM]={"camion"};
+					nouvel_ennemi(liste, Ncamion,30, e, camion);
+					break;
+				case 'S':
+					e.x=x;
+					e.y=y;
+					char NSUV[MAX_NOM]={"SUV"};
+					nouvel_ennemi(liste, NSUV,20, e, SUV);
+					break;
+				default:
+					break;
+			}
+			x++;
+		}while(c!='\n'&&c!=EOF);
+		y++;
+	}while(c!=EOF);
+	fclose(fNewMap);
+	}
+	afficher_liste(liste);
+	return ;
+};
+

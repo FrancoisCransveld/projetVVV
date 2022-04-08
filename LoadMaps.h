@@ -44,6 +44,8 @@ void loadMap(int tMapX, int tMapy,TabNiveau* niveauA, int select);
 void LoadNext();
 void tailleMap(int* tMapX,int* tMapY,TabNiveau niveauA, int selectedMap);
 #include "joueur.h"
+#include "ennemi.h"
 Joueur loadJoueur(int select);
+void loadEnnemi(ListeEnnemi* liste, int select);
 void initialisation_Map(Map* initMap);
 #endif

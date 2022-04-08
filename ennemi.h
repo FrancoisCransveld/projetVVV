@@ -4,9 +4,10 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "jeu.h"
-
-enum typeEnnemi={voiture,moto,camion,SUV};
+#define MAX_NOM 32
+enum typeEnnemi{voiture,moto,camion,SUV};
 typedef enum typeEnnemi TypeEnnemi;
+
 struct ennemi{
   Coordonnee pos;
   char* nom;
@@ -23,16 +24,19 @@ struct elementEnnemi{
 };
 
 typedef struct listeEnnemi ListeEnnemi;
-struct elementEnnemi{
+struct listeEnnemi{
   int nombre;
-  ElementEnnemi* premierListe;
-  ElementEnnemi* dernierListe;
+  ElementEnnemi* premier;
+  ElementEnnemi* dernier;
 };
 
-ListeEnnemi* creer_liste();
+ListeEnnemi* liste;
+
+ListeEnnemi* creer_liste(void);  
 void nouvel_ennemi(ListeEnnemi* liste, char nom[], int vie, Coordonnee pos, TypeEnnemi t);
 void modifier_ennemi(ListeEnnemi* liste, int numero, char nom[], int vie, Coordonnee pos, TypeEnnemi t);
 void supprimer_ennemi_numero(ListeEnnemi* liste, int numero);
 void retirer_vie_numero(ListeEnnemi* liste, int numero, int degat);
 void modifier_pos_ennemi(ListeEnnemi* liste, int numero, Coordonnee pos);
+void afficher_liste(ListeEnnemi* liste);
 #endif

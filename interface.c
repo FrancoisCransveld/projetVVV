@@ -21,10 +21,10 @@ void drawNext(){
 	//printf("drawNext ");
 	//printf("etat Map :%d %d",nextMap.taille.x, nextMap.taille.y);
 	if(nextMap.previous){
-		printf(" previous: true");
+		//printf(" previous: true");
 	}
 	else{
-		printf(" previous: false");
+		//printf(" previous: false");
 	}
 	//printf("etat niveauA : \n  -niveauA.next: %d\n  -niveauA.current: %d\n  -niveauA.nextLR: %d",niveauA.next,niveauA.current,niveauA.nextLR);
 	int y=0;
@@ -104,7 +104,7 @@ void drawNext(){
 					glEnd();
 					break;
 				case ' ' :	//cas du sol classique
-					glColor3f(0.0f,1.0f,0.0f); //couleurs verte
+					glColor3f(0.25f,0.25f,0.25f); //couleurs verte
 					glMatrixMode(GL_MODELVIEW);
 					glLoadIdentity();
 					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
@@ -118,6 +118,22 @@ void drawNext(){
 	
 					glEnd();
 					break;
+				default :	//cas du sol classique
+					glColor3f(0.25f,0.25f,0.25f); //couleurs verte
+					glMatrixMode(GL_MODELVIEW);
+					glLoadIdentity();
+					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+					
+					glVertex2f(0.0,0.0);
+					glVertex2f(TILE_SIZE,0.0f);
+					glVertex2f(TILE_SIZE,TILE_SIZE);
+					glVertex2f(0.0f,TILE_SIZE);
+	
+					glEnd();
+					break;
+				
 			}
 		}
 		
@@ -131,10 +147,10 @@ void drawNextLR(){
 	//printf("drawNextLR ");
 	//printf("etat Map :%d %d",nextLRMap.taille.x, nextLRMap.taille.y);
 	if(nextLRMap.previous){
-		printf(" previous: true");
+		//printf(" previous: true");
 	}
 	else{
-		printf(" previous: false");
+		//printf(" previous: false");
 	}
 	//printf("etat niveauA : \n  -niveauA.next: %d\n  -niveauA.current: %d\n  -niveauA.nextLR: %d",niveauA.next,niveauA.current,niveauA.nextLR);
 	int y=0;
@@ -192,7 +208,7 @@ void drawNextLR(){
 	
 	char** pDrawnMap=nextLRMap.c;
 	char carActuel;
-	//printf("taille x, y: %d, %d et MaxX ,Y : %d %d\n",minX,minY,maxX,maxY);
+	printf("taille x, y: %d, %d et MaxX ,Y : %d %d\n",minX,minY,maxX,maxY);
 	for(y=minY;y<maxY;y++){
 		for(x=minX;x<maxX;x++){
 			carActuel=*(*(pDrawnMap+y-minY)+x-minX);
@@ -213,7 +229,22 @@ void drawNextLR(){
 					glEnd();
 					break;
 				case ' ' :	//cas du sol classique
-					glColor3f(0.0f,1.0f,0.0f); //couleurs verte
+					glColor3f(0.25f,0.25f,0.25f); //couleurs verte
+					glMatrixMode(GL_MODELVIEW);
+					glLoadIdentity();
+					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+					
+					glVertex2f(0.0,0.0);
+					glVertex2f(TILE_SIZE,0.0f);
+					glVertex2f(TILE_SIZE,TILE_SIZE);
+					glVertex2f(0.0f,TILE_SIZE);
+	
+					glEnd();
+					break;
+				default :	//cas du sol classique
+					glColor3f(0.25f,0.25f,0.25f); //couleurs verte
 					glMatrixMode(GL_MODELVIEW);
 					glLoadIdentity();
 					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
@@ -235,7 +266,7 @@ void drawNextLR(){
 }
 void drawCurrent(){
 
-	printf("drawCurrent\n");
+	//printf("drawCurrent\n");
 	int y;
 	int x;
 	char** pDrawnMap=currentMap.c;
@@ -261,7 +292,37 @@ void drawCurrent(){
 					glEnd();
 					break;
 				case ' ' :
-					glColor3f(0.0f,1.0f,0.0f);
+					glColor3f(0.25f,0.25f,0.25f);
+					glMatrixMode(GL_MODELVIEW);
+					glLoadIdentity();
+					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+					
+					glVertex2f(0.0,0.0);
+					glVertex2f(TILE_SIZE,0.0f);
+					glVertex2f(TILE_SIZE,TILE_SIZE);
+					glVertex2f(0.0f,TILE_SIZE);
+	
+					glEnd();
+					break;
+				case 'j' :	//cas du sol classique
+					glColor3f(0.25f,0.25f,0.25f); //couleurs verte
+					glMatrixMode(GL_MODELVIEW);
+					glLoadIdentity();
+					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+					
+					glVertex2f(0.0,0.0);
+					glVertex2f(TILE_SIZE,0.0f);
+					glVertex2f(TILE_SIZE,TILE_SIZE);
+					glVertex2f(0.0f,TILE_SIZE);
+	
+					glEnd();
+					break;
+				default :	//cas du sol classique
+					glColor3f(0.25f,0.25f,0.25f); //gris
 					glMatrixMode(GL_MODELVIEW);
 					glLoadIdentity();
 					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
@@ -283,7 +344,7 @@ void drawCurrent(){
 }
 void drawMap(){
 	
-	printf("drawMap\n");
+	//printf("drawMap\n");
 	drawCurrent();
 	if(nextMap.c!=NULL){
 		drawNext();
@@ -294,26 +355,76 @@ void drawMap(){
 	
 }
 
-void drawEnnemis(ListeEnnemi* liste){
+void drawEnnemis(){
 	
-	printf("drawEnnemi\n");
+	//printf("drawEnnemi\n");
 	ElementEnnemi* actuel=liste->premier;
 	
 	for(int i=0;i<liste->nombre;i++){
 		
-		glColor3f(0.0f,0.8f,0.2f);
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		glTranslatef(actuel->e->pos->x*TILE_SIZE,actuel->e->pos->y*TILE_SIZE,0.0f);
+		switch (actuel->e.type){
+				case voiture:
+					glColor3f(1.0f,1.0f,0.0f);
+					glMatrixMode(GL_MODELVIEW);
+					glLoadIdentity();
+					glTranslatef(actuel->e.pos.x*TILE_SIZE,actuel->e.pos.y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+					
+					glVertex2f(0.0,0.0);
+					glVertex2f(TILE_SIZE,0.0f);
+					glVertex2f(TILE_SIZE,TILE_SIZE);
+					glVertex2f(0.0f,TILE_SIZE);
+					
+					glEnd();
+					break;
+				case moto :
+					glColor3f(0.5f,0.5f,0.0f);
+					glMatrixMode(GL_MODELVIEW);
+					glLoadIdentity();
+					glTranslatef(actuel->e.pos.x*TILE_SIZE,actuel->e.pos.y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+					
+					glVertex2f(0.0,0.0);
+					glVertex2f(TILE_SIZE,0.0f);
+					glVertex2f(TILE_SIZE,TILE_SIZE);
+					glVertex2f(0.0f,TILE_SIZE);
+	
+					glEnd();
+					break;
+				case camion :	//cas du sol classique
+					glColor3f(0.5f,0.0f,1.0f); //couleurs verte
+					glMatrixMode(GL_MODELVIEW);
+					glLoadIdentity();
+					glTranslatef(actuel->e.pos.x*TILE_SIZE,actuel->e.pos.y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+					
+					glVertex2f(0.0,0.0);
+					glVertex2f(TILE_SIZE,0.0f);
+					glVertex2f(TILE_SIZE,TILE_SIZE);
+					glVertex2f(0.0f,TILE_SIZE);
+	
+					glEnd();
+					break;
+				case SUV :	//cas du sol classique
+					glColor3f(0.2f,1.0f,0.2f); //couleurs verte
+					glMatrixMode(GL_MODELVIEW);
+					glLoadIdentity();
+					glTranslatef(actuel->e.pos.x*TILE_SIZE,actuel->e.pos.y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+					
+					glVertex2f(0.0,0.0);
+					glVertex2f(TILE_SIZE,0.0f);
+					glVertex2f(TILE_SIZE,TILE_SIZE);
+					glVertex2f(0.0f,TILE_SIZE);
+	
+					glEnd();
+					break;
+			}
 
-		glBegin(GL_QUADS);
-
-		glVertex2f(0.0,0.0);
-		glVertex2f(TILE_SIZE,0.0f);
-		glVertex2f(TILE_SIZE,TILE_SIZE);
-		glVertex2f(0.0f,TILE_SIZE);
-
-		glEnd();
 		if(actuel->suivant!=NULL){
 			actuel=actuel->suivant;
 		}
@@ -322,7 +433,7 @@ void drawEnnemis(ListeEnnemi* liste){
 
 void drawJoueur(){
 	
-	printf("drawJoueur\n");
+	//printf("drawJoueur\n");
 	glColor3f(1.0f,0.2f,0.8f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -340,9 +451,9 @@ void drawJoueur(){
 };
 void interface(int nb){
 	
-	printf("Interface\n");
+	//printf("Interface\n");
 	drawMap();
-	//drawEnnemi();
+	drawEnnemis();
 	drawJoueur();
 };
 

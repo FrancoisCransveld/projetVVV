@@ -18,7 +18,7 @@ bool ESCAPE = false;
 
 void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les input
 {
-	printf("Keyboard \n");
+	//printf("Keyboard \n");
 	switch(key)
 	{
 		case 27:
@@ -39,7 +39,7 @@ void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les in
 };
 void KeyboardSpecial(int key, int x, int y)  // fonction allant gérer les input
 {
-	printf("KeyboardSpecial \n");
+	//printf("KeyboardSpecial \n");
 	switch(key)
 	{
 		case GLUT_KEY_UP:
