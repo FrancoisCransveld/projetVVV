@@ -294,6 +294,32 @@ void drawMap(){
 	
 }
 
+void drawEnnemis(ListeEnnemi* liste){
+	
+	printf("drawEnnemi\n");
+	ElementEnnemi* actuel=liste->premier;
+	
+	for(int i=0;i<liste->nombre;i++){
+		
+		glColor3f(0.0f,0.8f,0.2f);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		glTranslatef(actuel->e->pos->x*TILE_SIZE,actuel->e->pos->y*TILE_SIZE,0.0f);
+
+		glBegin(GL_QUADS);
+
+		glVertex2f(0.0,0.0);
+		glVertex2f(TILE_SIZE,0.0f);
+		glVertex2f(TILE_SIZE,TILE_SIZE);
+		glVertex2f(0.0f,TILE_SIZE);
+
+		glEnd();
+		if(actuel->suivant!=NULL){
+			actuel=actuel->suivant;
+		}
+	}
+};
+
 void drawJoueur(){
 	
 	printf("drawJoueur\n");
@@ -311,12 +337,13 @@ void drawJoueur(){
 	
 	glEnd();
 
-}
+};
 void interface(int nb){
 	
 	printf("Interface\n");
 	drawMap();
+	//drawEnnemi();
 	drawJoueur();
-}
+};
 
 
