@@ -61,6 +61,9 @@ void upDateKeyboard(int i){
 	jeu();
 	glutTimerFunc(50, upDateKeyboard, 0);
 };
+//void switchMap(){
+	
+//}
 void jeu()
 {
 	glutKeyboardFunc(Keyboard);		//fonction de glut gérant le clavier

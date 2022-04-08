@@ -114,7 +114,9 @@ void moveLeft(){		//la fonction va vérifier si on peut se déplacer vers la gau
 	{
 		j.dir=3;
 		j.pos.x = x;
-		camera.x--;//position initiale de la camera affichant une map complète au centre. 
+		if(autorisation_scroll( x, y,MapJ,j.dir)){
+			camera.x--;//position initiale de la camera affichant une map complète au centre. 
+		}
 		
 	}
 	//printf("moveLeft\n");
@@ -137,7 +139,9 @@ void moveRight()		//la fonction va vérifier si on peut se déplacer vers la dro
 	{
 		j.dir=1;
 		j.pos.x = x;
-		camera.x++;
+		if(autorisation_scroll( x, y,MapJ,j.dir)){
+			camera.x++;
+		}
 	}
 	//printf("j pos x: %d j pos y: %d",j.pos.x,j.pos.y);
 
@@ -157,7 +161,9 @@ void moveUp()
 	if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#'){//attention a changer
 		j.dir=0;
 		j.pos.y = y;
-		camera.y--;
+		if(autorisation_scroll( x, y,MapJ,j.dir)){
+			camera.y--;
+		}
 		/*if(y>=20||(*(*(currentMap.c + 0)+20)=='#')){
 			//j->pos.y = y;
 			printf("\npos y: %d\n",y+1);
@@ -184,7 +190,9 @@ void moveDown()
    if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#'){
 		j.dir=2;
 		j.pos.y = y;
-		camera.y++;
+		if(autorisation_scroll( x, y,MapJ,j.dir)){
+			camera.y++;
+		}
 		/*if(y<currentMap.taille.y-22){
 			//j->pos.y = y;
 			printf("\npos y: %d\n",y+1);
@@ -196,4 +204,75 @@ void moveDown()
       }
       //printf("j pos x: %d j pos y: %d",j.pos.x,j.pos.y);
 };
+//PRE: les argument sont la postion du joueur après le déplacement et la carte sur laquel il évolue.
+//POST: fonction qui va testé si oui ou non la caméra doit scroller
+bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir){
+	bool SCROLL_LOCK=true;//booleen vérifiant si on a un verrou de scrolling dans la direction que prend le joueur 
+	bool SCROLL_J=false;	//booleen vérifiant que la position du joueur par rapport à la caméra selon sa direction est suffisament éloignée
+	int xLock=25;	//position x du verrou du srcolling pour la direction
+	int yLock=25;	//position y du verrou du srcolling pour la direction
+	switch(jDir){
+		case 0:
+			yLock=0;
+			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.y<18)){
+				SCROLL_LOCK=false;
+			}
+			if((camera.y-y)>7){
+				SCROLL_J=true;
+			}
+			break;
+		case 1:
+			xLock=49;
+			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.x>31)){
+				SCROLL_LOCK=false;
+			}
+			if((x-camera.x)>6){
+				SCROLL_J=true;
+			}
+			break;
+		case 2:
+			yLock=49;
+			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.y>31)){
+				SCROLL_LOCK=false;
+			}
+			if((y-camera.y)>6){
+				SCROLL_J=true;
+			}
+			break;
+		case 3:
+			xLock=0;
+			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.x<18)){
+				SCROLL_LOCK=false;
+			}
+			if((camera.x-x)>7){
+				SCROLL_J=true;
+			}
+			break;
+		case 4:
+			SCROLL_J=false;
+			break;
+	}
+	return(SCROLL_J&&SCROLL_LOCK);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //void movePlayer(

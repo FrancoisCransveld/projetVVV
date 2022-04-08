@@ -13,9 +13,11 @@ typedef struct joueur Joueur;
 Joueur j;
 
 void replacement_joueur(int x, int y, Map* map);
+bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir);
 void moveLeft();
 void moveRight();
 void moveUp();
 void moveDown();
+
 
 #endif

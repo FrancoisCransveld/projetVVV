@@ -193,12 +193,14 @@ void loadMaps(int *tMapX,int* tMapY){
 			nextMap.c=NULL;
 		}*/
 		i++;
-	}while(i<3);
+	}while(i<2);
 	loadEnnemi(liste, 0);
 	camera.x=currentMap.taille.x/2;//position initiale de la camera affichant une map complète au centre. 
 	camera.y=currentMap.taille.y/2;
 	return;
 }
+//PRE:
+//POST:cette fonction charge la prochaine map en fonction d'ou se dirige le joueur et d'ou est placée la camera 
 void LoadNext(){
 	
 	/*int nextLoad;
