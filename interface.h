@@ -5,7 +5,7 @@
 #include "LoadMaps.h"
 #include "joueur.h"
 #include "ennemi.h"
-
+#define CAM_RANGE 32
 #define TILE_SIZE 16.0
 int width;
 int heigth;

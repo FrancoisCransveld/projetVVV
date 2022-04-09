@@ -33,7 +33,7 @@ void replacement_joueur(int x, int y, Map* map){
 			map->c=currentMap.c;
 			mjX=x;
 			mjY=y;
-			printf("vous etes ici 3");
+			//printf("vous etes ici 3");
 		}
 	}
 	else{					    //position horizontale en dehors de 0 et taille currentMap
@@ -117,7 +117,8 @@ void moveLeft(){		//la fonction va vérifier si on peut se déplacer vers la gau
 		if(autorisation_scroll( x, y,MapJ,j.dir)){
 			camera.x--;//position initiale de la camera affichant une map complète au centre. 
 		}
-		
+		mapLoader(MapJ,j.dir);
+		supprimer_ennemi_hors_portee(liste);
 	}
 	//printf("moveLeft\n");
 	//printf("j pos x: %d j pos y: %d",j.pos.x,j.pos.y);
@@ -142,6 +143,8 @@ void moveRight()		//la fonction va vérifier si on peut se déplacer vers la dro
 		if(autorisation_scroll( x, y,MapJ,j.dir)){
 			camera.x++;
 		}
+		mapLoader(MapJ,j.dir);
+		supprimer_ennemi_hors_portee(liste);
 	}
 	//printf("j pos x: %d j pos y: %d",j.pos.x,j.pos.y);
 
@@ -164,6 +167,8 @@ void moveUp()
 		if(autorisation_scroll( x, y,MapJ,j.dir)){
 			camera.y--;
 		}
+		mapLoader(MapJ,j.dir);
+		supprimer_ennemi_hors_portee(liste);
 		/*if(y>=20||(*(*(currentMap.c + 0)+20)=='#')){
 			//j->pos.y = y;
 			printf("\npos y: %d\n",y+1);
@@ -186,13 +191,15 @@ void moveDown()
    Map MapJ;
 	
 	 //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
-	replacement_joueur(x,y,&MapJ);
-   if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#'){
+	replacement_joueur(x,y,&MapJ);	//dans MapJ la structure taille correspond au futur coordonée du joueur dans le plateau logique qui lui correspond
+   if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#'){   
 		j.dir=2;
 		j.pos.y = y;
 		if(autorisation_scroll( x, y,MapJ,j.dir)){
 			camera.y++;
 		}
+		supprimer_ennemi_hors_portee(liste);
+		mapLoader(MapJ,j.dir);
 		/*if(y<currentMap.taille.y-22){
 			//j->pos.y = y;
 			printf("\npos y: %d\n",y+1);
@@ -209,12 +216,12 @@ void moveDown()
 bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir){
 	bool SCROLL_LOCK=true;//booleen vérifiant si on a un verrou de scrolling dans la direction que prend le joueur 
 	bool SCROLL_J=false;	//booleen vérifiant que la position du joueur par rapport à la caméra selon sa direction est suffisament éloignée
-	int xLock=25;	//position x du verrou du srcolling pour la direction
-	int yLock=25;	//position y du verrou du srcolling pour la direction
+	int xLock=32;	//position x du verrou du srcolling pour la direction
+	int yLock=32;	//position y du verrou du srcolling pour la direction
 	switch(jDir){
 		case 0:
 			yLock=0;
-			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.y<18)){
+			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.y<25)){
 				SCROLL_LOCK=false;
 			}
 			if((camera.y-y)>7){
@@ -222,8 +229,8 @@ bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir){
 			}
 			break;
 		case 1:
-			xLock=49;
-			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.x>31)){
+			xLock=currentMap.taille.x-1;
+			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.x>38)){
 				SCROLL_LOCK=false;
 			}
 			if((x-camera.x)>6){
@@ -231,8 +238,8 @@ bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir){
 			}
 			break;
 		case 2:
-			yLock=49;
-			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.y>31)){
+			yLock=currentMap.taille.y-1;
+			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.y>38)){
 				SCROLL_LOCK=false;
 			}
 			if((y-camera.y)>6){
@@ -241,7 +248,7 @@ bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir){
 			break;
 		case 3:
 			xLock=0;
-			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.x<18)){
+			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.x<25)){
 				SCROLL_LOCK=false;
 			}
 			if((camera.x-x)>7){
@@ -254,7 +261,93 @@ bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir){
 	}
 	return(SCROLL_J&&SCROLL_LOCK);
 };
-
+void mapLoader(Map MapJ,Direction jDir){
+	
+	printf("mapLoader\n");
+	int nextLoad=niveauA.current;
+	switch(jDir){
+		case 0:
+			if(MapJ.taille.y<26){
+				if(jDir==niveauA.Nmap[niveauA.current].Next){
+					nextLoad=niveauA.current+1;
+				}
+				else if(((jDir+2)%4)==niveauA.Nmap[niveauA.current-1].Next){
+					nextLoad=niveauA.current-1;
+				}
+				else if(jDir==niveauA.Nmap[niveauA.current+1].Next){
+					nextLoad=niveauA.current+2;
+				}
+				else if(((jDir+2)%4)==niveauA.Nmap[niveauA.current-2].Next){
+					nextLoad=niveauA.current-2;
+				}
+			}
+			break;
+		case 1:
+			if(MapJ.taille.x>38){
+				if(jDir==niveauA.Nmap[niveauA.current].Next){
+					nextLoad=niveauA.current+1;
+				}
+				else if(((jDir+2)%4)==niveauA.Nmap[niveauA.current-1].Next){
+					nextLoad=niveauA.current-1;
+				}
+				else if(jDir==niveauA.Nmap[niveauA.current+1].Next){
+					nextLoad=niveauA.current+2;
+				}
+				else if(((jDir+2)%4)==niveauA.Nmap[niveauA.current-2].Next){
+					nextLoad=niveauA.current-2;
+				}
+			}
+			
+			break;
+		case 2:
+			if(MapJ.taille.y>38){
+				//printf("ici down: jdirP%d next-%d current%d next-1-%d current-1%d \n",((jDir+2)%4),niveauA.Nmap[niveauA.current].Next,niveauA.current,niveauA.Nmap[niveauA.current-1].Next,niveauA.current-1);
+				if(jDir==niveauA.Nmap[niveauA.current].Next){
+					
+					nextLoad=niveauA.current+1;
+				}
+				else if(((jDir+2)%4)==niveauA.Nmap[niveauA.current-1].Next){
+					
+					nextLoad=niveauA.current-1;
+				}
+				else if(jDir==niveauA.Nmap[niveauA.current+1].Next){
+					
+					nextLoad=niveauA.current+2;
+				}
+				else if(((jDir+2)%4)==niveauA.Nmap[niveauA.current-2].Next){
+					
+					nextLoad=niveauA.current-2;
+				}
+			}
+			break;
+		case 3:
+			if(MapJ.taille.x<26){
+				if(jDir==niveauA.Nmap[niveauA.current].Next){
+					nextLoad=niveauA.current+1;
+				}
+				else if(((jDir+2)%4)==niveauA.Nmap[niveauA.current-1].Next){
+					nextLoad=niveauA.current-1;
+				}
+				else if(jDir==niveauA.Nmap[niveauA.current+1].Next){
+					nextLoad=niveauA.current+2;
+				}
+				else if(((jDir+2)%4)==niveauA.Nmap[niveauA.current-2].Next){
+					nextLoad=niveauA.current-2;
+				}
+			}
+			break;
+		case 4:
+			break;
+	}
+	if(!niveauA.Nmap[nextLoad].loadStatus){
+		printf("nextLoad pre %d\n",nextLoad);
+		loadNext(nextLoad);
+		printf("nextLoad %d\n",nextLoad);
+	}
+	else{
+		printf("nothing\n");
+	}
+}
 
 
 

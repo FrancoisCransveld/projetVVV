@@ -49,8 +49,8 @@ int main (int argc,char* argv[]){
 	liste = creer_liste();
 	afficher_liste(liste);
 	loadMaps(&t_map_X, &t_map_Y);
-	width=t_map_X*TILE_SIZE;
-	heigth=t_map_Y*TILE_SIZE;
+	width=currentMap.taille.x*TILE_SIZE;
+	heigth=currentMap.taille.y*TILE_SIZE;
 	j=loadJoueur(0);
 	srand(time(NULL));
 	glutInit(&argc,argv);

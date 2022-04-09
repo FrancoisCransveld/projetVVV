@@ -15,4 +15,5 @@ void KeyboardSpecial(int key, int x, int y);
 void Keyboard(unsigned char key, int x, int y);
 void jeu( void );
 void upDateKeyboard(int i);
+void switchMap(void);
 #endif

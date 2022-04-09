@@ -271,6 +271,7 @@ void drawCurrent(){
 	int x;
 	char** pDrawnMap=currentMap.c;
 	char carActuel;
+	
 	for(y=0;y<currentMap.taille.y;y++){
 		for(x=0;x<currentMap.taille.x;x++){
 			carActuel=*(*(pDrawnMap+y)+x);
@@ -349,10 +350,11 @@ void drawMap(){
 	if(nextMap.c!=NULL){
 		drawNext();
 	}
+	//printf("drawMap\n");
 	if(nextLRMap.c!=NULL){
 		drawNextLR();
 	}
-	
+	//printf("drawMap\n");
 }
 
 void drawEnnemis(){
@@ -422,6 +424,8 @@ void drawEnnemis(){
 					glVertex2f(0.0f,TILE_SIZE);
 	
 					glEnd();
+					break;
+				case vide :
 					break;
 			}
 

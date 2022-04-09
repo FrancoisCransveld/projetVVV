@@ -13,6 +13,7 @@ struct selectionMap{
 	int s;
 	bool loadStatus;
 	Direction Next;
+	Direction previous;
 };
 typedef struct selectionMap SelectionMap;
 
@@ -41,7 +42,7 @@ TabNiveau niveauA; // tableau des niveaux aléatoirement choisis
 
 void loadMaps(int* tMapX, int* tMapy);
 void loadMap(int tMapX, int tMapy,TabNiveau* niveauA, int select);
-void LoadNext();
+void loadNext(int select);
 void tailleMap(int* tMapX,int* tMapY,TabNiveau niveauA, int selectedMap);
 #include "joueur.h"
 #include "ennemi.h"
