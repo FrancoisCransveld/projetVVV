@@ -37,7 +37,7 @@ void Display()
         interface(1);
         glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(TILE_SIZE*(camera.x)-width/2, TILE_SIZE*(camera.x)+width/2, TILE_SIZE*(camera.y)+heigth/2, TILE_SIZE*(camera.y)-heigth/2);
+	gluOrtho2D(TILE_SIZE*(camera.x)-width/4, TILE_SIZE*(camera.x)+width/4, TILE_SIZE*(camera.y)+heigth/4, TILE_SIZE*(camera.y)-heigth/4);
 	glFlush();
 	
 }

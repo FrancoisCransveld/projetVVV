@@ -12,10 +12,28 @@
 #include "joueur.h"
 void replacement_joueur(int x, int y, Map* map){
 	
+	printf("replacementJoueur\n");
 	int mjX, mjY;
  	//variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	//recherche position par rapport à current 
-	
+	if(y<0||y>=currentMap.taille.y){  //position verticale en dehors 0 et taille currentMap
+			
+			mjX=x;				//x ne change pas
+			if(y<0){			//si au dessus, alors la position dans nextMap est à la fin, donc à la taille de next+y (y est négatif)
+				map->c=nextMap.c;       //j est juste au dessus de currentMap, donc dans nextMap
+				mjY=y+nextMap.taille.y;
+			}		
+			else{			//si en dessous, alors la position dans previousMap est au début, donc à y-la hauteur de current	
+				map->c=previousMap.c;       //j est juste au dessus de currentMap, donc dans nextMap
+				mjY=y-currentMap.taille.y;
+			}
+	}
+	else{
+		map->c=currentMap.c;
+		mjX=x;
+		mjY=y;
+	}
+	/*
 	if(x>=0&&x<currentMap.taille.x){	   //position horizontale entre 0 et taille currentMap
 		if(y<0||y>=currentMap.taille.y){  //position verticale en dehors 0 et taille currentMap
 			map->c=nextMap.c;       //j est juste au dessus ou en dessous de currentMap, donc dans nextMap
@@ -89,13 +107,14 @@ void replacement_joueur(int x, int y, Map* map){
 				mjX=x-currentMap.taille.x;//si a droite, alors la position dans nextMap est au début, donc à x-la largeur de current
 			}
 		}
-	}
+	}*/
 	//printf("car %c\n",map->c[0][0]);
-	map->taille.x=mjX;
+	map->taille.x=mjX;	//Coordonnée de j dans la carte logique/le plateau qui le concerne contenu dans map->taille
 	map->taille.y=mjY;
-	printf("j pos x: %d j pos y: %d et mjX: %d mjY: %d\n",j.pos.x,j.pos.y, mjX,mjY);
-	printf("niveau.current %d %dniveau.Next %d %dniveau.LR %d %d\n",niveauA.current,niveauA.Nmap[niveauA.current].s,niveauA.next,niveauA.Nmap[niveauA.next].s,niveauA.nextLR,niveauA.Nmap[niveauA.nextLR].s);
+	//printf("j pos x: %d j pos y: %d et mjX: %d mjY: %d\n",j.pos.x,j.pos.y, mjX,mjY);
+	//printf("niveau.current %d %dniveau.Next %d %dniveau.LR %d %d\n",niveauA.current,niveauA.Nmap[niveauA.current].s,niveauA.next,niveauA.Nmap[niveauA.next].s,niveauA.previous,niveauA.Nmap[niveauA.previous].s);
 	return ;
+
 };
 void moveLeft(){		//la fonction va vérifier si on peut se déplacer vers la gauche et le faire le cas échéant
 
@@ -107,7 +126,7 @@ void moveLeft(){		//la fonction va vérifier si on peut se déplacer vers la gau
 	
 	 //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	replacement_joueur(x,y,&MapJ);
-	//printf("moveLeft\n");
+	printf("moveLeft\n");
 
 	//recherche position par rapport à current 
 	/*  */
@@ -118,7 +137,7 @@ void moveLeft(){		//la fonction va vérifier si on peut se déplacer vers la gau
 		if(autorisation_scroll( x, y,MapJ,j.dir)){
 			camera.x--;//position initiale de la camera affichant une map complète au centre. 
 		}
-		mapLoader(MapJ,j.dir);
+		//mapLoader(MapJ,j.dir);
 		switchMap();
 		supprimer_ennemi_hors_portee(liste);
 	}
@@ -138,6 +157,7 @@ void moveRight()		//la fonction va vérifier si on peut se déplacer vers la dro
 	
 	 //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	replacement_joueur(x,y,&MapJ);
+	printf("moveRight\n");
 	if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#')
 	{
 		j.dir=1;
@@ -145,7 +165,7 @@ void moveRight()		//la fonction va vérifier si on peut se déplacer vers la dro
 		if(autorisation_scroll( x, y,MapJ,j.dir)){
 			camera.x++;
 		}
-		mapLoader(MapJ,j.dir);
+		//mapLoader(MapJ,j.dir);
 		switchMap();
 		supprimer_ennemi_hors_portee(liste);
 	}
@@ -163,14 +183,14 @@ void moveUp()
 	
 	 //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	replacement_joueur(x,y,&MapJ);
-
+	printf("moveUp\n");
 	if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#'){//attention a changer
 		j.dir=0;
 		j.pos.y = y;
 		if(autorisation_scroll( x, y,MapJ,j.dir)){
 			camera.y--;
 		}
-		mapLoader(MapJ,j.dir);
+		//mapLoader(MapJ,j.dir);
 		switchMap();
 		supprimer_ennemi_hors_portee(liste);
 		/*if(y>=20||(*(*(currentMap.c + 0)+20)=='#')){
@@ -193,7 +213,7 @@ void moveDown()
    y = j.pos.y+1;
    
    Map MapJ;
-	
+	printf("moveDown\n");
 	 //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	replacement_joueur(x,y,&MapJ);	//dans MapJ la structure taille correspond au futur coordonée du joueur dans le plateau logique qui lui correspond
    if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#'){   
@@ -203,7 +223,7 @@ void moveDown()
 			camera.y++;
 		}
 		
-		mapLoader(MapJ,j.dir);
+		//mapLoader(MapJ,j.dir);
 		switchMap();
 		supprimer_ennemi_hors_portee(liste);
 		/*if(y<currentMap.taille.y-22){
@@ -224,10 +244,11 @@ bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir){
 	bool SCROLL_J=false;	//booleen vérifiant que la position du joueur par rapport à la caméra selon sa direction est suffisament éloignée
 	int xLock=32;	//position x du verrou du srcolling pour la direction
 	int yLock=32;	//position y du verrou du srcolling pour la direction
+	printf("Srcrolllock\n");
 	switch(jDir){
 		case 0:
 			yLock=0;
-			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.y<25)){
+			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.y<9)){
 				SCROLL_LOCK=false;
 			}
 			if((camera.y-y)>7){
@@ -236,7 +257,7 @@ bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir){
 			break;
 		case 1:
 			xLock=currentMap.taille.x-1;
-			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.x>38)){
+			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.x>54)){
 				SCROLL_LOCK=false;
 			}
 			if((x-camera.x)>6){
@@ -245,7 +266,7 @@ bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir){
 			break;
 		case 2:
 			yLock=currentMap.taille.y-1;
-			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.y>38)){
+			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.y>54)){
 				SCROLL_LOCK=false;
 			}
 			if((y-camera.y)>6){
@@ -254,7 +275,7 @@ bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir){
 			break;
 		case 3:
 			xLock=0;
-			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.x<25)){
+			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.x<9)){
 				SCROLL_LOCK=false;
 			}
 			if((camera.x-x)>7){
@@ -267,6 +288,7 @@ bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir){
 	}
 	return(SCROLL_J&&SCROLL_LOCK);
 };
+/*
 void mapLoader(Map MapJ,Direction jDir){
 	
 	printf("mapLoader\n");
@@ -371,7 +393,7 @@ void mapLoader(Map MapJ,Direction jDir){
 		printf("nothing\n");
 	}
 }
-
+*/
 
 
 

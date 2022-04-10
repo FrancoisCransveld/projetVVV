@@ -64,8 +64,10 @@ void upDateKeyboard(int i){
 void switchMap(){
 	printf("switchMap\n");
 	printf("x%d y%d\nmap %d %d",camera.x,camera.y,nextMap.taille.x,nextMap.taille.y);
-	bool switchEffectue=false;
-	bool switchLREffectue=false;
+	//bool switchEffectue=false;
+	bool switchPrevious=false;
+	bool switchNext=false;
+	//bool switchLREffectue=false;
 	int tamponCam=0;
 	int tamponJ=0;
 	int nextLoad;
@@ -76,15 +78,16 @@ void switchMap(){
 		tamponCam=camera.y+nextMap.taille.y;
 		tamponJ=j.pos.y+nextMap.taille.y;
 		variationE.y+=nextMap.taille.y;
-		switchEffectue=true;
+		switchNext=true;
 	}
-	if(camera.y>=nextMap.taille.y/2+currentMap.taille.y){
+	if(camera.y>=((previousMap.taille.y/2)+currentMap.taille.y)){
 		tamponCam=camera.y-nextMap.taille.y;
 		tamponJ=j.pos.y-nextMap.taille.y;
 		variationE.y-=nextMap.taille.y;
-		//currentMap=nextMap;
-		switchEffectue=true;
+		switchPrevious=true;
 	}
+	/* On oublie pour le moment, trop compliqué
+	
 	if(camera.x>=currentMap.taille.x+nextLRMap.taille.x/2){
 		tamponCam=camera.x-nextMap.taille.x;
 		tamponJ=j.pos.x-nextMap.taille.x;
@@ -98,25 +101,31 @@ void switchMap(){
 		variationE.x+=nextMap.taille.x;
 		//currentMap=nextLRMap;
 		switchLREffectue=true;
-	}
-	if(switchEffectue||switchLREffectue){
+	}*/
+	if(switchNext||switchPrevious){
 		modifier_pos_ennemis(liste,variationE);
-		if(switchEffectue){
-			camera.y=tamponCam;
-			j.pos.y=tamponJ;
-		}
+		camera.y=tamponCam;
+		j.pos.y=tamponJ;
+
+		/*
 		if(switchLREffectue){
 			camera.x=tamponCam;
 			j.pos.x=tamponJ;
-		}
+		}*/
 	}
-	if(switchEffectue){
+	if(switchNext){	//si on a un switch vers next lié à la position de la caméra à la moitié de nextMap.
+	//On passe currentMap à previousMap et nextMap à currentMap et on va recharger l'éventuelle nextMap
 		printf("ici 1");
-		currentMap.c=NULL;
+		previousMap=currentMap;
 		currentMap=nextMap;
-		niveauA.Nmap[niveauA.current].loadStatus=false;
+		nextMap.c=NULL;
+		nextMap.taille.y=0;
+		nextMap.taille.x=0;
+		niveauA.Nmap[niveauA.previous].loadStatus=false;//on change le status de previous avant de modifié sa position dans le tableau
+		niveauA.previous=niveauA.current;
 		niveauA.current=niveauA.next;
-
+		nextLoad=niveauA.next+1;
+		/*	trop compliqué on oublie pour le moment
 		if(!nextMap.previous){ //si la map n'est pas avant current dans le niveau
 			if(niveauA.current>niveauA.nextLR){//la map current est plus loin dans le niveau que la map nextLR on peu la libérer
 				niveauA.Nmap[niveauA.nextLR].loadStatus=false;
@@ -139,10 +148,21 @@ void switchMap(){
 		}
 		//printf("nextload %d\n",nextLoad);
 		loadNext(nextLoad);
+	}*/
 	}
-	if(switchLREffectue){
+	if(switchPrevious){
 		printf("ici 2");
-		currentMap.c=NULL;
+		printf("ici 1");
+		nextMap=currentMap;
+		currentMap=previousMap;
+		previousMap.c=NULL;
+		previousMap.taille.y=0;
+		previousMap.taille.x=0;
+		niveauA.Nmap[niveauA.next].loadStatus=false;//on change le status de previous avant de modifié sa position dans le tableau
+		niveauA.next=niveauA.current;
+		niveauA.current=niveauA.previous;
+		nextLoad=niveauA.previous-1;
+		/*currentMap.c=NULL;
 		currentMap=nextLRMap;
 		niveauA.Nmap[niveauA.current].loadStatus=false;
 		niveauA.current=niveauA.nextLR;
@@ -166,10 +186,16 @@ void switchMap(){
 			else{
 				nextLoad=niveauA.current-2;
 			}
-		}
-		//loadNext(nextLoad);
+		}*/
+		
 	}
-	
+	if(nextLoad<niveauA.nombreMap&&nextLoad>=0){
+		printf("prochaine Map loade :%d",nextLoad);
+		loadNext(nextLoad);
+	}
+	else{
+		printf("limite du niveau\n");
+	}
 };
 void jeu()
 {

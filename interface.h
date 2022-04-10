@@ -11,7 +11,9 @@ int width;
 int heigth;
 
 Coordonnee camera;
-
+void drawNext(void);
+void drawPrevious(void);
+void drawCurrent(void);
 void interface(int nb);
 void drawMap(void);
 void drawJoueur(void);

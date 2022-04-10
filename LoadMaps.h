@@ -20,9 +20,10 @@ typedef struct selectionMap SelectionMap;
 
 struct tabNiveau{
 	SelectionMap* Nmap;
+	int nombreMap;
 	int current;//le numéro dans le tableau de la map qui est chargée dans currentMap
 	int next;  //le numéro dans le tableau de la map qui est chargée dans nextMap
-	int nextLR;//le numéro dans le tableau de la map qui est chargée dans nextLRMap
+	int previous;//le numéro dans le tableau de la map qui est chargée dans nextLRMap
 };
 typedef struct tabNiveau TabNiveau;
 
@@ -37,7 +38,7 @@ Map currentMap;
 
 Map nextMap;
 
-Map nextLRMap;
+Map previousMap;
 
 TabNiveau niveauA; // tableau des niveaux aléatoirement choisis
 

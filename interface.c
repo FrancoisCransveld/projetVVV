@@ -18,22 +18,22 @@
 //Post:Fonction qui dessine la map nextMap; c'est dans cette fonction qu'on détermine ou dessinner NextMap par rapport à current
 void drawNext(){
 	
-	//printf("drawNext ");
+	printf("drawNext \n");
 	//printf("etat Map :%d %d",nextMap.taille.x, nextMap.taille.y);
-	if(nextMap.previous){
+	/*if(nextMap.previous){
 		//printf(" previous: true");
 	}
 	else{
 		//printf(" previous: false");
-	}
+	}*/
 	//printf("etat niveauA : \n  -niveauA.next: %d\n  -niveauA.current: %d\n  -niveauA.nextLR: %d",niveauA.next,niveauA.current,niveauA.nextLR);
 	int y=0;
 	int x=0;
 	int minX=0;
-	int minY=0;
+	int minY=0-nextMap.taille.y;//next map est toujours affichée au dessus
 	int maxX=nextMap.taille.x;
-	int maxY=nextMap.taille.y;
-	
+	int maxY=0;
+	/*
 	//Décalage de la hauteur (y)
 	//Dans tous les cas
 	if(!nextMap.previous){		//si next map est une map suivant bien la map current dans l'ordre du tableau niveauA (comprendre que du coups on vient de currentMap ou nextLRMap)
@@ -78,8 +78,9 @@ void drawNext(){
 			minX+=currentMap.taille.x;		//on dessine nextmap au coordonnée x=largeur currentMap jusque largeur de currentMap+nextMap 
 			maxX+=currentMap.taille.x;
 		}
-	}
+	}*/
 	//ok jusque là, à priori
+	
 	char** pDrawnMap=nextMap.c;
 	char carActuel;
 	//printf("taille x, y: %d, %d et MaxX ,Y : %d %d\n",minX,minY,maxX,maxY);
@@ -142,24 +143,26 @@ void drawNext(){
 }
 //Pre: reçoit en argument nextLRMap et niveauA
 //Post:Fonction qui dessine la map nextLRMap; c'est dans cette fonction qu'on détermine ou dessinner NextLRMap par rapport à current et next
-void drawNextLR(){
+void drawPrevious(){
 	
-	//printf("drawNextLR ");
+	printf("drawprevious \n");
 	//printf("etat Map :%d %d",nextLRMap.taille.x, nextLRMap.taille.y);
-	if(nextLRMap.previous){
+	/*
+	inutile pour le moment
+	if(previousMap.previous){
 		//printf(" previous: true");
 	}
 	else{
 		//printf(" previous: false");
-	}
+	}*/
 	//printf("etat niveauA : \n  -niveauA.next: %d\n  -niveauA.current: %d\n  -niveauA.nextLR: %d",niveauA.next,niveauA.current,niveauA.nextLR);
 	int y=0;
 	int x=0;
 	int minX=0;
-	int minY=0;
-	int maxX=nextLRMap.taille.x;
-	int maxY=nextLRMap.taille.y;
-	
+	int minY=currentMap.taille.y; // previous map est toujours affichée en dessous
+	int maxX=previousMap.taille.x;
+	int maxY=previousMap.taille.y+currentMap.taille.y;
+	/*
 	//Décalage de la largeur (x)
 	//Dans tous les cas
 	if(!nextLRMap.previous){		//si nextLR map est une map suivant bien la map current dans l'ordre du tableau niveauA (comprendre que du coups on vient de currentMap ou nextLRMap)
@@ -204,9 +207,9 @@ void drawNextLR(){
 			minY-=nextLRMap.taille.y;		//on dessine nextmap au coordonnée y=-hauteur nextLRMap jusque 0 
 			maxY-=currentMap.taille.y;
 		}
-	}
+	}*/
 	
-	char** pDrawnMap=nextLRMap.c;
+	char** pDrawnMap=previousMap.c;
 	char carActuel;
 	printf("taille x, y: %d, %d et MaxX ,Y : %d %d\n",minX,minY,maxX,maxY);
 	for(y=minY;y<maxY;y++){
@@ -266,7 +269,7 @@ void drawNextLR(){
 }
 void drawCurrent(){
 
-	//printf("drawCurrent\n");
+	printf("drawCurrent\n");
 	int y;
 	int x;
 	char** pDrawnMap=currentMap.c;
@@ -345,21 +348,21 @@ void drawCurrent(){
 }
 void drawMap(){
 	
-	//printf("drawMap\n");
+	printf("drawMap\n");
 	drawCurrent();
 	if(nextMap.c!=NULL){
 		drawNext();
 	}
 	//printf("drawMap\n");
-	if(nextLRMap.c!=NULL){
-		drawNextLR();
+	if(previousMap.c!=NULL){
+		drawPrevious();
 	}
 	//printf("drawMap\n");
 }
 
 void drawEnnemis(){
 	
-	//printf("drawEnnemi\n");
+	printf("drawEnnemi\n");
 	ElementEnnemi* actuel=liste->premier;
 	
 	for(int i=0;i<liste->nombre;i++){
@@ -437,7 +440,7 @@ void drawEnnemis(){
 
 void drawJoueur(){
 	
-	//printf("drawJoueur\n");
+	printf("drawJoueur\n");
 	glColor3f(1.0f,0.2f,0.8f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -455,7 +458,7 @@ void drawJoueur(){
 };
 void interface(int nb){
 	
-	//printf("Interface\n");
+	printf("Interface\n");
 	drawMap();
 	drawEnnemis();
 	drawJoueur();
