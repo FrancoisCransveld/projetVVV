@@ -12,7 +12,7 @@
 #include "joueur.h"
 void replacement_joueur(int x, int y, Map* map){
 	
-	printf("replacementJoueur\n");
+	//printf("replacementJoueur\n");
 	int mjX, mjY;
  	//variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	//recherche position par rapport à current 
@@ -126,7 +126,7 @@ void moveLeft(){		//la fonction va vérifier si on peut se déplacer vers la gau
 	
 	 //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	replacement_joueur(x,y,&MapJ);
-	printf("moveLeft\n");
+	//printf("moveLeft\n");
 
 	//recherche position par rapport à current 
 	/*  */
@@ -140,6 +140,7 @@ void moveLeft(){		//la fonction va vérifier si on peut se déplacer vers la gau
 		//mapLoader(MapJ,j.dir);
 		switchMap();
 		supprimer_ennemi_hors_portee(liste);
+		activer_ennemi_a_portee(liste);
 	}
 	//printf("moveLeft\n");
 	//printf("j pos x: %d j pos y: %d",j.pos.x,j.pos.y);
@@ -157,7 +158,7 @@ void moveRight()		//la fonction va vérifier si on peut se déplacer vers la dro
 	
 	 //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	replacement_joueur(x,y,&MapJ);
-	printf("moveRight\n");
+	//printf("moveRight\n");
 	if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#')
 	{
 		j.dir=1;
@@ -168,6 +169,7 @@ void moveRight()		//la fonction va vérifier si on peut se déplacer vers la dro
 		//mapLoader(MapJ,j.dir);
 		switchMap();
 		supprimer_ennemi_hors_portee(liste);
+		activer_ennemi_a_portee(liste);
 	}
 	//printf("j pos x: %d j pos y: %d",j.pos.x,j.pos.y);
 
@@ -183,7 +185,7 @@ void moveUp()
 	
 	 //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	replacement_joueur(x,y,&MapJ);
-	printf("moveUp\n");
+	//printf("moveUp\n");
 	if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#'){//attention a changer
 		j.dir=0;
 		j.pos.y = y;
@@ -193,6 +195,7 @@ void moveUp()
 		//mapLoader(MapJ,j.dir);
 		switchMap();
 		supprimer_ennemi_hors_portee(liste);
+		activer_ennemi_a_portee(liste);
 		/*if(y>=20||(*(*(currentMap.c + 0)+20)=='#')){
 			//j->pos.y = y;
 			printf("\npos y: %d\n",y+1);
@@ -213,7 +216,7 @@ void moveDown()
    y = j.pos.y+1;
    
    Map MapJ;
-	printf("moveDown\n");
+	//printf("moveDown\n");
 	 //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	replacement_joueur(x,y,&MapJ);	//dans MapJ la structure taille correspond au futur coordonée du joueur dans le plateau logique qui lui correspond
    if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#'){   
@@ -226,6 +229,7 @@ void moveDown()
 		//mapLoader(MapJ,j.dir);
 		switchMap();
 		supprimer_ennemi_hors_portee(liste);
+		activer_ennemi_a_portee( liste);
 		/*if(y<currentMap.taille.y-22){
 			//j->pos.y = y;
 			printf("\npos y: %d\n",y+1);
@@ -244,7 +248,7 @@ bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir){
 	bool SCROLL_J=false;	//booleen vérifiant que la position du joueur par rapport à la caméra selon sa direction est suffisament éloignée
 	int xLock=32;	//position x du verrou du srcolling pour la direction
 	int yLock=32;	//position y du verrou du srcolling pour la direction
-	printf("Srcrolllock\n");
+	//printf("Srcrolllock\n");
 	switch(jDir){
 		case 0:
 			yLock=0;

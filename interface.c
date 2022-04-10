@@ -18,7 +18,7 @@
 //Post:Fonction qui dessine la map nextMap; c'est dans cette fonction qu'on détermine ou dessinner NextMap par rapport à current
 void drawNext(){
 	
-	printf("drawNext \n");
+	//printf("drawNext \n");
 	//printf("etat Map :%d %d",nextMap.taille.x, nextMap.taille.y);
 	/*if(nextMap.previous){
 		//printf(" previous: true");
@@ -145,7 +145,8 @@ void drawNext(){
 //Post:Fonction qui dessine la map nextLRMap; c'est dans cette fonction qu'on détermine ou dessinner NextLRMap par rapport à current et next
 void drawPrevious(){
 	
-	printf("drawprevious \n");
+	
+	//printf("drawprevious \n");
 	//printf("etat Map :%d %d",nextLRMap.taille.x, nextLRMap.taille.y);
 	/*
 	inutile pour le moment
@@ -211,7 +212,7 @@ void drawPrevious(){
 	
 	char** pDrawnMap=previousMap.c;
 	char carActuel;
-	printf("taille x, y: %d, %d et MaxX ,Y : %d %d\n",minX,minY,maxX,maxY);
+	//printf("taille x, y: %d, %d et MaxX ,Y : %d %d\n",minX,minY,maxX,maxY);
 	for(y=minY;y<maxY;y++){
 		for(x=minX;x<maxX;x++){
 			carActuel=*(*(pDrawnMap+y-minY)+x-minX);
@@ -269,7 +270,7 @@ void drawPrevious(){
 }
 void drawCurrent(){
 
-	printf("drawCurrent\n");
+	//printf("drawCurrent\n");
 	int y;
 	int x;
 	char** pDrawnMap=currentMap.c;
@@ -348,7 +349,7 @@ void drawCurrent(){
 }
 void drawMap(){
 	
-	printf("drawMap\n");
+	//printf("drawMap\n");
 	drawCurrent();
 	if(nextMap.c!=NULL){
 		drawNext();
@@ -362,7 +363,7 @@ void drawMap(){
 
 void drawEnnemis(){
 	
-	printf("drawEnnemi\n");
+	//printf("drawEnnemi\n");
 	ElementEnnemi* actuel=liste->premier;
 	
 	for(int i=0;i<liste->nombre;i++){
@@ -440,7 +441,7 @@ void drawEnnemis(){
 
 void drawJoueur(){
 	
-	printf("drawJoueur\n");
+	//printf("drawJoueur\n");
 	glColor3f(1.0f,0.2f,0.8f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -456,12 +457,32 @@ void drawJoueur(){
 	glEnd();
 
 };
+void drawTirs(){
+
+	for(int i=0;i<j.tirs->nombre;i++){
+		Coordonnee posT=pos_tirs(j.tirs,i);
+		glColor3f(0.7f,0.7f,1.0f);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		glTranslatef(posT.x*TILE_SIZE,posT.y*TILE_SIZE,0.0f);
+		
+		glBegin(GL_QUADS);
+		
+		glVertex2f(0.0,0.0);
+		glVertex2f(TILE_SIZE/2,0.0f);
+		glVertex2f(TILE_SIZE/2,TILE_SIZE/2);
+		glVertex2f(0.0f,TILE_SIZE/2);
+		
+		glEnd();
+	}
+}
 void interface(int nb){
 	
-	printf("Interface\n");
+	//printf("Interface\n");
 	drawMap();
 	drawEnnemis();
 	drawJoueur();
+	drawTirs();
 };
 
 

@@ -2,12 +2,13 @@
 #define _JOUEUR_H_
 #include "jeu.h"
 #include "LoadMaps.h"
-
+#include "tirs.h"
 struct joueur{
 	Coordonnee pos;
 	int vie;
 	Direction dir;
-	//other
+	ListeTirs* tirs;
+	int maxTirs;
 };
 typedef struct joueur Joueur;
 Joueur j;

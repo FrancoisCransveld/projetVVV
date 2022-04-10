@@ -10,6 +10,7 @@
 //#include "jeu.h"
 #include "interface.h"
 
+
 //PRE:prend en argument deux pointeurs d'int pour renvoiyer la taille trouvée et un int qui correspond à la map qui devrai être traitée dans niveauA.Nmap[select]
 //POST:calcul la taille d'une carte et renvoie cette taille via les argument d'entrée tMapX et tMapY
 void tailleMap(int* tMapX, int* tMapY, TabNiveau niveauA, int select){
@@ -287,10 +288,12 @@ void loadMaps(int *tMapX,int* tMapY){
 	niveauA.Nmap[1].s=3;
 	niveauA.Nmap[1].Next=0;	//cette carte n'a pas de sortie
 	niveauA.Nmap[1].loadStatus=false;
+	niveauA.Nmap[1].ennemi=true;
 	niveauA.Nmap[2].s=4;
 	niveauA.Nmap[2].Next=0;	//cette carte n'a pas de sortie
 	niveauA.Nmap[2].previous=2;
 	niveauA.Nmap[2].loadStatus=false;
+	niveauA.Nmap[2].ennemi=true;
 	niveauA.Nmap[3].s=3;
 	niveauA.Nmap[3].Next=0;	//cette carte n'a pas de sortie
 	niveauA.Nmap[3].previous=2;
@@ -400,6 +403,8 @@ Joueur loadJoueur(int select){
 	
 	}
 	J.vie=3;
+	J.tirs=creer_liste_tirs();
+	J.maxTirs=4;
 	return J;
 };
 void loadEnnemi(ListeEnnemi* liste, int select){

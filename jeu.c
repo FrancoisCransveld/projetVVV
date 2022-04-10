@@ -15,7 +15,7 @@ bool LEFT = false;
 bool RIGHT = false;
 bool DOWN = false;
 bool ESCAPE = false;
-
+bool SPACE = false;
 void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les input
 {
 	//printf("Keyboard \n");
@@ -34,6 +34,9 @@ void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les in
 			break;
 		case's':
 			DOWN = true;
+			break;
+		case' ':
+			SPACE = true;
 			break;
 	}	
 };
@@ -59,7 +62,10 @@ void KeyboardSpecial(int key, int x, int y)  // fonction allant gérer les input
 //glutTimerFunc(500, InputLoop, 1);
 void upDateKeyboard(int i){
 	jeu();
-	glutTimerFunc(50, upDateKeyboard, 0);
+	if(j.tirs->nombre>0){
+		deplacement_tirs(j.tirs);
+	}
+	glutTimerFunc(25, upDateKeyboard, 0);
 };
 void switchMap(){
 	printf("switchMap\n");
@@ -81,10 +87,18 @@ void switchMap(){
 		switchNext=true;
 	}
 	if(camera.y>=((previousMap.taille.y/2)+currentMap.taille.y)){
-		tamponCam=camera.y-nextMap.taille.y;
-		tamponJ=j.pos.y-nextMap.taille.y;
-		variationE.y-=nextMap.taille.y;
-		switchPrevious=true;
+		if(nextMap.taille.y!=0){
+			tamponCam=camera.y-nextMap.taille.y;
+			tamponJ=j.pos.y-nextMap.taille.y;
+			variationE.y-=nextMap.taille.y;
+			switchPrevious=true;
+		}
+		else{
+			tamponCam=camera.y-currentMap.taille.y;
+			tamponJ=j.pos.y-currentMap.taille.y;
+			variationE.y-=currentMap.taille.y;
+			switchPrevious=true;
+		}
 	}
 	/* On oublie pour le moment, trop compliqué
 	
@@ -151,8 +165,6 @@ void switchMap(){
 	}*/
 	}
 	if(switchPrevious){
-		printf("ici 2");
-		printf("ici 1");
 		nextMap=currentMap;
 		currentMap=previousMap;
 		previousMap.c=NULL;
@@ -190,7 +202,8 @@ void switchMap(){
 		
 	}
 	if(nextLoad<niveauA.nombreMap&&nextLoad>=0){
-		printf("prochaine Map loade :%d",nextLoad);
+		printf("prochaine Map loade :%d nextMap %d previousMap %d currentmap %d",nextLoad,niveauA.next,niveauA.previous,niveauA.current);
+		printf("cam x%d y%d\n",camera.x,camera.y);
 		loadNext(nextLoad);
 	}
 	else{
@@ -226,6 +239,13 @@ void jeu()
 		//printf("DOWN ");
                 moveDown(j);
 		DOWN = false;
+	}
+	if (SPACE == true){
+	
+		if(j.tirs->nombre<j.maxTirs){
+			tirs(j.tirs,j.pos,pistolet,j.dir);
+		}
+		SPACE=false;
 	}
 	
 	glutPostRedisplay();

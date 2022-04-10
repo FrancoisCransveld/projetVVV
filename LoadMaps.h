@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "jeu.h"
-
+#include "tirs.h"
 //structure destinée à soit renseigner la direction dans laquel se dirige le joueur,soit renseigner où se trouve la prochaine map.
 //enum direction{Up, Right, Down, Left, fin};
 //typedef enum direction Direction;
@@ -12,7 +12,7 @@
 struct selectionMap{
 	int s;
 	bool loadStatus;
-	bool ennemi;
+	bool ennemi;//est-ce que les ennemis doivent être chargé
 	Direction Next;
 	Direction previous;
 };

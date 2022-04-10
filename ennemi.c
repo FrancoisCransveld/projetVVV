@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <math.h>
 #include "ennemi.h"
 #include "LoadMaps.h"
 #include "interface.h"
@@ -188,6 +189,7 @@ void retirer_vie_numero(ListeEnnemi* liste, int numero, int degat){
 				i++;
 			}
 		actuel->e.vie-=degat;
+		actuel->e.attente=false;
 		if(actuel->e.vie<1){
 			supprimer_ennemi_numero(liste, numero);
 		}
@@ -229,33 +231,104 @@ void modifier_pos_ennemis(ListeEnnemi* liste, Coordonnee variation){
 	int i=0;
 	
 	ElementEnnemi* actuel=liste->premier;
-	for(i=0;i<liste->nombre;i++){
+	int nombreMax=liste->nombre;
+	for(i=0;i<nombreMax;i++){
 		actuel->e.pos.x+=variation.x;
 		actuel->e.pos.y+=variation.y;
-		if(actuel->e.pos.y>camera.y+(CAM_RANGE*2)||actuel->e.pos.y<camera.y-(CAM_RANGE*2)||actuel->e.pos.x>camera.x+(CAM_RANGE*2)||actuel->e.pos.x<camera.x-(CAM_RANGE*2)){
-			printf("suprimer\n");
-			actuel->e.attente=false;
-			supprimer_ennemi_numero(liste, i);
-		}
 		actuel=actuel->suivant;
 	}
+	supprimer_ennemi_hors_portee(liste);
 	//afficher_liste(liste);
 };
 
 //suprime les ennemis hors de portées 
 void supprimer_ennemi_hors_portee(ListeEnnemi* liste){
 	ElementEnnemi* actuel=liste->premier;
-	for(int i=0;i<liste->nombre;i++){
-		if(actuel->e.pos.y>camera.y+(CAM_RANGE*2)||actuel->e.pos.y<camera.y-(CAM_RANGE*2)||actuel->e.pos.x>camera.x+(CAM_RANGE*2)||actuel->e.pos.x<camera.x-(CAM_RANGE*2)){
-			printf("suprimer\n");
+	int nombreMax=liste->nombre;
+	for(int i=0;i<nombreMax;i++){
+		if(actuel->e.pos.y>camera.y+(CAM_RANGE*8)||actuel->e.pos.y<camera.y-(CAM_RANGE*8)){
+			printf("suprimer %d adresse %hx\n",i,actuel);
 			actuel->e.attente=false;
 			supprimer_ennemi_numero(liste, i);
 		}
+		else{
+			actuel=actuel->suivant;
+		}
+	}
+	//	afficher_liste(liste);
+};
+//PRE:
+//POST:active et désactive les ennemis: e.attente=true en attente e.attente=false ennemi actif
+void activer_ennemi_a_portee(ListeEnnemi* liste){
+	ElementEnnemi* actuel=liste->premier;
+	int nombreMax=liste->nombre;
+	for(int i=0;i<nombreMax;i++){
+		if(actuel->e.pos.y<camera.y+(CAM_RANGE+4)&&actuel->e.pos.y>camera.y-(CAM_RANGE+4)){
+			printf("activer %d adresse %hx\n",i,actuel);
+			actuel->e.attente=false;
+		}
+		else{	
+			actuel->e.attente=true;
+		}
 		actuel=actuel->suivant;
 	}
-	//afficher_liste(liste);
+	//	afficher_liste(liste);
 };
-
+//
+//POST: fonction qui va appeler les ennemis pour effectuer leurs actions
+void action_ennemi(ListeEnnemi* liste){
+	ElementEnnemi* actuel=liste->premier;
+	for(int i=0;i<liste->nombre;i++){
+		if(!actuel->e.attente){
+			switch(actuel->e.type){
+				case voiture:
+					if(abs(actuel->e.pos.x-j.pos.x)<0){
+						actuel->e.pos.x++;
+					}
+					else if(abs(actuel->e.pos.x-j.pos.x)>0){
+						actuel->e.pos.x--;
+					}
+					else{
+						if(abs(actuel->e.pos.y-j.pos.y)<0){
+							//tirs
+						}
+						else if(abs(actuel->e.pos.y-j.pos.y)>0){
+							actuel->e.pos.y--;
+						}
+					}
+					break;
+				case moto:
+					if(actuel->e.pos.x%2==0){
+						if(abs(actuel->e.pos.x-j.pos.x)<0){
+							actuel->e.pos.x++;
+						}
+						else if(abs(actuel->e.pos.x-j.pos.x)>0){
+							actuel->e.pos.x--;
+						}
+					}
+					else{
+						if(abs(actuel->e.pos.y-j.pos.y)<0){
+							actuel->e.pos.y++;
+						}
+						else if(abs(actuel->e.pos.y-j.pos.y)>0){
+							actuel->e.pos.y--;
+						}
+					}
+					break;
+				case camion:
+					
+					break;
+				case SUV:
+					
+					break;
+				case vide:
+					break;
+				
+			}
+		}
+		actuel=actuel->suivant;
+	}
+};
 //PRE: prend en argument la liste
 //post:affiche cette liste dans la console
 void afficher_liste(ListeEnnemi* liste){
