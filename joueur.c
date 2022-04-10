@@ -93,7 +93,8 @@ void replacement_joueur(int x, int y, Map* map){
 	//printf("car %c\n",map->c[0][0]);
 	map->taille.x=mjX;
 	map->taille.y=mjY;
-	//printf("j pos x: %d j pos y: %d et mjX: %d mjY: %d\n",j.pos.x,j.pos.y, mjX,mjY);
+	printf("j pos x: %d j pos y: %d et mjX: %d mjY: %d\n",j.pos.x,j.pos.y, mjX,mjY);
+	printf("niveau.current %d %dniveau.Next %d %dniveau.LR %d %d\n",niveauA.current,niveauA.Nmap[niveauA.current].s,niveauA.next,niveauA.Nmap[niveauA.next].s,niveauA.nextLR,niveauA.Nmap[niveauA.nextLR].s);
 	return ;
 };
 void moveLeft(){		//la fonction va vérifier si on peut se déplacer vers la gauche et le faire le cas échéant
@@ -118,6 +119,7 @@ void moveLeft(){		//la fonction va vérifier si on peut se déplacer vers la gau
 			camera.x--;//position initiale de la camera affichant une map complète au centre. 
 		}
 		mapLoader(MapJ,j.dir);
+		switchMap();
 		supprimer_ennemi_hors_portee(liste);
 	}
 	//printf("moveLeft\n");
@@ -144,6 +146,7 @@ void moveRight()		//la fonction va vérifier si on peut se déplacer vers la dro
 			camera.x++;
 		}
 		mapLoader(MapJ,j.dir);
+		switchMap();
 		supprimer_ennemi_hors_portee(liste);
 	}
 	//printf("j pos x: %d j pos y: %d",j.pos.x,j.pos.y);
@@ -168,6 +171,7 @@ void moveUp()
 			camera.y--;
 		}
 		mapLoader(MapJ,j.dir);
+		switchMap();
 		supprimer_ennemi_hors_portee(liste);
 		/*if(y>=20||(*(*(currentMap.c + 0)+20)=='#')){
 			//j->pos.y = y;
@@ -198,8 +202,10 @@ void moveDown()
 		if(autorisation_scroll( x, y,MapJ,j.dir)){
 			camera.y++;
 		}
-		supprimer_ennemi_hors_portee(liste);
+		
 		mapLoader(MapJ,j.dir);
+		switchMap();
+		supprimer_ennemi_hors_portee(liste);
 		/*if(y<currentMap.taille.y-22){
 			//j->pos.y = y;
 			printf("\npos y: %d\n",y+1);
@@ -264,85 +270,102 @@ bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir){
 void mapLoader(Map MapJ,Direction jDir){
 	
 	printf("mapLoader\n");
-	int nextLoad=niveauA.current;
+	int nextLoad=-1;
 	switch(jDir){
 		case 0:
 			if(MapJ.taille.y<26){
-				if(jDir==niveauA.Nmap[niveauA.current].Next){
-					nextLoad=niveauA.current+1;
+			printf("up: jdirP%d next dir%d current%d previous dir%d next%d nextLR %d \n",jDir,niveauA.Nmap[niveauA.current].Next,niveauA.current,niveauA.Nmap[niveauA.current].previous,niveauA.next,niveauA.nextLR);
+				int i=0;
+				while(niveauA.Nmap[niveauA.current+i].Next!=5&&i<2){
+					if(jDir==niveauA.Nmap[niveauA.current+i].Next){
+						nextLoad=niveauA.current+1+i;
+						break;
+					}
+					i++;
 				}
-				else if(((jDir+2)%4)==niveauA.Nmap[niveauA.current-1].Next){
-					nextLoad=niveauA.current-1;
+				i=0;
+				while(niveauA.Nmap[niveauA.current-i].previous!=5&&i<2){
+					if(jDir==niveauA.Nmap[niveauA.current-i].previous){
+						nextLoad=niveauA.current-1-i;
+						break;
+					}
+					i++;
+				}	
 				}
-				else if(jDir==niveauA.Nmap[niveauA.current+1].Next){
-					nextLoad=niveauA.current+2;
-				}
-				else if(((jDir+2)%4)==niveauA.Nmap[niveauA.current-2].Next){
-					nextLoad=niveauA.current-2;
-				}
-			}
 			break;
 		case 1:
 			if(MapJ.taille.x>38){
-				if(jDir==niveauA.Nmap[niveauA.current].Next){
-					nextLoad=niveauA.current+1;
+			printf("right: jdirP%d next dir%d current%d previous dir%d next%d \n",jDir,niveauA.Nmap[niveauA.current].Next,niveauA.current,niveauA.Nmap[niveauA.current].previous,niveauA.next);
+				int i=0;
+				while(niveauA.Nmap[niveauA.current+i].Next!=5&&i<2){
+					if(jDir==niveauA.Nmap[niveauA.current+i].Next){
+						nextLoad=niveauA.current+1+i;
+						break;
+					}
+					i++;
 				}
-				else if(((jDir+2)%4)==niveauA.Nmap[niveauA.current-1].Next){
-					nextLoad=niveauA.current-1;
-				}
-				else if(jDir==niveauA.Nmap[niveauA.current+1].Next){
-					nextLoad=niveauA.current+2;
-				}
-				else if(((jDir+2)%4)==niveauA.Nmap[niveauA.current-2].Next){
-					nextLoad=niveauA.current-2;
-				}
+				i=0;
+				while(niveauA.Nmap[niveauA.current-i].previous!=5&&i<2){
+					if(jDir==niveauA.Nmap[niveauA.current-i].previous){
+						nextLoad=niveauA.current-1-i;
+						break;
+					}
+					i++;
+				}	
 			}
 			
 			break;
 		case 2:
 			if(MapJ.taille.y>38){
-				//printf("ici down: jdirP%d next-%d current%d next-1-%d current-1%d \n",((jDir+2)%4),niveauA.Nmap[niveauA.current].Next,niveauA.current,niveauA.Nmap[niveauA.current-1].Next,niveauA.current-1);
-				if(jDir==niveauA.Nmap[niveauA.current].Next){
-					
-					nextLoad=niveauA.current+1;
+				printf("down: jdirP%d next dir%d current%d previous dir%d next%d \n",jDir,niveauA.Nmap[niveauA.current].Next,niveauA.current,niveauA.Nmap[niveauA.current].previous,niveauA.next);
+				int i=0;
+				while(niveauA.Nmap[niveauA.current+i].Next!=5&&i<2){
+					if(jDir==niveauA.Nmap[niveauA.current+i].Next){
+						nextLoad=niveauA.current+1+i;
+						break;
+					}
+					i++;
 				}
-				else if(((jDir+2)%4)==niveauA.Nmap[niveauA.current-1].Next){
-					
-					nextLoad=niveauA.current-1;
-				}
-				else if(jDir==niveauA.Nmap[niveauA.current+1].Next){
-					
-					nextLoad=niveauA.current+2;
-				}
-				else if(((jDir+2)%4)==niveauA.Nmap[niveauA.current-2].Next){
-					
-					nextLoad=niveauA.current-2;
-				}
+				i=0;
+				while(niveauA.Nmap[niveauA.current-i].previous!=5&&i<2){
+					if(jDir==niveauA.Nmap[niveauA.current-i].previous){
+						nextLoad=niveauA.current-1-i;
+						break;
+					}
+					i++;
+				}	
 			}
 			break;
 		case 3:
 			if(MapJ.taille.x<26){
-				if(jDir==niveauA.Nmap[niveauA.current].Next){
-					nextLoad=niveauA.current+1;
+			printf("left: jdirP%d next dir%d current%d previous dir%d next%d \n",jDir,niveauA.Nmap[niveauA.current].Next,niveauA.current,niveauA.Nmap[niveauA.current].previous,niveauA.next);
+				int i=0;
+				while(niveauA.Nmap[niveauA.current+i].Next!=5&&i<2){
+					if(jDir==niveauA.Nmap[niveauA.current+i].Next){
+						nextLoad=niveauA.current+1+i;
+						break;
+					}
+					i++;
 				}
-				else if(((jDir+2)%4)==niveauA.Nmap[niveauA.current-1].Next){
-					nextLoad=niveauA.current-1;
-				}
-				else if(jDir==niveauA.Nmap[niveauA.current+1].Next){
-					nextLoad=niveauA.current+2;
-				}
-				else if(((jDir+2)%4)==niveauA.Nmap[niveauA.current-2].Next){
-					nextLoad=niveauA.current-2;
-				}
+				i=0;
+				while(niveauA.Nmap[niveauA.current-i].previous!=5&&i<2){
+					if(jDir==niveauA.Nmap[niveauA.current-i].previous){
+						nextLoad=niveauA.current-1-i;
+						break;
+					}
+					i++;
+				}	
 			}
 			break;
 		case 4:
 			break;
 	}
-	if(!niveauA.Nmap[nextLoad].loadStatus){
-		printf("nextLoad pre %d\n",nextLoad);
-		loadNext(nextLoad);
-		printf("nextLoad %d\n",nextLoad);
+	if(nextLoad>=0){
+		if(!niveauA.Nmap[nextLoad].loadStatus){
+			printf("nextLoad pre %d\n",nextLoad);
+			loadNext(nextLoad);
+			printf("nextLoad %d\n",nextLoad);
+		}
 	}
 	else{
 		printf("nothing\n");

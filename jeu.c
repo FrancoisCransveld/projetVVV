@@ -112,7 +112,7 @@ void switchMap(){
 	}
 	if(switchEffectue){
 		printf("ici 1");
-		currentMap.c=NULL;//peut-être ça va déconner!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		currentMap.c=NULL;
 		currentMap=nextMap;
 		niveauA.Nmap[niveauA.current].loadStatus=false;
 		niveauA.current=niveauA.next;
@@ -137,12 +137,12 @@ void switchMap(){
 				nextLoad=niveauA.current-2;
 			}
 		}
-		printf("nextload %d\n",nextLoad);
+		//printf("nextload %d\n",nextLoad);
 		loadNext(nextLoad);
 	}
 	if(switchLREffectue){
 		printf("ici 2");
-		currentMap.c=NULL;//peut-être ça va déconner!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		currentMap.c=NULL;
 		currentMap=nextLRMap;
 		niveauA.Nmap[niveauA.current].loadStatus=false;
 		niveauA.current=niveauA.nextLR;
@@ -167,7 +167,7 @@ void switchMap(){
 				nextLoad=niveauA.current-2;
 			}
 		}
-		loadNext(nextLoad);
+		//loadNext(nextLoad);
 	}
 	
 };
@@ -201,6 +201,6 @@ void jeu()
                 moveDown(j);
 		DOWN = false;
 	}
-	switchMap();
+	
 	glutPostRedisplay();
 };

@@ -16,6 +16,7 @@ void tailleMap(int* tMapX, int* tMapY, TabNiveau niveauA, int select){
 	printf("tailleMap %d\n",select);
 	int x=0;
 	int y=0;
+	bool premierligne=false;
 	bool X=false;
 	FILE* fNewMap=NULL;
 	switch(niveauA.Nmap[select].s){
@@ -50,10 +51,57 @@ void tailleMap(int* tMapX, int* tMapY, TabNiveau niveauA, int select){
 	else{
 		fseek(fNewMap,0,0);
 		char c=' ';
-		while(c!=EOF){
+		while(c!='\n'){
 			
 			c=fgetc(fNewMap);
-			
+			printf("%c",c);
+			if(c=='p'){
+				c=fgetc(fNewMap);
+				printf("%c",c);
+				switch(c){
+					case '0':
+						niveauA.Nmap[select].previous=0;
+						break;
+					case '1':
+						niveauA.Nmap[select].previous=1;
+						break;
+					case '2':
+						niveauA.Nmap[select].previous=2;
+						break;
+					case '3':
+						niveauA.Nmap[select].previous=3;
+						break;
+					case '4':
+						niveauA.Nmap[select].previous=4;
+						break;
+					
+				}
+			}
+			if(c=='n'){
+				c=fgetc(fNewMap);
+				printf("%c",c);
+				switch(c){
+					case '0':
+						niveauA.Nmap[select].Next=0;
+						break;
+					case '1':
+						niveauA.Nmap[select].Next=1;
+						break;
+					case '2':
+						niveauA.Nmap[select].Next=2;
+						break;
+					case '3':
+						niveauA.Nmap[select].Next=3;
+						break;
+					case '4':
+						niveauA.Nmap[select].Next=4;
+						break;
+					
+				}
+			}
+		}
+		while(c!=EOF){
+			c=fgetc(fNewMap);
 			if(c=='\n'){
 				y++;
 				X=true;
@@ -117,9 +165,13 @@ void loadMap(int tMapX, int tMapY, TabNiveau* niveauA, int select){
 		//exit(ERROR_EXIT);
 	}
 	else{
+		char c;
+		while(c!='\n'){
+			c=fgetc(fNewMap);
+		}
 		printf("Le fichier ouvert\n");
 		char** loadedMap=malloc(sizeof(char *)*tMapY);
-		char c;
+		
 		int x=0;
 		int y=0;
 		*(loadedMap)=malloc(sizeof(char*)*tMapX);
@@ -139,6 +191,7 @@ void loadMap(int tMapX, int tMapY, TabNiveau* niveauA, int select){
 			currentMap.taille.x=tMapX;
 			currentMap.taille.y=tMapY; 
 			currentMap.previous=false;
+			niveauA->Nmap[niveauA->current].loadStatus=false;
 			niveauA->current=select;
 		}
 		else if(select>niveauA->current){
@@ -147,6 +200,7 @@ void loadMap(int tMapX, int tMapY, TabNiveau* niveauA, int select){
 				nextMap.taille.x=tMapX; 
 				nextMap.taille.y=tMapY; 
 				nextMap.previous=false;
+				niveauA->Nmap[niveauA->next].loadStatus=false;
 				niveauA->next=select;
 			}
 			else if(niveauA->Nmap[select-1].Next==1||niveauA->Nmap[select-1].Next==3){
@@ -154,6 +208,7 @@ void loadMap(int tMapX, int tMapY, TabNiveau* niveauA, int select){
 				nextLRMap.taille.x=tMapX; 
 				nextLRMap.taille.y=tMapY; 
 				nextLRMap.previous=false;
+				niveauA->Nmap[niveauA->nextLR].loadStatus=false;
 				niveauA->nextLR=select;
 			}
 		}
@@ -163,6 +218,7 @@ void loadMap(int tMapX, int tMapY, TabNiveau* niveauA, int select){
 				nextMap.taille.x=tMapX; 
 				nextMap.taille.y=tMapY; 
 				nextMap.previous=true;
+				niveauA->Nmap[niveauA->next].loadStatus=false;
 				niveauA->next=select;
 			}
 			else if(niveauA->Nmap[select].Next==1||niveauA->Nmap[select].Next==3){
@@ -170,6 +226,7 @@ void loadMap(int tMapX, int tMapY, TabNiveau* niveauA, int select){
 				nextLRMap.taille.x=tMapX; 
 				nextLRMap.taille.y=tMapY; 
 				nextLRMap.previous=true;
+				niveauA->Nmap[niveauA->nextLR].loadStatus=false;
 				niveauA->nextLR=select;
 			}
 		}
@@ -209,31 +266,39 @@ void loadMaps(int *tMapX,int* tMapY){
 	niveauA.Nmap[0].s=0;		// le numéro de cette carte est le 0
 	niveauA.Nmap[0].Next=0;	// la sortie de cette carte est vers le haut
 	niveauA.Nmap[0].loadStatus=false;//cette map n'est pas chargée en mémoire
+	niveauA.Nmap[0].ennemi=true;
 	niveauA.Nmap[1].s=2;
 	niveauA.Nmap[1].Next=1;	//cette carte n'a pas de sortie
 	niveauA.Nmap[1].loadStatus=false;
 	niveauA.Nmap[2].s=5;
 	niveauA.Nmap[2].Next=1;	//cette carte n'a pas de sortie
+	niveauA.Nmap[2].previous=1;
 	niveauA.Nmap[2].loadStatus=false;
 	niveauA.Nmap[3].s=1;
 	niveauA.Nmap[3].Next=0;	//cette carte n'a pas de sortie
+	niveauA.Nmap[3].previous=1;
 	niveauA.Nmap[3].loadStatus=false;
 	niveauA.Nmap[4].s=3;
 	niveauA.Nmap[4].Next=0;	//cette carte n'a pas de sortie
+	niveauA.Nmap[4].previous=2;
 	niveauA.Nmap[4].loadStatus=false;
 	niveauA.Nmap[5].s=2;
 	niveauA.Nmap[5].Next=1;	//cette carte n'a pas de sortie
+	niveauA.Nmap[5].previous=2;
 	niveauA.Nmap[5].loadStatus=false;
 	niveauA.Nmap[6].s=5;
 	niveauA.Nmap[6].Next=1;	//cette carte n'a pas de sortie
+	niveauA.Nmap[6].previous=3;
 	niveauA.Nmap[6].loadStatus=false;
 	niveauA.Nmap[7].s=6;
 	niveauA.Nmap[7].Next=5;	//cette carte n'a pas de sortie
+	niveauA.Nmap[7].previous=3;
 	niveauA.Nmap[7].loadStatus=false;
 	niveauA.current=0;
 	int i=0;
 	initialisation_Map(&nextLRMap);
 	do{
+		
 		tailleMap(tMapX,tMapY,niveauA, i);
 		loadMap(*tMapX,*tMapY,&niveauA, i);
 	
@@ -248,6 +313,9 @@ void loadMaps(int *tMapX,int* tMapY){
 		}*/
 		i++;
 	}while(i<2);
+	for(i=0;i<nombreMap;i++){
+		niveauA.Nmap[i].ennemi=true;
+	}
 	loadEnnemi(liste, 0);
 	supprimer_ennemi_numero(liste, 0);
 	camera.x=currentMap.taille.x/2;//position initiale de la camera affichant une map complète au centre. 
@@ -334,115 +402,117 @@ void loadEnnemi(ListeEnnemi* liste, int select){
 	int y=0;
 	char c=' ';
 	//bool END=true; //variable booleen pour sortir de la double boucle dés que l'on a trouver la position du joueur
-	FILE* fNewMap=NULL;
-	switch(select){    //probablement pas utile, on verra si on modifie la fonction avec la sauvegarde de partie en cours
-		case 0:
-			fNewMap=fopen("map1.txt","r");
-			break;
-		case 1:
-			fNewMap=fopen("map2.txt","r");
-			break;
-		case 2:
-			fNewMap=fopen("map3.txt","r");
-			break;
-		case 3:
-			fNewMap=fopen("map4.txt","r");
-			break;
-		case 4:
-			fNewMap=fopen("map5.txt","r");
-			break;
-		case 5:
-			fNewMap=fopen("map6.txt","r");
-			break;
-		case 6:
-			fNewMap=fopen("map7.txt","r");
-			break;
-		default:
-			break;
-	}
-	if(fNewMap==NULL){
-		printf("Le fichier n'a pu être ouvert\n");
-		
-		//exit(ERROR_EXIT);
-	}
-	else{
-		if(select==niveauA.current){
-			Dx=0;
-			Dy=0;
+	if(niveauA.Nmap[select].ennemi){
+		FILE* fNewMap=NULL;
+		switch(select){    //probablement pas utile, on verra si on modifie la fonction avec la sauvegarde de partie en cours
+			case 0:
+				fNewMap=fopen("map1.txt","r");
+				break;
+			case 1:
+				fNewMap=fopen("map2.txt","r");
+				break;
+			case 2:
+				fNewMap=fopen("map3.txt","r");
+				break;
+			case 3:
+				fNewMap=fopen("map4.txt","r");
+				break;
+			case 4:
+				fNewMap=fopen("map5.txt","r");
+				break;
+			case 5:
+				fNewMap=fopen("map6.txt","r");
+				break;
+			case 6:
+				fNewMap=fopen("map7.txt","r");
+				break;
+			default:
+				break;
 		}
-		else if(select==niveauA.next){
-			if(!niveauA.Nmap[select].previous){
-				if(niveauA.Nmap[niveauA.current].Next==0){
-					Dy-=nextMap.taille.y;
-				}
-				else if(niveauA.Nmap[niveauA.current].Next==2){
-					Dy+=currentMap.taille.y;
-				}
-			}
-			else{
-				if(niveauA.Nmap[select].Next==0){
-					Dy+=currentMap.taille.y;
-				}
-				else if(niveauA.Nmap[select].Next==2){
-					Dy-=nextMap.taille.y;
-				}
-			}
+		if(fNewMap==NULL){
+			printf("Le fichier n'a pu être ouvert\n");
+			
+			//exit(ERROR_EXIT);
 		}
-		else if(select==niveauA.nextLR){
-			if(!niveauA.Nmap[select].previous){
-				if(niveauA.Nmap[niveauA.current].Next==3){
-					Dx-=nextLRMap.taille.x;
+		else{
+			if(select==niveauA.current){
+				Dx=0;
+				Dy=0;
+			}
+			else if(select==niveauA.next){
+				if(!niveauA.Nmap[select].previous){
+					if(niveauA.Nmap[niveauA.current].Next==0){
+						Dy-=64;
+					}
+					else if(niveauA.Nmap[niveauA.current].Next==2){
+						Dy+=64;
+					}
 				}
-				else if(niveauA.Nmap[niveauA.current].Next==1){
-					Dx+=currentMap.taille.x;
+				else{
+					if(niveauA.Nmap[select].Next==0){
+						Dy+=64;
+					}
+					else if(niveauA.Nmap[select].Next==2){
+						Dy-=64;
+					}
 				}
 			}
-			else{
-				if(niveauA.Nmap[select].Next==3){
-					Dx+=currentMap.taille.x;
+			else if(select==niveauA.nextLR){
+				if(!niveauA.Nmap[select].previous){
+					if(niveauA.Nmap[niveauA.current].Next==3){
+						Dx-=64;
+					}
+					else if(niveauA.Nmap[niveauA.current].Next==1){
+						Dx+=64;
+					}
 				}
-				else if(niveauA.Nmap[select].Next==1){
-					Dx-=nextLRMap.taille.x;
+				else{
+					if(niveauA.Nmap[select].Next==3){
+						Dx+=64;
+					}
+					else if(niveauA.Nmap[select].Next==1){
+						Dx-=64;
+					}
 				}
 			}
+		do{	//boucle parcourrant tous le fichier pour retrouver la position des ennemis dans la carte
+			x=0;
+			do{
+				c=fgetc(fNewMap);
+				switch(c){    //probablement pas utile, on verra si on modifie la fonction avec la sauvegarde de partie en cours
+					case 'm':
+						e.x=x+Dx;
+						e.y=y+Dy;
+						char Nmoto[MAX_NOM]={"moto"};
+						nouvel_ennemi(liste, Nmoto,3, e, moto);
+						break;
+					case 'v':
+						e.x=x+Dx;
+						e.y=y+Dy;
+						char Nvoiture[MAX_NOM]={"voiture"};
+						nouvel_ennemi(liste, Nvoiture,5, e, voiture);
+						break;
+					case 'c':
+						e.x=x+Dx;
+						e.y=y+Dy;
+						char Ncamion[MAX_NOM]={"camion"};
+						nouvel_ennemi(liste, Ncamion,30, e, camion);
+						break;
+					case 'S':
+						e.x=x+Dx;
+						e.y=y+Dy;
+						char NSUV[MAX_NOM]={"SUV"};
+						nouvel_ennemi(liste, NSUV,20, e, SUV);
+						break;
+					default:
+						break;
+				}
+				x++;
+			}while(c!='\n'&&c!=EOF);
+			y++;
+		}while(c!=EOF);
+		fclose(fNewMap);
 		}
-	do{	//boucle parcourrant tous le fichier pour retrouver la position des ennemis dans la carte
-		x=0;
-		do{
-			c=fgetc(fNewMap);
-			switch(c){    //probablement pas utile, on verra si on modifie la fonction avec la sauvegarde de partie en cours
-				case 'm':
-					e.x=x+Dx;
-					e.y=y+Dy;
-					char Nmoto[MAX_NOM]={"moto"};
-					nouvel_ennemi(liste, Nmoto,3, e, moto);
-					break;
-				case 'v':
-					e.x=x+Dx;
-					e.y=y+Dy;
-					char Nvoiture[MAX_NOM]={"voiture"};
-					nouvel_ennemi(liste, Nvoiture,5, e, voiture);
-					break;
-				case 'c':
-					e.x=x+Dx;
-					e.y=y+Dy;
-					char Ncamion[MAX_NOM]={"camion"};
-					nouvel_ennemi(liste, Ncamion,30, e, camion);
-					break;
-				case 'S':
-					e.x=x+Dx;
-					e.y=y+Dy;
-					char NSUV[MAX_NOM]={"SUV"};
-					nouvel_ennemi(liste, NSUV,20, e, SUV);
-					break;
-				default:
-					break;
-			}
-			x++;
-		}while(c!='\n'&&c!=EOF);
-		y++;
-	}while(c!=EOF);
-	fclose(fNewMap);
 	}
 	afficher_liste(liste);
 	return ;

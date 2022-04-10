@@ -12,6 +12,7 @@
 struct selectionMap{
 	int s;
 	bool loadStatus;
+	bool ennemi;
 	Direction Next;
 	Direction previous;
 };

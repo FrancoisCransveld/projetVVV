@@ -239,7 +239,7 @@ void modifier_pos_ennemis(ListeEnnemi* liste, Coordonnee variation){
 		}
 		actuel=actuel->suivant;
 	}
-	afficher_liste(liste);
+	//afficher_liste(liste);
 };
 
 //suprime les ennemis hors de portées 
@@ -253,7 +253,7 @@ void supprimer_ennemi_hors_portee(ListeEnnemi* liste){
 		}
 		actuel=actuel->suivant;
 	}
-	afficher_liste(liste);
+	//afficher_liste(liste);
 };
 
 //PRE: prend en argument la liste
