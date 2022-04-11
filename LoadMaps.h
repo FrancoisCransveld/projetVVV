@@ -5,10 +5,8 @@
 #include <stdbool.h>
 #include "jeu.h"
 #include "tirs.h"
-//structure destinée à soit renseigner la direction dans laquel se dirige le joueur,soit renseigner où se trouve la prochaine map.
-//enum direction{Up, Right, Down, Left, fin};
-//typedef enum direction Direction;
 
+//structure destinée à soit renseigner la direction dans laquel se dirige le joueur,soit renseigner où se trouve la prochaine map.
 struct selectionMap{
 	int s;
 	bool loadStatus;
@@ -41,7 +39,7 @@ Map nextMap;
 Map previousMap;
 
 TabNiveau niveauA; // tableau des niveaux aléatoirement choisis
-
+void map_select(int select,char* nom);
 void loadMaps(int* tMapX, int* tMapy);
 void loadMap(int tMapX, int tMapy,TabNiveau* niveauA, int select);
 void loadNext(int select);

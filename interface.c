@@ -20,12 +20,6 @@ void drawNext(){
 	
 	//printf("drawNext \n");
 	//printf("etat Map :%d %d",nextMap.taille.x, nextMap.taille.y);
-	/*if(nextMap.previous){
-		//printf(" previous: true");
-	}
-	else{
-		//printf(" previous: false");
-	}*/
 	//printf("etat niveauA : \n  -niveauA.next: %d\n  -niveauA.current: %d\n  -niveauA.nextLR: %d",niveauA.next,niveauA.current,niveauA.nextLR);
 	int y=0;
 	int x=0;
@@ -33,54 +27,6 @@ void drawNext(){
 	int minY=0-nextMap.taille.y;//next map est toujours affichée au dessus
 	int maxX=nextMap.taille.x;
 	int maxY=0;
-	/*
-	//Décalage de la hauteur (y)
-	//Dans tous les cas
-	if(!nextMap.previous){		//si next map est une map suivant bien la map current dans l'ordre du tableau niveauA (comprendre que du coups on vient de currentMap ou nextLRMap)
-		if(niveauA.Nmap[niveauA.next-1].Next==0){	//si la sortie de la map qui se trouve juste avant est vers le haut
-			minY-=nextMap.taille.y;			//on dessine nextmap au coordonnée y=-hauteur nextMap jusque 0 
-			maxY=0;
-		}
-		if(niveauA.Nmap[niveauA.next-1].Next==2){	//si la sortie de current est vers le bas
-			minY+=currentMap.taille.y;		//on dessine nextmap au coordonnée y=hauteur currentMap jusque hauteur de currentMap+nextMap 
-			maxY+=currentMap.taille.y;
-		}
-	}
-	else{	//(comprendre que du coups on va vers currentMap ou nextLRMap)
-		if(niveauA.Nmap[niveauA.next].Next==0){	//si la sortie de next est vers le haut
-			minY+=currentMap.taille.y;		//on dessine nextmap au coordonnée y=hauteur currentMap jusque hauteur de currentMap+nextMap 
-			maxY+=currentMap.taille.y;
-		}
-		if(niveauA.Nmap[niveauA.next].Next==2){	//si la sortie de next est vers le bas
-			minY-=nextMap.taille.y;			//on dessine nextmap au coordonnée y=-hauteur nextMap jusque 0 
-			maxY=0;
-		}
-	}
-	//Décalage sur la largeur (x)
-	// seulement si soit nextMap se trouve après nextLRMap alors que celle-ci est après current, soit nextMap est avant nextLRMap et currentMap
-	
-	if(niveauA.next>niveauA.nextLR&&niveauA.nextLR>niveauA.current){		//si next map est une map suivant bien la map current dans l'ordre du tableau niveauA (comprendre que du coups on vient de currentMap)
-		if(niveauA.Nmap[niveauA.current].Next==1){	//si la sortie de current est vers la droite
-			minX+=currentMap.taille.x;		//on dessine nextmap au coordonnée x=largeur currentMap jusque largeur de currentMap+nextMap 
-			maxX+=currentMap.taille.x;
-		}
-		if(niveauA.Nmap[niveauA.current].Next==3){	//si la sortie de current est vers la gauche
-			minX-=nextLRMap.taille.x;		//on dessine nextmap au coordonnée x=-largeur de nextLRMap jusque 0
-			maxX=0;
-		}
-	}
-	else if(niveauA.next<niveauA.nextLR&&niveauA.nextLR<niveauA.current){	//(comprendre que du coups on va vers currentMap)
-		if(niveauA.Nmap[niveauA.nextLR].Next==1){	//si la sortie de nextLR est vers la droite
-			minX-=nextLRMap.taille.x;		//on dessine nextmap au coordonnée x=-largeur nextMap jusque 0 
-			maxX=0;
-		}
-		if(niveauA.Nmap[niveauA.nextLR].Next==3){	//si la sortie de next est vers la gauche
-			minX+=currentMap.taille.x;		//on dessine nextmap au coordonnée x=largeur currentMap jusque largeur de currentMap+nextMap 
-			maxX+=currentMap.taille.x;
-		}
-	}*/
-	//ok jusque là, à priori
-	
 	char** pDrawnMap=nextMap.c;
 	char carActuel;
 	//printf("taille x, y: %d, %d et MaxX ,Y : %d %d\n",minX,minY,maxX,maxY);
@@ -145,71 +91,12 @@ void drawNext(){
 //Post:Fonction qui dessine la map nextLRMap; c'est dans cette fonction qu'on détermine ou dessinner NextLRMap par rapport à current et next
 void drawPrevious(){
 	
-	
-	//printf("drawprevious \n");
-	//printf("etat Map :%d %d",nextLRMap.taille.x, nextLRMap.taille.y);
-	/*
-	inutile pour le moment
-	if(previousMap.previous){
-		//printf(" previous: true");
-	}
-	else{
-		//printf(" previous: false");
-	}*/
-	//printf("etat niveauA : \n  -niveauA.next: %d\n  -niveauA.current: %d\n  -niveauA.nextLR: %d",niveauA.next,niveauA.current,niveauA.nextLR);
 	int y=0;
 	int x=0;
 	int minX=0;
 	int minY=currentMap.taille.y; // previous map est toujours affichée en dessous
 	int maxX=previousMap.taille.x;
 	int maxY=previousMap.taille.y+currentMap.taille.y;
-	/*
-	//Décalage de la largeur (x)
-	//Dans tous les cas
-	if(!nextLRMap.previous){		//si nextLR map est une map suivant bien la map current dans l'ordre du tableau niveauA (comprendre que du coups on vient de currentMap ou nextLRMap)
-		if(niveauA.Nmap[niveauA.nextLR-1].Next==1){	//si la sortie de la map qui se trouve juste avant est vers la droite
-			minX+=currentMap.taille.x;		//on dessine nextmap au coordonnée x=largeur currentMap jusque largeur currentMap+nextLRMap 
-			maxX+=currentMap.taille.x;
-		}
-		if(niveauA.Nmap[niveauA.nextLR-1].Next==3){	//si la sortie de current est vers la gauche
-			minX-=nextLRMap.taille.x;		//on dessine nextmap au coordonnée x=-largeur nextLRMap jusque 0
-			maxX-=nextLRMap.taille.x;
-		}
-	}
-	else{	//(comprendre que du coups on va vers currentMap ou nextMap)
-		if(niveauA.Nmap[niveauA.nextLR].Next==1){	//si la sortie de nextLR est vers la droite
-			minX-=nextLRMap.taille.x;		//on dessine nextmap au coordonnée x=-largeur nextLRMap jusque 0
-			maxX-=nextLRMap.taille.x;
-		}
-		if(niveauA.Nmap[niveauA.nextLR].Next==3){	//si la sortie de nextLR est vers la gauche
-			minX+=currentMap.taille.x;		//on dessine nextmap au coordonnée x=largeur currentMap jusque largeur currentMap+nextLRMap 
-			maxX+=currentMap.taille.x;
-		}
-	}
-	//Décalage sur la hauteur (y)
-	// seulement si soit nextLRMap se trouve après nextMap alors que celle-ci est après current, soit nextLRMap est avant nextMap et cette deuxième est avant currentMap
-	
-	if(niveauA.nextLR>niveauA.next&&niveauA.next>niveauA.current){		//si next map est une map suivant bien la map current dans l'ordre du tableau niveauA (comprendre que du coups on vient de currentMap)
-		if(niveauA.Nmap[niveauA.current].Next==0){	//si la sortie de current est vers le haut
-			minY-=nextLRMap.taille.y;		//on dessine nextmap au coordonnée y=-hauteur nextLRMap jusque 0 
-			maxY-=currentMap.taille.y;
-		}
-		if(niveauA.Nmap[niveauA.current].Next==2){	//si la sortie de current est vers le bas
-			minY+=currentMap.taille.y;		//on dessine nextmap au coordonnée y=hauteur de currentMap jusque hauteur de currentMap+nextLRMap
-			maxY+=currentMap.taille.y;
-		}
-	}
-	else if(niveauA.nextLR<niveauA.next&&niveauA.next<niveauA.current){	//(comprendre que du coups on va vers currentMap)
-		if(niveauA.Nmap[niveauA.next].Next==0){	//si la sortie de nextLR est vers le haut
-			minY+=currentMap.taille.y;		//on dessine nextmap au coordonnée y=hauteur de currentMap jusque hauteur de currentMap+nextLRMap
-			maxY+=currentMap.taille.y;
-		}
-		if(niveauA.Nmap[niveauA.next].Next==2){	//si la sortie de next est vers le bas
-			minY-=nextLRMap.taille.y;		//on dessine nextmap au coordonnée y=-hauteur nextLRMap jusque 0 
-			maxY-=currentMap.taille.y;
-		}
-	}*/
-	
 	char** pDrawnMap=previousMap.c;
 	char carActuel;
 	//printf("taille x, y: %d, %d et MaxX ,Y : %d %d\n",minX,minY,maxX,maxY);

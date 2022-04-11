@@ -33,81 +33,6 @@ void replacement_joueur(int x, int y, Map* map){
 		mjX=x;
 		mjY=y;
 	}
-	/*
-	if(x>=0&&x<currentMap.taille.x){	   //position horizontale entre 0 et taille currentMap
-		if(y<0||y>=currentMap.taille.y){  //position verticale en dehors 0 et taille currentMap
-			map->c=nextMap.c;       //j est juste au dessus ou en dessous de currentMap, donc dans nextMap
-			mjX=x;				//x ne change pas
-			if(y<0){			//si au dessus, alors la position dans nextMap est à la fin, donc à la taille de next+y (y est négatif)
-				
-				mjY=y+nextMap.taille.y;
-			}		
-			else{			//si en dessous, alors la position dans nextMap est au début, donc à y-la hauteur de current	
-				
-				mjY=y-currentMap.taille.y;
-			}
-		}
-		else{				//j est entre les limites de currentMap
-			map->c=currentMap.c;
-			mjX=x;
-			mjY=y;
-			//printf("vous etes ici 3");
-		}
-	}
-	else{					    //position horizontale en dehors de 0 et taille currentMap
-		if((y<0||y>=currentMap.taille.y)){  //position verticale en dehors 0 et taille currentMap
-							//j est à la fois en dehors horizontalement et verticalement des limites de currentMap
-			if(niveauA.next==niveauA.current+1||niveauA.next==niveauA.current-1){// si la première map après current est nextMap
-				map->c=nextLRMap.c;
-				if(x<0){
-
-					mjX=x+nextLRMap.taille.x;//si a gauche, alors la position dans nextLRMap est à la fin, donc à la taille de nextLR+x (x est négatif)
-				}
-				else{
-
-					mjX=x-currentMap.taille.x;//si a droite, alors la position dans nextMap est au début, donc à x-la largeur de current
-				}
-				if(y<0){			//si au dessus, alors la position dans nextMap est à la fin, donc à la taille de next+y (y est négatif)
-
-					mjY=y+nextLRMap.taille.y;
-				}		
-				else{			//si en dessous, alors la position dans nextMap est au début, donc à y-la hauteur de current	
-
-					mjY=y-currentMap.taille.y;
-				}
-			}
-			else{
-				map->c=nextMap.c;
-				if(x<0){
-
-					mjX=x+nextMap.taille.x;//si a gauche, alors la position dans nextLRMap est à la fin, donc à la taille de nextLR+x (x est négatif)
-				}
-				else{
-
-					mjX=x-currentMap.taille.x;//si a droite, alors la position dans nextMap est au début, donc à x-la largeur de current
-				}
-				if(y<0){			//si au dessus, alors la position dans nextMap est à la fin, donc à la taille de next+y (y est négatif)
-					mjY=y+nextMap.taille.y;
-				}		
-				else{			//si en dessous, alors la position dans nextMap est au début, donc à y-la hauteur de current	
-			
-					mjY=y-currentMap.taille.y;
-				}
-			}
-		}
-		else{					//j est juste à gauche ou droite de currentMap, donc dans nextLRMap
-			map->c=nextLRMap.c;
-			mjY=y;				//y ne change pas
-			if(x<0){
-				
-				mjX=x+nextLRMap.taille.x;//si a gauche, alors la position dans nextLRMap est à la fin, donc à la taille de nextLR+x (x est négatif)
-			}
-			else{
-				
-				mjX=x-currentMap.taille.x;//si a droite, alors la position dans nextMap est au début, donc à x-la largeur de current
-			}
-		}
-	}*/
 	//printf("car %c\n",map->c[0][0]);
 	map->taille.x=mjX;	//Coordonnée de j dans la carte logique/le plateau qui le concerne contenu dans map->taille
 	map->taille.y=mjY;
@@ -196,14 +121,7 @@ void moveUp()
 		switchMap();
 		supprimer_ennemi_hors_portee(liste);
 		activer_ennemi_a_portee(liste);
-		/*if(y>=20||(*(*(currentMap.c + 0)+20)=='#')){
-			//j->pos.y = y;
-			printf("\npos y: %d\n",y+1);
-		}
-		else{
-			printf("\npos y: %d\n",y+1);
-			//loadMap();
-		}*/
+		
 	}
 	//printf("j pos x: %d j pos y: %d",j.pos.x,j.pos.y);     
 	
@@ -230,14 +148,7 @@ void moveDown()
 		switchMap();
 		supprimer_ennemi_hors_portee(liste);
 		activer_ennemi_a_portee( liste);
-		/*if(y<currentMap.taille.y-22){
-			//j->pos.y = y;
-			printf("\npos y: %d\n",y+1);
-		}
-		else{
-			printf("\npos y: %d\n",y+1);
-			//loadMap();
-		}*/
+		
       }
       //printf("j pos x: %d j pos y: %d",j.pos.x,j.pos.y);
 };
@@ -252,37 +163,37 @@ bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir){
 	switch(jDir){
 		case 0:
 			yLock=0;
-			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.y<9)){
+			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.y<12)){
 				SCROLL_LOCK=false;
 			}
-			if((camera.y-y)>7){
+			if((camera.y-y)>4){
 				SCROLL_J=true;
 			}
 			break;
 		case 1:
 			xLock=currentMap.taille.x-1;
-			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.x>54)){
+			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.x>51)){
 				SCROLL_LOCK=false;
 			}
-			if((x-camera.x)>6){
+			if((x-camera.x)>3){
 				SCROLL_J=true;
 			}
 			break;
 		case 2:
 			yLock=currentMap.taille.y-1;
-			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.y>54)){
+			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.y>51)){
 				SCROLL_LOCK=false;
 			}
-			if((y-camera.y)>6){
+			if((y-camera.y)>3){
 				SCROLL_J=true;
 			}
 			break;
 		case 3:
 			xLock=0;
-			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.x<9)){
+			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.x<12)){
 				SCROLL_LOCK=false;
 			}
-			if((camera.x-x)>7){
+			if((camera.x-x)>4){
 				SCROLL_J=true;
 			}
 			break;

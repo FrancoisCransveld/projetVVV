@@ -100,32 +100,11 @@ void switchMap(){
 			switchPrevious=true;
 		}
 	}
-	/* On oublie pour le moment, trop compliqué
 	
-	if(camera.x>=currentMap.taille.x+nextLRMap.taille.x/2){
-		tamponCam=camera.x-nextMap.taille.x;
-		tamponJ=j.pos.x-nextMap.taille.x;
-		variationE.x-=nextMap.taille.x;
-		//currentMap=nextLRMap;
-		switchLREffectue=true;
-	}
-	if(camera.x<=-nextLRMap.taille.x/2){
-		tamponCam=camera.x+nextMap.taille.x;
-		tamponJ=j.pos.x+nextMap.taille.x;
-		variationE.x+=nextMap.taille.x;
-		//currentMap=nextLRMap;
-		switchLREffectue=true;
-	}*/
 	if(switchNext||switchPrevious){
 		modifier_pos_ennemis(liste,variationE);
 		camera.y=tamponCam;
 		j.pos.y=tamponJ;
-
-		/*
-		if(switchLREffectue){
-			camera.x=tamponCam;
-			j.pos.x=tamponJ;
-		}*/
 	}
 	if(switchNext){	//si on a un switch vers next lié à la position de la caméra à la moitié de nextMap.
 	//On passe currentMap à previousMap et nextMap à currentMap et on va recharger l'éventuelle nextMap
@@ -139,30 +118,7 @@ void switchMap(){
 		niveauA.previous=niveauA.current;
 		niveauA.current=niveauA.next;
 		nextLoad=niveauA.next+1;
-		/*	trop compliqué on oublie pour le moment
-		if(!nextMap.previous){ //si la map n'est pas avant current dans le niveau
-			if(niveauA.current>niveauA.nextLR){//la map current est plus loin dans le niveau que la map nextLR on peu la libérer
-				niveauA.Nmap[niveauA.nextLR].loadStatus=false;
-				nextLRMap.c=NULL;
-				nextLoad=niveauA.current+1;
-			}
-			else{	//loadStatus est true
-				nextLoad=niveauA.current+2;
-			}
-		}
-		else{	//la map next est avant currentMap
-			if(niveauA.current<niveauA.nextLR){
-				niveauA.Nmap[niveauA.nextLR].loadStatus=false;
-				nextLRMap.c=NULL;
-				nextLoad=niveauA.current-1;
-			}
-			else{
-				nextLoad=niveauA.current-2;
-			}
-		}
-		//printf("nextload %d\n",nextLoad);
-		loadNext(nextLoad);
-	}*/
+		
 	}
 	if(switchPrevious){
 		nextMap=currentMap;
@@ -174,31 +130,7 @@ void switchMap(){
 		niveauA.next=niveauA.current;
 		niveauA.current=niveauA.previous;
 		nextLoad=niveauA.previous-1;
-		/*currentMap.c=NULL;
-		currentMap=nextLRMap;
-		niveauA.Nmap[niveauA.current].loadStatus=false;
-		niveauA.current=niveauA.nextLR;
-
-		if(!nextMap.previous){ //si la map next n'est pas avant current dans le niveau
-			if(niveauA.current>niveauA.next){//la map current est plus loin dans le niveau que la map next on peu la libérer
-				niveauA.Nmap[niveauA.nextLR].loadStatus=false;
-				nextLRMap.c=NULL;
-				nextLoad=niveauA.current+1;
-			}
-			else{	//loadStatus est true
-				nextLoad=niveauA.current+2;
-			}
-		}
-		else{	//la map nextLR est avant currentMap
-			if(niveauA.current<niveauA.next){
-				niveauA.Nmap[niveauA.next].loadStatus=false;
-				nextMap.c=NULL;
-				nextLoad=niveauA.current-1;
-			}
-			else{
-				nextLoad=niveauA.current-2;
-			}
-		}*/
+		
 		
 	}
 	if(nextLoad<niveauA.nombreMap&&nextLoad>=0){

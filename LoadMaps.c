@@ -6,10 +6,40 @@
 #endif
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "LoadMaps.h"
 //#include "jeu.h"
 #include "interface.h"
 
+//fonction qui fait la correspondance entre le numero select et la carte qui lui correspond dans un switch et renvoie un FILE* 
+void map_select(int select,char* nom){
+	
+	switch(niveauA.Nmap[select].s){
+		case 0:
+			strcpy(nom,"map1.txt");
+			break;
+		case 1:
+			strcpy(nom,"map2.txt");
+			break;
+		case 2:
+			strcpy(nom,"map3.txt");
+			break;
+		case 3:
+			strcpy(nom,"map4.txt");
+			break;
+		case 4:
+			strcpy(nom,"map5.txt");
+			break;
+		case 5:
+			strcpy(nom,"map6.txt");
+			break;
+		case 6:
+			strcpy(nom,"map7.txt");
+			break;
+		default:
+			break;
+	}
+};
 
 //PRE:prend en argument deux pointeurs d'int pour renvoiyer la taille trouvée et un int qui correspond à la map qui devrai être traitée dans niveauA.Nmap[select]
 //POST:calcul la taille d'une carte et renvoie cette taille via les argument d'entrée tMapX et tMapY
@@ -19,35 +49,13 @@ void tailleMap(int* tMapX, int* tMapY, TabNiveau niveauA, int select){
 	int y=0;
 	//bool premierligne=false;
 	bool X=false;
+	char nom[MAX_NOM]={"\0"};
 	FILE* fNewMap=NULL;
-	switch(niveauA.Nmap[select].s){
-		case 0:
-			fNewMap=fopen("map1.txt","r");
-			break;
-		case 1:
-			fNewMap=fopen("map2.txt","r");
-			break;
-		case 2:
-			fNewMap=fopen("map3.txt","r");
-			break;
-		case 3:
-			fNewMap=fopen("map4.txt","r");
-			break;
-		case 4:
-			fNewMap=fopen("map5.txt","r");
-			break;
-		case 5:
-			fNewMap=fopen("map6.txt","r");
-			break;
-		case 6:
-			fNewMap=fopen("map7.txt","r");
-			break;
-		default:
-			break;
-	}
+	map_select(select,nom);
+	fNewMap=fopen(nom,"r");
 	if(fNewMap==NULL){
 		printf("Le fichier n'a pu être ouvert\n");
-		//exit(ERROR_EXIT);
+		exit(-1);
 	}
 	else{
 		fseek(fNewMap,0,0);
@@ -128,38 +136,10 @@ void loadMap(int tMapX, int tMapY, TabNiveau* niveauA, int select){
 	
 	printf("loadMap\n");
 	printf("X :%d Y :%d\n",tMapX,tMapY);
+	char nom[MAX_NOM]={"\0"};
 	FILE* fNewMap=NULL;
-	switch(niveauA->Nmap[select].s){
-		case 0:
-			fNewMap=fopen("map1.txt","r");
-			break;
-		case 1:
-			fNewMap=fopen("map2.txt","r");
-			break;
-		case 2:
-			fNewMap=fopen("map3.txt","r");
-			break;
-		case 3:
-			fNewMap=fopen("map4.txt","r");
-			break;
-		case 4:
-			fNewMap=fopen("map5.txt","r");
-			break;
-		case 5:
-			fNewMap=fopen("map6.txt","r");
-			break;
-		case 6:
-			fNewMap=fopen("map7.txt","r");
-			break;
-		/*case 7:
-			fNewMap=fopen("map8.txt","r");
-			break;
-		case 8:
-			fNewMap=fopen("map9.txt","r");
-			break;*/
-		default:
-			break;
-	}
+	map_select(select,nom);
+	fNewMap=fopen(nom,"r");
 	
 	if(fNewMap==NULL){
 		printf("Le fichier n'a pu être ouvert\n");
@@ -211,42 +191,6 @@ void loadMap(int tMapX, int tMapY, TabNiveau* niveauA, int select){
 			niveauA->Nmap[niveauA->previous].loadStatus=false;
 			niveauA->previous=select;
 		}
-		/*
-			if(niveauA->Nmap[select-1].Next==0||niveauA->Nmap[select-1].Next==2){
-				nextMap.c=loadedMap;
-				nextMap.taille.x=tMapX; 
-				nextMap.taille.y=tMapY; 
-				nextMap.previous=false;
-				niveauA->Nmap[niveauA->next].loadStatus=false;
-				niveauA->next=select;
-			}
-			else if(niveauA->Nmap[select-1].Next==1||niveauA->Nmap[select-1].Next==3){
-				nextLRMap.c=loadedMap;
-				nextLRMap.taille.x=tMapX; 
-				nextLRMap.taille.y=tMapY; 
-				nextLRMap.previous=false;
-				niveauA->Nmap[niveauA->nextLR].loadStatus=false;
-				niveauA->nextLR=select;
-			}
-		}
-		else if(select<niveauA->current){
-			if(niveauA->Nmap[select].Next==0||niveauA->Nmap[select].Next==2){
-				nextMap.c=loadedMap;
-				nextMap.taille.x=tMapX; 
-				nextMap.taille.y=tMapY; 
-				nextMap.previous=true;
-				niveauA->Nmap[niveauA->next].loadStatus=false;
-				niveauA->next=select;
-			}
-			else if(niveauA->Nmap[select].Next==1||niveauA->Nmap[select].Next==3){
-				nextLRMap.c=loadedMap;
-				nextLRMap.taille.x=tMapX; 
-				nextLRMap.taille.y=tMapY; 
-				nextLRMap.previous=true;
-				niveauA->Nmap[niveauA->nextLR].loadStatus=false;
-				niveauA->nextLR=select;
-			}
-		}*/
 		niveauA->Nmap[select].loadStatus=true; //on confirme que cette map du niveau est chargée.
 		do{
 
@@ -271,8 +215,8 @@ void initialisation_Map(Map* initMap){
 	initMap->previous=false;
 	return ;
 };
-
-//Fait initialement une sélection de map aléatoirement et charge les maps nécessaire au jeux au fur et a mesure 
+//PRE: prend en argument deux int pour la largeur et la hauteur des maps( cette fonction sera changé pour prendre une int qui déterminera le nombre de carte du niveau
+//POST: Fait initialement une sélection de map aléatoirement et charge les maps nécessaire au jeux au fur et a mesure (pas encore finit )
 void loadMaps(int *tMapX,int* tMapY){
 
 	int nombreMap=8;
@@ -350,32 +294,11 @@ Joueur loadJoueur(int select){
 	int y=0;
 	char c=' ';
 	bool END=true; //variable booleen pour sortir de la double boucle dés que l'on a trouver la position du joueur
+	char nom[MAX_NOM]={"\0"};
 	FILE* fNewMap=NULL;
-	switch(select){    //probablement pas utile, on verra si on modifie la fonction avec la sauvegarde de partie en cours
-		case 0:
-			fNewMap=fopen("map1.txt","r");
-			break;
-		case 1:
-			fNewMap=fopen("map2.txt","r");
-			break;
-		case 2:
-			fNewMap=fopen("map3.txt","r");
-			break;
-		case 3:
-			fNewMap=fopen("map4.txt","r");
-			break;
-		case 4:
-			fNewMap=fopen("map5.txt","r");
-			break;
-		case 5:
-			fNewMap=fopen("map6.txt","r");
-			break;
-		case 6:
-			fNewMap=fopen("map7.txt","r");
-			break;
-		default:
-			break;
-	}
+	map_select(select,nom);
+	fNewMap=fopen(nom,"r");
+	
 	if(fNewMap==NULL){
 		printf("Le fichier n'a pu être ouvert loadJoueur\n");
 		
@@ -418,32 +341,10 @@ void loadEnnemi(ListeEnnemi* liste, int select){
 	char c=' ';
 	//bool END=true; //variable booleen pour sortir de la double boucle dés que l'on a trouver la position du joueur
 	if(niveauA.Nmap[select].ennemi){
+		char nom[MAX_NOM]={"\0"};
 		FILE* fNewMap=NULL;
-		switch(select){    //probablement pas utile, on verra si on modifie la fonction avec la sauvegarde de partie en cours
-			case 0:
-				fNewMap=fopen("map1.txt","r");
-				break;
-			case 1:
-				fNewMap=fopen("map2.txt","r");
-				break;
-			case 2:
-				fNewMap=fopen("map3.txt","r");
-				break;
-			case 3:
-				fNewMap=fopen("map4.txt","r");
-				break;
-			case 4:
-				fNewMap=fopen("map5.txt","r");
-				break;
-			case 5:
-				fNewMap=fopen("map6.txt","r");
-				break;
-			case 6:
-				fNewMap=fopen("map7.txt","r");
-				break;
-			default:
-				break;
-		}
+		map_select(select,nom);
+		fNewMap=fopen(nom,"r");
 		if(fNewMap==NULL){
 			printf("Le fichier n'a pu être ouvert\n");
 			
@@ -460,41 +361,7 @@ void loadEnnemi(ListeEnnemi* liste, int select){
 			else if(select==niveauA.previous){
 				Dy+=currentMap.taille.y;
 			}
-				/*if(!niveauA.Nmap[select].previous){
-					if(niveauA.Nmap[niveauA.current].Next==0){
-						Dy-=64;
-					}
-					else if(niveauA.Nmap[niveauA.current].Next==2){
-						Dy+=64;
-					}
-				}
-				else{
-					if(niveauA.Nmap[select].Next==0){
-						Dy+=64;
-					}
-					else if(niveauA.Nmap[select].Next==2){
-						Dy-=64;
-					}
-				}*/
-			/*abandonné pour le moment car trop compliqué 
-			else if(select==niveauA.nextLR){
-				if(!niveauA.Nmap[select].previous){
-					if(niveauA.Nmap[niveauA.current].Next==3){
-						Dx-=64;
-					}
-					else if(niveauA.Nmap[niveauA.current].Next==1){
-						Dx+=64;
-					}
-				}
-				else{
-					if(niveauA.Nmap[select].Next==3){
-						Dx+=64;
-					}
-					else if(niveauA.Nmap[select].Next==1){
-						Dx-=64;
-					}
-				}
-			}*/
+
 			while(c!='\n'){	//boucle pour éviter de charger dans la map la pemière ligne du fichier texte qui contient des infos
 				c=fgetc(fNewMap);
 			}
