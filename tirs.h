@@ -39,5 +39,6 @@ void supprimer_tirs_hors_portee(ListeTirs* listeT);
 void modifier_pos_tirs(ListeTirs* listeT, Coordonnee variation);
 void deplacement_tirs(ListeTirs* listeT);
 Coordonnee pos_tirs(ListeTirs* listeT,int numero);
+TypeTirs degat_tirs(ListeTirs* listeT, int numero);
 void afficher_liste_tirs(ListeTirs* listeT);
 #endif

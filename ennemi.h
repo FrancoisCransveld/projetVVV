@@ -41,6 +41,8 @@ void retirer_vie_numero(ListeEnnemi* liste, int numero, int degat);
 void modifier_pos_ennemi(ListeEnnemi* liste, int numero, Coordonnee pos);
 void modifier_pos_ennemis(ListeEnnemi* liste, Coordonnee variation);
 void activer_ennemi_a_portee(ListeEnnemi* liste);
+Coordonnee pos_Ennemi(ListeEnnemi* liste,int numero);
 void supprimer_ennemi_hors_portee(ListeEnnemi* liste);
+void action_ennemi(ListeEnnemi* liste);
 void afficher_liste(ListeEnnemi* liste);
 #endif

@@ -107,57 +107,63 @@ void modifier_ennemi(ListeEnnemi* liste, int numero, char nom[], int vie, Coordo
 //PRE:On prend la liste dans laquel on veut supprimer et le numéro de l'élément (int numero) on commence par 0
 //POST:Supprime l'element numero et refait les liens entre les suivants et précédent
 void supprimer_ennemi_numero(ListeEnnemi* liste, int numero){
+	
+	if(liste==NULL){
+		exit(EXIT_FAILURE);
+	}
 	int i=0;
 	int decalage=numero;
 	bool SensCroissant=true;
-	ElementEnnemi* actuel=NULL;
-	ElementEnnemi* precedent=NULL;
-	ElementEnnemi* suivant=NULL;
-	if(numero<liste->nombre){
-		if(liste->nombre/2<numero){
-			actuel=liste->premier;
-		}
-		else{
-			actuel=liste->dernier;
-			SensCroissant=false;
-			decalage=liste->nombre-numero-1;
-		}
+	if(liste->premier!=NULL){
+		ElementEnnemi* actuel=NULL;
+		ElementEnnemi* precedent=NULL;
+		ElementEnnemi* suivant=NULL;
+		if(numero<liste->nombre){
+			if(liste->nombre/2<numero){
+				actuel=liste->premier;
+			}
+			else{
+				actuel=liste->dernier;
+				SensCroissant=false;
+				decalage=liste->nombre-numero-1;
+			}
 
-			while(i<decalage){
-				if(SensCroissant){
-					actuel=actuel->suivant;
+				while(i<decalage){
+					if(SensCroissant){
+						actuel=actuel->suivant;
+					}
+					else{
+						actuel=actuel->precedent;
+					}
+					i++;
 				}
-				else{
-					actuel=actuel->precedent;
+			precedent=actuel->precedent;
+			suivant=actuel->suivant;
+			if(!actuel->e.attente){
+				if(precedent==NULL&&suivant==NULL){
+					char nom[5]={"vide"};
+					actuel->e.vie=0;
+					strcpy(actuel->e.nom,nom);
+					actuel->e.pos.x=-64;
+					actuel->e.pos.y=-64;
+					actuel->e.type=vide;
 				}
-				i++;
-			}
-		precedent=actuel->precedent;
-		suivant=actuel->suivant;
-		if(!actuel->e.attente){
-			if(precedent==NULL&&suivant==NULL){
-				char nom[5]={"vide"};
-				actuel->e.vie=0;
-				strcpy(actuel->e.nom,nom);
-				actuel->e.pos.x=-64;
-				actuel->e.pos.y=-64;
-				actuel->e.type=vide;
-			}
-			else {
-				if(precedent==NULL){
-					suivant->precedent=NULL;
-					liste->premier=actuel->suivant;
+				else {
+					if(precedent==NULL){
+						suivant->precedent=NULL;
+						liste->premier=actuel->suivant;
+					}
+					else if(suivant==NULL){
+						precedent->suivant=NULL;
+						liste->dernier=actuel->precedent;
+					}
+					else{
+						precedent->suivant=actuel->suivant;
+						suivant->precedent=actuel->precedent;
+					}
+					free(actuel);
+					liste->nombre--;
 				}
-				else if(suivant==NULL){
-					precedent->suivant=NULL;
-					liste->dernier=actuel->precedent;
-				}
-				else{
-					precedent->suivant=actuel->suivant;
-					suivant->precedent=actuel->precedent;
-				}
-				free(actuel);
-				liste->nombre--;
 			}
 		}
 	}
@@ -188,7 +194,7 @@ void retirer_vie_numero(ListeEnnemi* liste, int numero, int degat){
 				}
 				i++;
 			}
-		actuel->e.vie-=degat;
+		actuel->e.vie-=(degat+1);
 		actuel->e.attente=false;
 		if(actuel->e.vie<1){
 			supprimer_ennemi_numero(liste, numero);
@@ -274,6 +280,35 @@ void activer_ennemi_a_portee(ListeEnnemi* liste){
 	}
 	//	afficher_liste(liste);
 };
+//PRE:
+//POST:Renvoie la coordonnee de l'ennemi, numero (les ennemis sont numeroté de 0 à liste.nombre-1)
+Coordonnee pos_Ennemi(ListeEnnemi* liste,int numero){
+	int i=0;
+	int decalage=numero;
+	bool SensCroissant=true;
+	ElementEnnemi* actuel=NULL;
+	if(numero<liste->nombre){
+		if(liste->nombre/2<numero){
+			actuel=liste->premier;
+		}
+		else{
+			actuel=liste->dernier;
+			SensCroissant=false;
+			decalage=liste->nombre-numero-1;
+		}
+
+		while(i<decalage){
+			if(SensCroissant){
+				actuel=actuel->suivant;
+			}
+			else{
+				actuel=actuel->precedent;
+			}
+			i++;
+		}
+	}
+	return(actuel->e.pos);
+}
 //
 //POST: fonction qui va appeler les ennemis pour effectuer leurs actions
 void action_ennemi(ListeEnnemi* liste){
@@ -282,35 +317,35 @@ void action_ennemi(ListeEnnemi* liste){
 		if(!actuel->e.attente){
 			switch(actuel->e.type){
 				case voiture:
-					if(abs(actuel->e.pos.x-j.pos.x)<0){
+					if(actuel->e.pos.x-j.pos.x<0){
 						actuel->e.pos.x++;
 					}
-					else if(abs(actuel->e.pos.x-j.pos.x)>0){
+					else if(actuel->e.pos.x-j.pos.x>0){
 						actuel->e.pos.x--;
 					}
 					else{
-						if(abs(actuel->e.pos.y-j.pos.y)<0){
-							//tirs
+						if(actuel->e.pos.y-j.pos.y<0){
+							actuel->e.pos.y++;
 						}
-						else if(abs(actuel->e.pos.y-j.pos.y)>0){
+						else if(actuel->e.pos.y-j.pos.y>0){
 							actuel->e.pos.y--;
 						}
 					}
 					break;
 				case moto:
-					if(actuel->e.pos.x%2==0){
-						if(abs(actuel->e.pos.x-j.pos.x)<0){
+					if((actuel->e.pos.x-actuel->e.pos.y)%2==0){
+						if(actuel->e.pos.x-j.pos.x<0){
 							actuel->e.pos.x++;
 						}
-						else if(abs(actuel->e.pos.x-j.pos.x)>0){
+						else if(actuel->e.pos.x-j.pos.x>0){
 							actuel->e.pos.x--;
 						}
 					}
 					else{
-						if(abs(actuel->e.pos.y-j.pos.y)<0){
+						if(actuel->e.pos.y-j.pos.y<0){
 							actuel->e.pos.y++;
 						}
-						else if(abs(actuel->e.pos.y-j.pos.y)>0){
+						else if(actuel->e.pos.y-j.pos.y>0){
 							actuel->e.pos.y--;
 						}
 					}

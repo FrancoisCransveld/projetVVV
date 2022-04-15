@@ -130,12 +130,68 @@ void modifier_tirs(ListeTirs* listeT, int numero, Coordonnee pos, TypeTirs t,Dir
 //POST:Supprime l'element numero et refait les liens entre les suivants et précédent
 void supprimer_tirs_numero(ListeTirs* listeT, int numero){
 	
+	if(listeT==NULL){
+		exit(EXIT_FAILURE);
+	}
 	int i=0;
 	int decalage=numero;
 	bool SensCroissant=true;
 	ElementTirs* actuel=NULL;
 	ElementTirs* precedent=NULL;
 	ElementTirs* suivant=NULL;
+	if(listeT->premier!=NULL){
+		if(numero<listeT->nombre){
+			if(listeT->nombre/2<numero){
+				actuel=listeT->premier;
+			}
+			else{
+				actuel=listeT->dernier;
+				SensCroissant=false;
+				decalage=listeT->nombre-numero-1;
+			}
+
+				while(i<decalage){
+					if(SensCroissant){
+						actuel=actuel->suivant;
+					}
+					else{
+						actuel=actuel->precedent;
+					}
+					i++;
+				}
+			precedent=actuel->precedent;
+			suivant=actuel->suivant;
+			printf("suprimer tirs %d adresse %hx nombre%d\n",numero,actuel,listeT->nombre);
+			if(precedent==NULL&&suivant==NULL){
+				actuel->t.dir=4;
+				actuel->t.pos.x=0;
+				actuel->t.pos.y=0;
+				actuel->t.t=rien;
+			}
+			else {
+				if(precedent==NULL){
+					suivant->precedent=NULL;
+					listeT->premier=actuel->suivant;
+				}
+				else if(suivant==NULL){
+					precedent->suivant=NULL;
+					listeT->dernier=actuel->precedent;
+				}
+				else{
+					precedent->suivant=actuel->suivant;
+					suivant->precedent=actuel->precedent;
+				}
+				//free(actuel);
+				listeT->nombre--;
+			}
+		}
+	}
+};
+TypeTirs degat_tirs(ListeTirs* listeT, int numero){
+	int i=0;
+	int decalage=numero;
+	bool SensCroissant=true;
+	ElementTirs* actuel=NULL;
 	if(numero<listeT->nombre){
 		if(listeT->nombre/2<numero){
 			actuel=listeT->premier;
@@ -155,32 +211,9 @@ void supprimer_tirs_numero(ListeTirs* listeT, int numero){
 				}
 				i++;
 			}
-		precedent=actuel->precedent;
-		suivant=actuel->suivant;
-		printf("suprimer tirs %d adresse %hx nombre%d\n",numero,actuel,listeT->nombre);
-		if(precedent==NULL&&suivant==NULL){
-			actuel->t.dir=4;
-			actuel->t.pos.x=0;
-			actuel->t.pos.y=0;
-			actuel->t.t=rien;
-		}
-		else {
-			if(precedent==NULL){
-				suivant->precedent=NULL;
-				listeT->premier=actuel->suivant;
-			}
-			else if(suivant==NULL){
-				precedent->suivant=NULL;
-				listeT->dernier=actuel->precedent;
-			}
-			else{
-				precedent->suivant=actuel->suivant;
-				suivant->precedent=actuel->precedent;
-			}
-			listeT->nombre--;
-		}
 		
 	}
+	return (actuel->t.t);
 };
 //PRE:En argument la liste à modifier, la variation de Coordonnee pos
 //POST:On déplace tous les tirs de la variation surtout utiliser pour switch map (deplacement vertical)

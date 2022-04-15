@@ -203,6 +203,42 @@ bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir){
 	}
 	return(SCROLL_J&&SCROLL_LOCK);
 };
+
+bool collisionEnnemiJoueur(){
+	bool collision=false;
+	for(int i=0;i<liste->nombre;i++){
+				Coordonnee EnnemiActuel=pos_Ennemi(liste,i);
+				if((EnnemiActuel.x==j.pos.x)&&(EnnemiActuel.y==j.pos.y)){
+					j.vie--;
+					switch(j.dir){
+						case 0:
+							moveDown();
+							moveDown();
+							break;
+						case 1:
+							moveLeft();
+							moveLeft();
+							break;
+						case 2:
+							moveUp();
+							moveUp();
+							break;
+						case 3:
+							moveRight();
+							moveRight();
+							break;
+						case 4:
+							moveDown();
+							moveDown();
+							break;
+					}
+					collision=true;
+					return collision;
+				}
+	
+	}
+	return collision;
+}
 /*
 void mapLoader(Map MapJ,Direction jDir){
 	

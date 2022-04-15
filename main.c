@@ -61,6 +61,8 @@ int main (int argc,char* argv[]){
 	glutReshapeFunc(handleResize);
 	glutDisplayFunc(Display);
 	glutTimerFunc(25, upDateKeyboard, 0);
+	glutTimerFunc(25, upDateTirs,1);
+	glutTimerFunc(75, upDateEnnemi,2);
 	glutMainLoop();
 	return 0;
 }

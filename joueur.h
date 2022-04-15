@@ -20,6 +20,7 @@ void moveLeft();
 void moveRight();
 void moveUp();
 void moveDown();
+bool collisionEnnemiJoueur();
 
 
 #endif

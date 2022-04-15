@@ -60,12 +60,35 @@ void KeyboardSpecial(int key, int x, int y)  // fonction allant gérer les input
 	}	
 };
 //glutTimerFunc(500, InputLoop, 1);
-void upDateKeyboard(int i){
+void upDateKeyboard(int num){
 	jeu();
+	
+	glutTimerFunc(25, upDateKeyboard, 0);
+};
+void upDateTirs(int num){
 	if(j.tirs->nombre>0){
 		deplacement_tirs(j.tirs);
+		for(int i=0;i<liste->nombre;i++){
+			for(int tirs=0;tirs<j.tirs->nombre;tirs++){
+				Coordonnee EnnemiActuel=pos_Ennemi(liste,i);
+				Coordonnee tirsActuel=pos_tirs(j.tirs,tirs);
+				if((EnnemiActuel.x==tirsActuel.x)&&(EnnemiActuel.y==tirsActuel.y)){
+					retirer_vie_numero(liste, i,degat_tirs(j.tirs, tirs));
+					supprimer_tirs_numero(j.tirs,tirs);
+				}
+			}
+		}
 	}
-	glutTimerFunc(25, upDateKeyboard, 0);
+	glutTimerFunc(25, upDateTirs,1);
+};
+void upDateEnnemi(int num){
+	action_ennemi(liste);
+	if(collisionEnnemiJoueur()){
+		glutTimerFunc(1000, upDateEnnemi,2);
+	}
+	else{
+		glutTimerFunc(100, upDateEnnemi,2);
+	}
 };
 void switchMap(){
 	printf("switchMap\n");

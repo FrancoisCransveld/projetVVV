@@ -14,6 +14,8 @@ typedef enum direction Direction;
 void KeyboardSpecial(int key, int x, int y);
 void Keyboard(unsigned char key, int x, int y);
 void jeu( void );
+void upDateTirs(int num);
+void upDateEnnemi(int num);
 void upDateKeyboard(int i);
 void switchMap(void);
 #endif
