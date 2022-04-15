@@ -317,38 +317,10 @@ void action_ennemi(ListeEnnemi* liste){
 		if(!actuel->e.attente){
 			switch(actuel->e.type){
 				case voiture:
-					if(actuel->e.pos.x-j.pos.x<0){
-						actuel->e.pos.x++;
-					}
-					else if(actuel->e.pos.x-j.pos.x>0){
-						actuel->e.pos.x--;
-					}
-					else{
-						if(actuel->e.pos.y-j.pos.y<0){
-							actuel->e.pos.y++;
-						}
-						else if(actuel->e.pos.y-j.pos.y>0){
-							actuel->e.pos.y--;
-						}
-					}
+					action_voiture(&(actuel->e));
 					break;
 				case moto:
-					if((actuel->e.pos.x-actuel->e.pos.y)%2==0){
-						if(actuel->e.pos.x-j.pos.x<0){
-							actuel->e.pos.x++;
-						}
-						else if(actuel->e.pos.x-j.pos.x>0){
-							actuel->e.pos.x--;
-						}
-					}
-					else{
-						if(actuel->e.pos.y-j.pos.y<0){
-							actuel->e.pos.y++;
-						}
-						else if(actuel->e.pos.y-j.pos.y>0){
-							actuel->e.pos.y--;
-						}
-					}
+					action_moto(&(actuel->e));
 					break;
 				case camion:
 					
@@ -362,6 +334,44 @@ void action_ennemi(ListeEnnemi* liste){
 			}
 		}
 		actuel=actuel->suivant;
+	}
+};
+//PRE:on envoie le pointeur de l'ennemi voiture dont le traitement est en cours dans action_ennemi
+//POST:fonction ou l'on retrouve les actions automatique d'un ennemi type voiture appelé par action_ennemi
+void action_voiture(Ennemi* voiture){
+	if(voiture->pos.x-j.pos.x<0){
+		voiture->pos.x++;
+	}
+	else if(voiture->pos.x-j.pos.x>0){
+		voiture->pos.x--;
+	}
+	else{
+		if(voiture->pos.y-j.pos.y<0){
+			voiture->pos.y++;
+		}
+		else if(voiture->pos.y-j.pos.y>0){
+			voiture->pos.y--;
+		}
+	}
+};
+//PRE:on envoie le pointeur de l'ennemi moto dont le traitement est en cours dans action_ennemi
+//POST:fonction ou l'on retrouve les actions automatique d'un ennemi type moto appelé par action_ennemi
+void action_moto(Ennemi* moto){
+	if((moto->pos.x-moto->pos.y)%2==0){
+		if(moto->pos.x-j.pos.x<0){
+			moto->pos.x++;
+		}
+		else if(moto->pos.x-j.pos.x>0){
+			moto->pos.x--;
+		}
+	}
+	else{
+		if(moto->pos.y-j.pos.y<0){
+			moto->pos.y++;
+		}
+		else if(moto->pos.y-j.pos.y>0){
+			moto->pos.y--;
+		}
 	}
 };
 //PRE: prend en argument la liste
