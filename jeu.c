@@ -90,6 +90,8 @@ void upDateEnnemi(int num){
 		glutTimerFunc(100, upDateEnnemi,2);
 	}
 };
+//PRE:
+//POST:Cette fonction va échanger la carte current avec la carte sur laquel le joueur se trouve (previous ou next) et décale la position sur l'axe vertical de tout les objets (joueur, tirs, ennemis)
 void switchMap(){
 	printf("switchMap\n");
 	printf("x%d y%d\nmap %d %d",camera.x,camera.y,nextMap.taille.x,nextMap.taille.y);

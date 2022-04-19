@@ -309,6 +309,37 @@ Coordonnee pos_Ennemi(ListeEnnemi* liste,int numero){
 	}
 	return(actuel->e.pos);
 }
+//PRE:cette fontion reçoit un pointeur de map, une coordonnee x et une coordonnee y de l'ennemi ou il veut se déplacer
+//POST:la fonction renvoie la coordonnee de l'ennemi sur la map qui le concerne next, current ou previous dans la structure coordonnee du pointeur de map donné en entrée ce qui premettra de vérifier la correspondance avec les murs sur les cartes.
+void replacement_ennemi(int x, int y, Map* map){
+	
+	//printf("replacementJoueur\n");
+	int mjX, mjY;
+ 	//variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
+	//recherche position par rapport à current 
+	if(y<0||y>=currentMap.taille.y){  //position verticale en dehors 0 et taille currentMap
+			
+			mjX=x;				//x ne change pas
+			if(y<0){			//si au dessus, alors la position dans nextMap est à la fin, donc à la taille de next+y (y est négatif)
+				map->c=nextMap.c;       //j est juste au dessus de currentMap, donc dans nextMap
+				mjY=y+nextMap.taille.y;
+			}		
+			else{			//si en dessous, alors la position dans previousMap est au début, donc à y-la hauteur de current	
+				map->c=previousMap.c;       //j est juste au dessus de currentMap, donc dans nextMap
+				mjY=y-currentMap.taille.y;
+			}
+	}
+	else{
+		map->c=currentMap.c;
+		mjX=x;
+		mjY=y;
+	}
+	//printf("car %c\n",map->c[0][0]);
+	map->taille.x=mjX;	//Coordonnée de j dans la carte logique/le plateau qui le concerne contenu dans map->taille
+	map->taille.y=mjY;
+	return ;
+
+};
 //
 //POST: fonction qui va appeler les ennemis pour effectuer leurs actions
 void action_ennemi(ListeEnnemi* liste){
@@ -339,39 +370,58 @@ void action_ennemi(ListeEnnemi* liste){
 //PRE:on envoie le pointeur de l'ennemi voiture dont le traitement est en cours dans action_ennemi
 //POST:fonction ou l'on retrouve les actions automatique d'un ennemi type voiture appelé par action_ennemi
 void action_voiture(Ennemi* voiture){
+	int x=voiture->pos.x;
+	int y=voiture->pos.y;
 	if(voiture->pos.x-j.pos.x<0){
-		voiture->pos.x++;
+		x++;
 	}
 	else if(voiture->pos.x-j.pos.x>0){
-		voiture->pos.x--;
+		x--;
 	}
 	else{
 		if(voiture->pos.y-j.pos.y<0){
-			voiture->pos.y++;
+			y++;
 		}
 		else if(voiture->pos.y-j.pos.y>0){
-			voiture->pos.y--;
+			y--;
 		}
+	}
+	Map Emap;
+	replacement_ennemi(x,y,&Emap);
+	if(*(*(Emap.c+Emap.taille.y)+Emap.taille.x)!='#'){
+		voiture->pos.x=x;
+		voiture->pos.y=y;
+	}
+	else{
+		
 	}
 };
 //PRE:on envoie le pointeur de l'ennemi moto dont le traitement est en cours dans action_ennemi
 //POST:fonction ou l'on retrouve les actions automatique d'un ennemi type moto appelé par action_ennemi
 void action_moto(Ennemi* moto){
+	int x=moto->pos.x;
+	int y=moto->pos.y;
 	if((moto->pos.x-moto->pos.y)%2==0){
 		if(moto->pos.x-j.pos.x<0){
-			moto->pos.x++;
+			x++;
 		}
 		else if(moto->pos.x-j.pos.x>0){
-			moto->pos.x--;
+			x--;
 		}
 	}
 	else{
 		if(moto->pos.y-j.pos.y<0){
-			moto->pos.y++;
+			y++;
 		}
 		else if(moto->pos.y-j.pos.y>0){
-			moto->pos.y--;
+			y--;
 		}
+	}
+	Map Emap;
+	replacement_ennemi(x,y,&Emap);
+	if(*(*(Emap.c+Emap.taille.y)+Emap.taille.x)!='#'){
+		moto->pos.x=x;
+		moto->pos.y=y;
 	}
 };
 //PRE: prend en argument la liste
