@@ -250,7 +250,7 @@ void drawMap(){
 
 void drawEnnemis(){
 	
-	//printf("drawEnnemi\n");
+	printf("drawEnnemi\n");
 	ElementEnnemi* actuel=liste->premier;
 	
 	for(int i=0;i<liste->nombre;i++){
@@ -345,7 +345,7 @@ void drawJoueur(){
 
 };
 void drawTirs(){
-
+	printf("drawTirs debut\n");
 	for(int i=0;i<j.tirs->nombre;i++){
 		Coordonnee posT=pos_tirs(j.tirs,i);
 		glColor3f(0.7f,0.7f,1.0f);
@@ -362,6 +362,7 @@ void drawTirs(){
 		
 		glEnd();
 	}
+	printf("drawTirs fin \n");
 }
 void interface(int nb){
 	

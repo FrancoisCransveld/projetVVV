@@ -61,33 +61,55 @@ void KeyboardSpecial(int key, int x, int y)  // fonction allant gérer les input
 };
 //glutTimerFunc(500, InputLoop, 1);
 void upDateKeyboard(int num){
+	printf("updateKeyboard \n");
 	jeu();
-	
 	glutTimerFunc(25, upDateKeyboard, 0);
 };
+//PRE:
+//POST:
 void upDateTirs(int num){
+	printf("upDateTirs\n");
+	if (SPACE == true){
+		if(j.tirs->nombre<j.maxTirs){
+			tirs(j.tirs,j.pos,pistolet,j.dir);
+		}
+		SPACE=false;
+	}
 	if(j.tirs->nombre>0){
+		printf("preDeplacement\n");
 		deplacement_tirs(j.tirs);
 		for(int i=0;i<liste->nombre;i++){
+			
 			for(int tirs=0;tirs<j.tirs->nombre;tirs++){
-				Coordonnee EnnemiActuel=pos_Ennemi(liste,i);
-				Coordonnee tirsActuel=pos_tirs(j.tirs,tirs);
-				if((EnnemiActuel.x==tirsActuel.x)&&(EnnemiActuel.y==tirsActuel.y)){
-					retirer_vie_numero(liste, i,degat_tirs(j.tirs, tirs));
-					supprimer_tirs_numero(j.tirs,tirs);
+				if(i<liste->nombre){
+					printf("PreCoordonneeEnnemi %d\n", i);
+					Coordonnee EnnemiActuel=pos_Ennemi(liste,i);
+					printf("PreCoordonneeTirs %d\n", tirs);
+					Coordonnee tirsActuel=pos_tirs(j.tirs,tirs);
+					if((EnnemiActuel.x==tirsActuel.x)&&(EnnemiActuel.y==tirsActuel.y)){ 
+						retirer_vie_numero(liste, i,degat_tirs(j.tirs, tirs));
+						supprimer_tirs_numero(j.tirs,tirs);
+						printf("sortie de suppresion tirs \n");
+					}
 				}
+				printf("sortie for 2\n");
 			}
+			printf("sortie for 1\n");
 		}
 	}
+	printf("fin UpdateTirs\n");
 	glutTimerFunc(25, upDateTirs,1);
 };
+//PRE:
+//POST:
 void upDateEnnemi(int num){
+	printf("upDateEnnemi\n");
 	action_ennemi(liste);
 	if(collisionEnnemiJoueur()){
 		glutTimerFunc(1000, upDateEnnemi,2);
 	}
 	else{
-		glutTimerFunc(100, upDateEnnemi,2);
+		glutTimerFunc(100, upDateEnnemi,2); 
 	}
 };
 //PRE:
@@ -169,6 +191,7 @@ void switchMap(){
 };
 void jeu()
 {
+	printf("jeu \n");
 	glutKeyboardFunc(Keyboard);		//fonction de glut gérant le clavier
 	glutSpecialFunc(KeyboardSpecial);
 	if (LEFT == true)
@@ -194,16 +217,15 @@ void jeu()
 	if (DOWN == true)
 	{
 		//printf("DOWN ");
-                moveDown(j);
+        moveDown(j);
 		DOWN = false;
 	}
-	if (SPACE == true){
-	
+	/*if (SPACE == true){
 		if(j.tirs->nombre<j.maxTirs){
 			tirs(j.tirs,j.pos,pistolet,j.dir);
 		}
 		SPACE=false;
-	}
+	}*/
 	
 	glutPostRedisplay();
 };

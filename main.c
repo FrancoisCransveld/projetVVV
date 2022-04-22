@@ -35,10 +35,15 @@ void Display()
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         interface(1);
+        printf("sortie interface\n"); 
         glMatrixMode(GL_PROJECTION);
+        printf("matrixModeDisplay\n");
 	glLoadIdentity();
+	printf("LoadIdentity\n");
 	gluOrtho2D(TILE_SIZE*(camera.x)-width/4, TILE_SIZE*(camera.x)+width/4, TILE_SIZE*(camera.y)+heigth/4, TILE_SIZE*(camera.y)-heigth/4);
+	printf("gluOrtho\n");
 	glFlush();
+	printf("fin display\n");
 	
 }
 int main (int argc,char* argv[]){

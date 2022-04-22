@@ -47,7 +47,7 @@ ListeEnnemi* creer_liste(void){
 void nouvel_ennemi(ListeEnnemi* liste, char* nom, int vie, Coordonnee pos, TypeEnnemi t){
 	
 	ElementEnnemi* actuel=liste->dernier;
-	if(actuel->e.type!=vide){
+	if(liste->nombre>0){
 		ElementEnnemi* nouveau=malloc(sizeof(ElementEnnemi));
 
 		nouveau->e.vie=vie;
@@ -65,8 +65,23 @@ void nouvel_ennemi(ListeEnnemi* liste, char* nom, int vie, Coordonnee pos, TypeE
 		liste->nombre++;
 		liste->dernier=nouveau;
 	}
-	else{
-		modifier_ennemi(liste, 0, nom, vie, pos, t,true);
+	else if(liste->nombre==0){
+		ElementEnnemi* nouveau=malloc(sizeof(ElementEnnemi));
+
+		nouveau->e.vie=vie;
+		nouveau->e.pos=pos;
+		nouveau->e.type=t;
+		nouveau->e.attente=true;
+		nouveau->suivant=NULL;
+		nouveau->precedent=NULL;
+		
+		nouveau->e.nom=malloc(sizeof(char*)*MAX_NOM);
+		
+		strcpy(nouveau->e.nom,nom);
+
+		liste->nombre++;
+		liste->dernier=nouveau;
+		liste->premier=nouveau;
 	}
 	
 };
@@ -78,7 +93,7 @@ void modifier_ennemi(ListeEnnemi* liste, int numero, char nom[], int vie, Coordo
 	bool SensCroissant=true;
 	ElementEnnemi* actuel=NULL;
 	if(numero<liste->nombre){
-		if(liste->nombre/2<numero){
+		if(numero<liste->nombre/2){
 			actuel=liste->premier;
 		}
 		else{
@@ -115,11 +130,12 @@ void supprimer_ennemi_numero(ListeEnnemi* liste, int numero){
 	int decalage=numero;
 	bool SensCroissant=true;
 	if(liste->premier!=NULL){
+		afficher_liste(liste);
 		ElementEnnemi* actuel=NULL;
 		ElementEnnemi* precedent=NULL;
 		ElementEnnemi* suivant=NULL;
 		if(numero<liste->nombre){
-			if(liste->nombre/2<numero){
+			if(numero<liste->nombre/2){
 				actuel=liste->premier;
 			}
 			else{
@@ -147,6 +163,8 @@ void supprimer_ennemi_numero(ListeEnnemi* liste, int numero){
 					actuel->e.pos.x=-64;
 					actuel->e.pos.y=-64;
 					actuel->e.type=vide;
+					liste->premier=NULL;
+					liste->dernier=NULL;
 				}
 				else {
 					if(precedent==NULL){
@@ -161,9 +179,11 @@ void supprimer_ennemi_numero(ListeEnnemi* liste, int numero){
 						precedent->suivant=actuel->suivant;
 						suivant->precedent=actuel->precedent;
 					}
-					free(actuel);
-					liste->nombre--;
+					
 				}
+				free(actuel);
+				liste->nombre--;
+				afficher_liste(liste);
 			}
 		}
 	}
@@ -176,7 +196,7 @@ void retirer_vie_numero(ListeEnnemi* liste, int numero, int degat){
 	bool SensCroissant=true;
 	ElementEnnemi* actuel=NULL;
 	if(numero<liste->nombre){
-		if(liste->nombre/2<numero){
+		if(numero<liste->nombre/2){
 			actuel=liste->premier;
 		}
 		else{
@@ -210,7 +230,7 @@ void modifier_pos_ennemi(ListeEnnemi* liste, int numero, Coordonnee pos){
 	bool SensCroissant=true;
 	ElementEnnemi* actuel=NULL;
 	if(numero<liste->nombre){
-		if(liste->nombre/2<numero){
+		if(numero<liste->nombre/2){
 			actuel=liste->premier;
 		}
 		else{
@@ -283,12 +303,16 @@ void activer_ennemi_a_portee(ListeEnnemi* liste){
 //PRE:
 //POST:Renvoie la coordonnee de l'ennemi, numero (les ennemis sont numeroté de 0 à liste.nombre-1)
 Coordonnee pos_Ennemi(ListeEnnemi* liste,int numero){
+	Coordonnee ennemiPos;
+	ennemiPos.x=128;
+	ennemiPos.y=128;
+	if(liste->premier!=NULL){
 	int i=0;
 	int decalage=numero;
 	bool SensCroissant=true;
 	ElementEnnemi* actuel=NULL;
 	if(numero<liste->nombre){
-		if(liste->nombre/2<numero){
+		if(numero<liste->nombre/2){
 			actuel=liste->premier;
 		}
 		else{
@@ -307,7 +331,10 @@ Coordonnee pos_Ennemi(ListeEnnemi* liste,int numero){
 			i++;
 		}
 	}
-	return(actuel->e.pos);
+	ennemiPos=actuel->e.pos;
+
+	}
+	return(ennemiPos);
 }
 //PRE:cette fontion reçoit un pointeur de map, une coordonnee x et une coordonnee y de l'ennemi ou il veut se déplacer
 //POST:la fonction renvoie la coordonnee de l'ennemi sur la map qui le concerne next, current ou previous dans la structure coordonnee du pointeur de map donné en entrée ce qui premettra de vérifier la correspondance avec les murs sur les cartes.
@@ -428,11 +455,12 @@ void action_moto(Ennemi* moto){
 //post:affiche cette liste dans la console
 void afficher_liste(ListeEnnemi* liste){
 	int i=0;
-	printf("---Liste ennemi : ---\n");
+	printf("---Liste ennemi %d: ---\n",liste->nombre);
 	ElementEnnemi* actuel=liste->premier;
 	while(i<liste->nombre){
 	printf(" nom ennemi :%s vie : %d pos : (x=%d;y=%d) type :%d\n",actuel->e.nom,actuel->e.vie,actuel->e.pos.x,actuel->e.pos.y,actuel->e.type);
 	actuel=actuel->suivant;
 	i++;
 	}
+	printf("-----------fin liste----------\n");
 };			
