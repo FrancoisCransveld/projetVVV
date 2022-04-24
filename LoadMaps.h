@@ -5,7 +5,8 @@
 #include <stdbool.h>
 #include "jeu.h"
 #include "tirs.h"
-
+#define MAPS 14
+#define MAPS_BOSS 2
 //structure destinée à soit renseigner la direction dans laquel se dirige le joueur,soit renseigner où se trouve la prochaine map.
 struct selectionMap{
 	int s;
@@ -39,11 +40,14 @@ Map nextMap;
 Map previousMap;
 
 TabNiveau niveauA; // tableau des niveaux aléatoirement choisis
+char* int_vers_char(int nombre);
 void map_select(int select,char* nom);
+void Entree_sortie_Map( int select, Direction* entreeN, Direction* sortieN);
 void loadMaps(int* tMapX, int* tMapy);
 void loadMap(int tMapX, int tMapy,TabNiveau* niveauA, int select);
 void loadNext(int select);
 void tailleMap(int* tMapX,int* tMapY,TabNiveau niveauA, int selectedMap);
+void choix_map_aleatoire(void);
 #include "joueur.h"
 #include "ennemi.h"
 Joueur loadJoueur(int select);

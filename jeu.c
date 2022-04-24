@@ -61,14 +61,14 @@ void KeyboardSpecial(int key, int x, int y)  // fonction allant gérer les input
 };
 //glutTimerFunc(500, InputLoop, 1);
 void upDateKeyboard(int num){
-	printf("updateKeyboard \n");
+	//printf("updateKeyboard \n");
 	jeu();
 	glutTimerFunc(25, upDateKeyboard, 0);
 };
 //PRE:
 //POST:
 void upDateTirs(int num){
-	printf("upDateTirs\n");
+	//printf("upDateTirs\n");
 	if (SPACE == true){
 		if(j.tirs->nombre<j.maxTirs){
 			tirs(j.tirs,j.pos,pistolet,j.dir);
@@ -76,34 +76,34 @@ void upDateTirs(int num){
 		SPACE=false;
 	}
 	if(j.tirs->nombre>0){
-		printf("preDeplacement\n");
+		//printf("preDeplacement\n");
 		deplacement_tirs(j.tirs);
 		for(int i=0;i<liste->nombre;i++){
 			
 			for(int tirs=0;tirs<j.tirs->nombre;tirs++){
 				if(i<liste->nombre){
-					printf("PreCoordonneeEnnemi %d\n", i);
+					//printf("PreCoordonneeEnnemi %d\n", i);
 					Coordonnee EnnemiActuel=pos_Ennemi(liste,i);
-					printf("PreCoordonneeTirs %d\n", tirs);
+					//printf("PreCoordonneeTirs %d\n", tirs);
 					Coordonnee tirsActuel=pos_tirs(j.tirs,tirs);
 					if((EnnemiActuel.x==tirsActuel.x)&&(EnnemiActuel.y==tirsActuel.y)){ 
 						retirer_vie_numero(liste, i,degat_tirs(j.tirs, tirs));
 						supprimer_tirs_numero(j.tirs,tirs);
-						printf("sortie de suppresion tirs \n");
+						//printf("sortie de suppresion tirs \n");
 					}
 				}
-				printf("sortie for 2\n");
+				//printf("sortie for 2\n");
 			}
-			printf("sortie for 1\n");
+			//printf("sortie for 1\n");
 		}
 	}
-	printf("fin UpdateTirs\n");
+	//printf("fin UpdateTirs\n");
 	glutTimerFunc(25, upDateTirs,1);
 };
 //PRE:
 //POST:
 void upDateEnnemi(int num){
-	printf("upDateEnnemi\n");
+	//printf("upDateEnnemi\n");
 	action_ennemi(liste);
 	if(collisionEnnemiJoueur()){
 		glutTimerFunc(1000, upDateEnnemi,2);
@@ -115,8 +115,8 @@ void upDateEnnemi(int num){
 //PRE:
 //POST:Cette fonction va échanger la carte current avec la carte sur laquel le joueur se trouve (previous ou next) et décale la position sur l'axe vertical de tout les objets (joueur, tirs, ennemis)
 void switchMap(){
-	printf("switchMap\n");
-	printf("x%d y%d\nmap %d %d",camera.x,camera.y,nextMap.taille.x,nextMap.taille.y);
+	//printf("switchMap\n");
+	//printf("x%d y%d\nmap %d %d",camera.x,camera.y,nextMap.taille.x,nextMap.taille.y);
 	//bool switchEffectue=false;
 	bool switchPrevious=false;
 	bool switchNext=false;
@@ -149,6 +149,7 @@ void switchMap(){
 	}
 	
 	if(switchNext||switchPrevious){
+		printf("switchMap\n");
 		modifier_pos_ennemis(liste,variationE);
 		camera.y=tamponCam;
 		j.pos.y=tamponJ;
@@ -186,12 +187,12 @@ void switchMap(){
 		loadNext(nextLoad);
 	}
 	else{
-		printf("limite du niveau\n");
+		//printf("limite du niveau\n");
 	}
 };
 void jeu()
 {
-	printf("jeu \n");
+	//printf("jeu \n");
 	glutKeyboardFunc(Keyboard);		//fonction de glut gérant le clavier
 	glutSpecialFunc(KeyboardSpecial);
 	if (LEFT == true)

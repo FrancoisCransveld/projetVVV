@@ -44,7 +44,7 @@ ListeTirs* creer_liste_tirs(void){
 //PRE:prend en entrée la liste chainée à laquel on donne un nouvelle élément, le nom de cette élément, sa vie, sa coordonnee, son type
 //POST:ajoute un tirs en fin de la liste chainée, qui aura toute les caractéristiques donnée en entrée
 void tirs(ListeTirs* listeT, Coordonnee pos, TypeTirs t, Direction dir){
-	printf("nouveau tirs \n");
+	//printf("nouveau tirs \n");
 	ElementTirs* actuel=listeT->dernier;
 	if(listeT->nombre>0){
 		ElementTirs* nouveau=malloc(sizeof(ElementTirs));
@@ -104,7 +104,7 @@ void tirs(ListeTirs* listeT, Coordonnee pos, TypeTirs t, Direction dir){
 //PRE:prend en entrée la liste chainée à laquel on donne un nouvelle élément, le nom de cette élément, sa vie, sa coordonnee, son type
 //POST:on modifie un élément de la liste donnée, cette élement se retrouve avec numero il correspon à la place dans la liste chainée commençant par 0 jusque nombre-1
 void modifier_tirs(ListeTirs* listeT, int numero, Coordonnee pos, TypeTirs t,Direction dir){
-	printf("modifier tirs\n");
+	//printf("modifier tirs\n");
 	int i=0;
 	int decalage=numero;
 	bool SensCroissant=true;
@@ -157,7 +157,7 @@ void supprimer_tirs_numero(ListeTirs* listeT, int numero){
 	if(listeT==NULL){
 		exit(EXIT_FAILURE);
 	}
-	printf("debut supprimer %d\n",numero);
+	//printf("debut supprimer %d\n",numero);
 	int i=0;
 	int decalage=numero;
 	bool SensCroissant=true;
@@ -166,20 +166,20 @@ void supprimer_tirs_numero(ListeTirs* listeT, int numero){
 	ElementTirs* suivant=NULL;
 	if(listeT->premier!=NULL){
 		if(numero<listeT->nombre){
-			printf("nombre liste %d",listeT->nombre);
+			//printf("nombre liste %d",listeT->nombre);
 			if(numero<listeT->nombre/2){
-				printf(" numero %d plus petit que moitie nombre %d\n",numero,listeT->nombre/2);
+				//printf(" numero %d plus petit que moitie nombre %d\n",numero,listeT->nombre/2);
 				actuel=listeT->premier;
 			}
 			else{
-				printf(" numero %d plus grand que moitie nombre %d\n",numero,listeT->nombre/2);
+				//printf(" numero %d plus grand que moitie nombre %d\n",numero,listeT->nombre/2);
 				actuel=listeT->dernier;
 				SensCroissant=false;
 				decalage=listeT->nombre-numero-1;
 			}
 
 				while(i<decalage){
-					printf("\ndecallage %d \n",i);
+					//printf("\ndecallage %d \n",i);
 					if(SensCroissant){
 						actuel=actuel->suivant;
 					}
@@ -190,7 +190,7 @@ void supprimer_tirs_numero(ListeTirs* listeT, int numero){
 				}
 			precedent=actuel->precedent;
 			suivant=actuel->suivant;
-			printf("suprimer tirs %d adresse %hx nombre%d\n",numero,actuel,listeT->nombre);
+			//printf("suprimer tirs %d adresse %hx nombre%d\n",numero,actuel,listeT->nombre);
 			if(precedent==NULL&&suivant==NULL){
 				/*actuel->t.dir=4;
 				actuel->t.pos.x=0;
@@ -217,7 +217,7 @@ void supprimer_tirs_numero(ListeTirs* listeT, int numero){
 				
 				
 			}
-			printf("suprimer tirs %d adresse %hx nombre%d\n",numero,actuel,listeT->nombre);
+			//printf("suprimer tirs %d adresse %hx nombre%d\n",numero,actuel,listeT->nombre);
 			free(actuel);
 			listeT->nombre--;
 			
@@ -227,7 +227,7 @@ void supprimer_tirs_numero(ListeTirs* listeT, int numero){
 //PRE:
 //POST:
 TypeTirs degat_tirs(ListeTirs* listeT, int numero){
-	printf("degat tirs\n");
+	//printf("degat tirs\n");
 	int i=0;
 	int decalage=numero;
 	bool SensCroissant=true;
@@ -258,7 +258,7 @@ TypeTirs degat_tirs(ListeTirs* listeT, int numero){
 //PRE:En argument la liste à modifier, la variation de Coordonnee pos
 //POST:On déplace tous les tirs de la variation surtout utiliser pour switch map (deplacement vertical)
 void modifier_pos_tirs(ListeTirs* listeT, Coordonnee variation){
-	printf("modifier pos tirs\n");
+	//printf("modifier pos tirs\n");
 	int i=0;
 	
 	ElementTirs* actuel=listeT->premier;
@@ -278,7 +278,7 @@ void supprimer_tirs_hors_portee(ListeTirs* listeT){
 	int nombreMax=listeT->nombre;
 	for(int i=0;i<nombreMax;i++){
 		if(actuel->t.pos.y>camera.y+(CAM_RANGE*4)||actuel->t.pos.y<camera.y-(CAM_RANGE*4)){
-			printf("hors portee\n");
+			//printf("hors portee\n");
 			supprimer_tirs_numero(listeT, i);
 		}
 		else{
@@ -297,7 +297,7 @@ void deplacement_tirs(ListeTirs* listeT){
 		int nombreRegistre=0;
 		for(int i=0;i<listeT->nombre;i++){
 			if(actuel->t.distanceMax>0){
-				printf("deplacement tirs normal %d\n",i);
+				//printf("deplacement tirs normal %d\n",i);
 				switch(actuel->t.dir){
 					case Up:
 						actuel->t.pos.y--;
@@ -332,18 +332,18 @@ void deplacement_tirs(ListeTirs* listeT){
 			}
 		
 		}
-		printf("registre ");
+		//printf("registre ");
 		for(int n=0;n<nombreRegistre;n++){
 			printf("%d ",*(registre+n));
 		}
-		printf("fin\n");
+		//printf("fin\n");
 		for(int n=0;n<nombreRegistre;n++){
 		
-			printf("deplacement tirs suppression %d\n", *(registre+n));
-			printf("suprimer tirs %d adresse %hx nombre%d\n",*(registre+n),actuel,listeT->nombre);
-			afficher_liste_tirs(listeT);
+			//printf("deplacement tirs suppression %d\n", *(registre+n));
+			//printf("suprimer tirs %d adresse %hx nombre%d\n",*(registre+n),actuel,listeT->nombre);
+			//afficher_liste_tirs(listeT);
 			supprimer_tirs_numero(listeT,*(registre+n));
-			afficher_liste_tirs(listeT);
+			//afficher_liste_tirs(listeT);
 		}
 		free(registre);
 	}
@@ -351,7 +351,7 @@ void deplacement_tirs(ListeTirs* listeT){
 //PRE:
 //POST:Renvoie la coordonnee du tirs numero (les tirs sont numeroté de 0 à listeT.nombre-1)
 Coordonnee pos_tirs(ListeTirs* listeT,int numero){
-	printf("pos tirs\n");
+	//printf("pos tirs\n");
 	if(listeT->premier!=NULL){
 	int i=0;
 	int decalage=numero;

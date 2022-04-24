@@ -11,10 +11,53 @@
 //#include "jeu.h"
 #include "interface.h"
 
+//PRE:Prend en argument un int positif
+//POST:renvoie la chaine de caractère correspondante à cet int
+char* int_vers_char(int nombre){
+	int i=0;
+	int n=nombre;
+	//printf("nombre :%d\n",nombre);
+	do{
+		nombre=nombre/10;
+		i++;
+		//printf("nombre :%d i: %d\n",nombre,i);
+	}while(nombre>0);
+	char* String_nombre=malloc(sizeof(char*)*(i+1));
+	
+	sprintf(String_nombre,"%d",n);
+	
+	return(String_nombre);
+}
 //fonction qui fait la correspondance entre le numero select et la carte qui lui correspond dans un switch et renvoie un FILE* 
 void map_select(int select,char* nom){
+	printf("maps_select : %d\n",select);
+	char Nom[MAX_NOM]={"map"};
 	
-	switch(niveauA.Nmap[select].s){
+	char* valeur=NULL;
+	if(select<MAPS){
+		valeur=int_vers_char(select);
+		strcat(nom,Nom);
+		strcat(nom,valeur);
+		strcat(nom,".txt");
+	}
+	else if(select<MAPS+3&&select>=MAPS){
+		valeur=int_vers_char(select-MAPS);
+		strcat(nom,Nom);
+		strcat(nom,"PreBoss");
+		strcat(nom,valeur);
+		strcat(nom,".txt");
+	}
+	else if(select<MAPS+3+MAPS_BOSS&&select>=MAPS+3){
+		valeur=int_vers_char(select-MAPS-3);
+		strcat(nom,Nom);
+		strcat(nom,"Boss");
+		strcat(nom,valeur);
+		strcat(nom,".txt");
+	}
+	free(valeur);
+	/*strcat(nom,valeur);
+	strcat(nom,".txt");*/
+	/*switch(niveauA.Nmap[select].s){
 		case 0:
 			strcpy(nom,"map1.txt");
 			break;
@@ -38,7 +81,7 @@ void map_select(int select,char* nom){
 			break;
 		default:
 			break;
-	}
+	}*/
 };
 
 //PRE:prend en argument deux pointeurs d'int pour renvoiyer la taille trouvée et un int qui correspond à la map qui devrai être traitée dans niveauA.Nmap[select]
@@ -138,12 +181,12 @@ void loadMap(int tMapX, int tMapY, TabNiveau* niveauA, int select){
 	printf("X :%d Y :%d\n",tMapX,tMapY);
 	char nom[MAX_NOM]={"\0"};
 	FILE* fNewMap=NULL;
-	map_select(select,nom);
+	map_select(niveauA->Nmap[select].s,nom);
 	fNewMap=fopen(nom,"r");
 	
 	if(fNewMap==NULL){
 		printf("Le fichier n'a pu être ouvert\n");
-		//exit(ERROR_EXIT);
+		exit(-1);
 	}
 	else{
 		char c;
@@ -205,6 +248,152 @@ void loadMap(int tMapX, int tMapY, TabNiveau* niveauA, int select){
 	
 	
 };
+//PRE:
+//POST:
+void Entree_sortie_Map( int select, Direction* entreeN, Direction* sortieN){
+	char nom[MAX_NOM]={"\0"};
+	FILE* fNewMap=NULL;
+	map_select(select,nom);
+	printf("%s\n",nom);
+	fNewMap=fopen(nom,"r");
+	if(fNewMap==NULL){
+		printf("Erreur fichier inexistant\n");
+		exit(-1);
+	}
+	else{
+		fseek(fNewMap,0,0);
+		char c=' ';
+		while(c!='\n'){
+			
+			c=fgetc(fNewMap);
+			printf("%c",c);
+			if(c=='p'){
+				c=fgetc(fNewMap);
+				printf("%c",c);
+				switch(c){
+					case '0':
+						*entreeN=0;
+						break;
+					case '1':
+						*entreeN=1;
+						break;
+					case '2':
+						*entreeN=2;
+						break;
+					case '3':
+						*entreeN=3;
+						break;
+					case '4':
+						*entreeN=4;
+						break;
+					
+				}
+			}
+			if(c=='n'){
+				c=fgetc(fNewMap);
+				printf("%c",c);
+				switch(c){
+					case '0':
+						*sortieN=0;
+						break;
+					case '1':
+						*sortieN=1;
+						break;
+					case '2':
+						*sortieN=2;
+						break;
+					case '3':
+						*sortieN=3;
+						break;
+					case '4':
+						*sortieN=4;
+						break;
+					
+				}
+			}
+		}
+		
+	}
+	fclose(fNewMap);
+	return;
+}
+//PRE:le nombre de map dans niveauA.nombreMap doit être plus grand que 3
+//POST:
+void choix_map_aleatoire(void){
+	
+	Direction sortieC=0;
+	Direction entreeC=4;
+	Direction sortieN;
+	Direction entreeN;
+	
+	//installer la première map, startMap
+	printf("startmap\n");
+	niveauA.Nmap[0].s=0;
+	Entree_sortie_Map(0, &entreeN, &sortieN);
+	niveauA.Nmap[0].Next=sortieN;
+	niveauA.Nmap[0].previous=entreeN;
+	niveauA.Nmap[0].ennemi=true;
+	niveauA.Nmap[0].loadStatus=false;
+	sortieC=sortieN;
+	entreeC=entreeN;
+	
+	//sélection de toute les map du niveau hors startMap, pre-BossMap et BossMap
+	printf("maps\n");
+	for(int i=1;i<niveauA.nombreMap-2;i++){
+
+		bool MapOK=true;
+		int nRandom;
+		do{
+			nRandom=(rand()%MAPS);
+			Entree_sortie_Map(nRandom, &entreeN, &sortieN);
+			if(entreeN==sortieC){
+				MapOK=false;
+			}
+			
+		}while(MapOK);
+		niveauA.Nmap[i].s=nRandom;
+		niveauA.Nmap[i].Next=sortieN;
+		niveauA.Nmap[i].previous=entreeN;
+		niveauA.Nmap[i].ennemi=true;
+		niveauA.Nmap[i].loadStatus=false;
+		sortieC=sortieN;
+		entreeC=entreeN;
+	}
+	//selection pre-BossMap, qui fait le lien entre la dernière map et la map de boss qui sera toujours en entree 0
+	printf("preBoss\n");
+	int select=MAPS;
+	if(sortieC==0){
+		select=MAPS;
+	}
+	else if(sortieC==1){
+		select+=1;
+	}
+	else if(sortieC==3){
+		select+=2;	
+	}
+	Entree_sortie_Map(select, &entreeN, &sortieN);
+	niveauA.Nmap[niveauA.nombreMap-2].s=select;
+	niveauA.Nmap[niveauA.nombreMap-2].Next=sortieN;
+	niveauA.Nmap[niveauA.nombreMap-2].previous=entreeN;
+	niveauA.Nmap[niveauA.nombreMap-2].ennemi=true;
+	niveauA.Nmap[niveauA.nombreMap-2].loadStatus=false;
+	
+	//selection BossMap, parmis les MapBoss
+	printf("Boss\n");
+	int nRandomBoss=(rand()%MAPS_BOSS);
+	Entree_sortie_Map(nRandomBoss+3+MAPS, &entreeN, &sortieN);
+	niveauA.Nmap[niveauA.nombreMap-1].s=nRandomBoss+3+MAPS;
+	niveauA.Nmap[niveauA.nombreMap-1].Next=sortieN;
+	niveauA.Nmap[niveauA.nombreMap-1].previous=entreeN;
+	niveauA.Nmap[niveauA.nombreMap-1].ennemi=true;
+	niveauA.Nmap[niveauA.nombreMap-1].loadStatus=false;
+	
+	for(int m=0;m<niveauA.nombreMap;m++){
+		char nomA[MAX_NOM]={"\0"};
+		map_select(niveauA.Nmap[m].s,nomA);
+		printf("%s\n",nomA);
+	}
+}
 //PRE: aucun pré-requis
 //POST:initialisation d'une structure Map à zero pointeur tableau sur NULL et taille x, y à 0 et previous sur false.
 void initialisation_Map(Map* initMap){
@@ -225,7 +414,8 @@ void loadMaps(int *tMapX,int* tMapY){
 	initialisation_Map(&nextMap);
 	initialisation_Map(&currentMap);
 	niveauA.Nmap=malloc(sizeof(SelectionMap)*nombreMap);
-	niveauA.Nmap[0].s=0;		// le numéro de cette carte est le 0
+	choix_map_aleatoire();
+	/*niveauA.Nmap[0].s=0;		// le numéro de cette carte est le 0
 	niveauA.Nmap[0].Next=0;	// la sortie de cette carte est vers le haut
 	niveauA.Nmap[0].loadStatus=false;//cette map n'est pas chargée en mémoire
 	niveauA.Nmap[0].ennemi=true;
@@ -258,6 +448,7 @@ void loadMaps(int *tMapX,int* tMapY){
 	niveauA.Nmap[7].Next=5;	//cette carte n'a pas de sortie
 	niveauA.Nmap[7].previous=2;
 	niveauA.Nmap[7].loadStatus=false;
+	*/
 	niveauA.current=0;
 	int i=0;
 	do{
@@ -302,7 +493,7 @@ Joueur loadJoueur(int select){
 	if(fNewMap==NULL){
 		printf("Le fichier n'a pu être ouvert loadJoueur\n");
 		
-		//exit(ERROR_EXIT);
+		exit(-1);
 	}
 	else{
 	
@@ -348,7 +539,7 @@ void loadEnnemi(ListeEnnemi* liste, int select){
 		if(fNewMap==NULL){
 			printf("Le fichier n'a pu être ouvert\n");
 			
-			//exit(ERROR_EXIT);
+			exit(-1);
 		}
 		else{
 			if(select==niveauA.current){

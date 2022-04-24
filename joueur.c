@@ -111,7 +111,7 @@ void moveUp()
 	 //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	replacement_joueur(x,y,&MapJ);
 	//printf("moveUp\n");
-	if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#'){//attention a changer
+	if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#'&&*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='!'){//attention a changer
 		j.dir=0;
 		j.pos.y = y;
 		if(autorisation_scroll( x, y,MapJ,j.dir)){
@@ -137,7 +137,7 @@ void moveDown()
 	//printf("moveDown\n");
 	 //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	replacement_joueur(x,y,&MapJ);	//dans MapJ la structure taille correspond au futur coordonée du joueur dans le plateau logique qui lui correspond
-   if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#'){   
+   if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#'&&*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='!'){   
 		j.dir=2;
 		j.pos.y = y;
 		if(autorisation_scroll( x, y,MapJ,j.dir)){
@@ -163,7 +163,7 @@ bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir){
 	switch(jDir){
 		case 0:
 			yLock=0;
-			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.y<12)){
+			if((*(*(MapJ.c + yLock) + xLock)=='!')&&(MapJ.taille.y<12)){
 				SCROLL_LOCK=false;
 			}
 			if((camera.y-y)>4){
@@ -181,7 +181,7 @@ bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir){
 			break;
 		case 2:
 			yLock=currentMap.taille.y-1;
-			if((*(*(MapJ.c + yLock) + xLock)=='#')&&(MapJ.taille.y>51)){
+			if((*(*(MapJ.c + yLock) + xLock)=='!')&&(MapJ.taille.y>51)){
 				SCROLL_LOCK=false;
 			}
 			if((y-camera.y)>3){

@@ -50,6 +50,21 @@ void drawNext(){
 					
 					glEnd();
 					break;
+				case '!':
+					glColor3f(1.0f,1.0f,1.0f);
+					glMatrixMode(GL_MODELVIEW);
+					glLoadIdentity();
+					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+					
+					glVertex2f(0.0,0.0);
+					glVertex2f(TILE_SIZE,0.0f);
+					glVertex2f(TILE_SIZE,TILE_SIZE);
+					glVertex2f(0.0f,TILE_SIZE);
+					
+					glEnd();
+					break;
 				case ' ' :	//cas du sol classique
 					glColor3f(0.25f,0.25f,0.25f); //couleurs verte
 					glMatrixMode(GL_MODELVIEW);
@@ -119,6 +134,21 @@ void drawPrevious(){
 					
 					glEnd();
 					break;
+				case '!':
+					glColor3f(1.0f,1.0f,1.0f);
+					glMatrixMode(GL_MODELVIEW);
+					glLoadIdentity();
+					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+					
+					glVertex2f(0.0,0.0);
+					glVertex2f(TILE_SIZE,0.0f);
+					glVertex2f(TILE_SIZE,TILE_SIZE);
+					glVertex2f(0.0f,TILE_SIZE);
+					
+					glEnd();
+					break;
 				case ' ' :	//cas du sol classique
 					glColor3f(0.25f,0.25f,0.25f); //couleurs verte
 					glMatrixMode(GL_MODELVIEW);
@@ -169,6 +199,21 @@ void drawCurrent(){
 			
 			switch (carActuel){
 				case '#':
+					glColor3f(1.0f,1.0f,1.0f);
+					glMatrixMode(GL_MODELVIEW);
+					glLoadIdentity();
+					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+					
+					glVertex2f(0.0,0.0);
+					glVertex2f(TILE_SIZE,0.0f);
+					glVertex2f(TILE_SIZE,TILE_SIZE);
+					glVertex2f(0.0f,TILE_SIZE);
+					
+					glEnd();
+					break;
+				case '!':
 					glColor3f(1.0f,1.0f,1.0f);
 					glMatrixMode(GL_MODELVIEW);
 					glLoadIdentity();
@@ -250,7 +295,7 @@ void drawMap(){
 
 void drawEnnemis(){
 	
-	printf("drawEnnemi\n");
+	//printf("drawEnnemi\n");
 	ElementEnnemi* actuel=liste->premier;
 	
 	for(int i=0;i<liste->nombre;i++){
@@ -345,7 +390,7 @@ void drawJoueur(){
 
 };
 void drawTirs(){
-	printf("drawTirs debut\n");
+	//printf("drawTirs debut\n");
 	for(int i=0;i<j.tirs->nombre;i++){
 		Coordonnee posT=pos_tirs(j.tirs,i);
 		glColor3f(0.7f,0.7f,1.0f);
@@ -362,7 +407,7 @@ void drawTirs(){
 		
 		glEnd();
 	}
-	printf("drawTirs fin \n");
+	//printf("drawTirs fin \n");
 }
 void interface(int nb){
 	

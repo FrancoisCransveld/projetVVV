@@ -130,7 +130,7 @@ void supprimer_ennemi_numero(ListeEnnemi* liste, int numero){
 	int decalage=numero;
 	bool SensCroissant=true;
 	if(liste->premier!=NULL){
-		afficher_liste(liste);
+		//afficher_liste(liste);
 		ElementEnnemi* actuel=NULL;
 		ElementEnnemi* precedent=NULL;
 		ElementEnnemi* suivant=NULL;
@@ -259,8 +259,10 @@ void modifier_pos_ennemis(ListeEnnemi* liste, Coordonnee variation){
 	ElementEnnemi* actuel=liste->premier;
 	int nombreMax=liste->nombre;
 	for(i=0;i<nombreMax;i++){
+		printf("avant ennemi %d->x:%d y:%d\n",i,actuel->e.pos.x,actuel->e.pos.y);
 		actuel->e.pos.x+=variation.x;
 		actuel->e.pos.y+=variation.y;
+		printf("apres ennemi %d->x:%d y:%d\n",i,actuel->e.pos.x,actuel->e.pos.y);
 		actuel=actuel->suivant;
 	}
 	supprimer_ennemi_hors_portee(liste);
@@ -273,7 +275,7 @@ void supprimer_ennemi_hors_portee(ListeEnnemi* liste){
 	int nombreMax=liste->nombre;
 	for(int i=0;i<nombreMax;i++){
 		if(actuel->e.pos.y>camera.y+(CAM_RANGE*8)||actuel->e.pos.y<camera.y-(CAM_RANGE*8)){
-			printf("suprimer %d adresse %hx\n",i,actuel);
+			//printf("suprimer %d adresse %hx\n",i,actuel);
 			actuel->e.attente=false;
 			supprimer_ennemi_numero(liste, i);
 		}
@@ -290,7 +292,7 @@ void activer_ennemi_a_portee(ListeEnnemi* liste){
 	int nombreMax=liste->nombre;
 	for(int i=0;i<nombreMax;i++){
 		if(actuel->e.pos.y<camera.y+(CAM_RANGE+4)&&actuel->e.pos.y>camera.y-(CAM_RANGE+4)){
-			printf("activer %d adresse %hx\n",i,actuel);
+			//printf("activer %d adresse %hx\n",i,actuel);
 			actuel->e.attente=false;
 		}
 		else{	
