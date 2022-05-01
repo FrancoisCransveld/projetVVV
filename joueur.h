@@ -6,6 +6,7 @@
 struct joueur{
 	Coordonnee pos;
 	int vie;
+	int hp;
 	Direction dir;
 	ListeTirs* tirs;
 	int maxTirs;

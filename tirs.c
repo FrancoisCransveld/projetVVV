@@ -49,16 +49,18 @@ void tirs(ListeTirs* listeT, Coordonnee pos, TypeTirs t, Direction dir){
 	if(listeT->nombre>0){
 		ElementTirs* nouveau=malloc(sizeof(ElementTirs));
 		nouveau->t.pos=pos;
+		nouveau->t.pos.x*=2;
+		nouveau->t.pos.y*=2;
 		nouveau->t.t=t;
 		switch (nouveau->t.t){
 			case 0:
-				nouveau->t.distanceMax=20;
+				nouveau->t.distanceMax=40;
 				break;
 			case 1:
-				nouveau->t.distanceMax=15;
+				nouveau->t.distanceMax=30;
 				break;
 			case 2:
-				nouveau->t.distanceMax=10;
+				nouveau->t.distanceMax=20;
 				break;
 			case 3:
 				nouveau->t.distanceMax=0;
@@ -74,16 +76,18 @@ void tirs(ListeTirs* listeT, Coordonnee pos, TypeTirs t, Direction dir){
 	else if(listeT->nombre==0){
 		ElementTirs* nouveau=malloc(sizeof(ElementTirs));
 		nouveau->t.pos=pos;
+		nouveau->t.pos.x*=2;
+		nouveau->t.pos.y*=2;
 		nouveau->t.t=t;
 		switch (nouveau->t.t){
 			case 0:
-				nouveau->t.distanceMax=20;
+				nouveau->t.distanceMax=40;
 				break;
 			case 1:
-				nouveau->t.distanceMax=15;
+				nouveau->t.distanceMax=30;
 				break;
 			case 2:
-				nouveau->t.distanceMax=10;
+				nouveau->t.distanceMax=20;
 				break;
 			case 3:
 				nouveau->t.distanceMax=0;
@@ -130,16 +134,18 @@ void modifier_tirs(ListeTirs* listeT, int numero, Coordonnee pos, TypeTirs t,Dir
 			}
 		actuel->t.t=t;
 		actuel->t.pos=pos;
+		actuel->t.pos.x=actuel->t.pos.x*2;
+		actuel->t.pos.y=actuel->t.pos.y*2;
 		actuel->t.dir=dir;
 		switch (actuel->t.t){
 			case 0:
-				actuel->t.distanceMax=20;
+				actuel->t.distanceMax=40;
 				break;
 			case 1:
-				actuel->t.distanceMax=15;
+				actuel->t.distanceMax=30;
 				break;
 			case 2:
-				actuel->t.distanceMax=10;
+				actuel->t.distanceMax=20;
 				break;
 			case 3:
 				actuel->t.distanceMax=0;
@@ -352,6 +358,9 @@ void deplacement_tirs(ListeTirs* listeT){
 //POST:Renvoie la coordonnee du tirs numero (les tirs sont numeroté de 0 à listeT.nombre-1)
 Coordonnee pos_tirs(ListeTirs* listeT,int numero){
 	//printf("pos tirs\n");
+	Coordonnee position;
+	position.x=-200;//hors de toute carte
+	position.y=-200;
 	if(listeT->premier!=NULL){
 	int i=0;
 	int decalage=numero;
@@ -376,11 +385,13 @@ Coordonnee pos_tirs(ListeTirs* listeT,int numero){
 			}
 			i++;
 		}
+		position=actuel->t.pos;
 	}
 	
-	return(actuel->t.pos);
+	
 	}
-}
+	return(position);
+};
 //PRE: prend en argument la liste
 //post:affiche cette liste dans la console
 void afficher_liste_tirs(ListeTirs* listeT){

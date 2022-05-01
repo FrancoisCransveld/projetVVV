@@ -217,6 +217,21 @@ void retirer_vie_numero(ListeEnnemi* liste, int numero, int degat){
 		actuel->e.vie-=(degat+1);
 		actuel->e.attente=false;
 		if(actuel->e.vie<1){
+			switch (actuel->e.type){
+				case 0:
+					score+=5;
+					break;
+				case 1:
+					score+=2;
+					break;
+				case 2:
+					score+=20;
+					break;
+				case 3:
+					score+=50;
+					break;
+			}
+			printf("score :%d\n",score);
 			supprimer_ennemi_numero(liste, numero);
 		}
 		

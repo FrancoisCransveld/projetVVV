@@ -43,7 +43,7 @@ TabNiveau niveauA; // tableau des niveaux aléatoirement choisis
 char* int_vers_char(int nombre);
 void map_select(int select,char* nom);
 void Entree_sortie_Map( int select, Direction* entreeN, Direction* sortieN);
-void loadMaps(int* tMapX, int* tMapy);
+void loadMaps( int nombreMap);
 void loadMap(int tMapX, int tMapy,TabNiveau* niveauA, int select);
 void loadNext(int select);
 void tailleMap(int* tMapX,int* tMapY,TabNiveau niveauA, int selectedMap);

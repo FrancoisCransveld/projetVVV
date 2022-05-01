@@ -55,33 +55,7 @@ void map_select(int select,char* nom){
 		strcat(nom,".txt");
 	}
 	free(valeur);
-	/*strcat(nom,valeur);
-	strcat(nom,".txt");*/
-	/*switch(niveauA.Nmap[select].s){
-		case 0:
-			strcpy(nom,"map1.txt");
-			break;
-		case 1:
-			strcpy(nom,"map2.txt");
-			break;
-		case 2:
-			strcpy(nom,"map3.txt");
-			break;
-		case 3:
-			strcpy(nom,"map4.txt");
-			break;
-		case 4:
-			strcpy(nom,"map5.txt");
-			break;
-		case 5:
-			strcpy(nom,"map6.txt");
-			break;
-		case 6:
-			strcpy(nom,"map7.txt");
-			break;
-		default:
-			break;
-	}*/
+	
 };
 
 //PRE:prend en argument deux pointeurs d'int pour renvoiyer la taille trouvée et un int qui correspond à la map qui devrai être traitée dans niveauA.Nmap[select]
@@ -406,49 +380,18 @@ void initialisation_Map(Map* initMap){
 };
 //PRE: prend en argument deux int pour la largeur et la hauteur des maps( cette fonction sera changé pour prendre une int qui déterminera le nombre de carte du niveau
 //POST: Fait initialement une sélection de map aléatoirement et charge les maps nécessaire au jeux au fur et a mesure (pas encore finit )
-void loadMaps(int *tMapX,int* tMapY){
-
-	int nombreMap=8;
+void loadMaps( int nombreMap){
+	
+	int* tMapX=malloc(sizeof(int*));
+	int* tMapY=malloc(sizeof(int*));
+	nombreMap=8;
 	niveauA.nombreMap=nombreMap;
 	initialisation_Map(&previousMap);
 	initialisation_Map(&nextMap);
 	initialisation_Map(&currentMap);
 	niveauA.Nmap=malloc(sizeof(SelectionMap)*nombreMap);
 	choix_map_aleatoire();
-	/*niveauA.Nmap[0].s=0;		// le numéro de cette carte est le 0
-	niveauA.Nmap[0].Next=0;	// la sortie de cette carte est vers le haut
-	niveauA.Nmap[0].loadStatus=false;//cette map n'est pas chargée en mémoire
-	niveauA.Nmap[0].ennemi=true;
-	niveauA.Nmap[1].s=3;
-	niveauA.Nmap[1].Next=0;	//cette carte n'a pas de sortie
-	niveauA.Nmap[1].loadStatus=false;
-	niveauA.Nmap[1].ennemi=true;
-	niveauA.Nmap[2].s=4;
-	niveauA.Nmap[2].Next=0;	//cette carte n'a pas de sortie
-	niveauA.Nmap[2].previous=2;
-	niveauA.Nmap[2].loadStatus=false;
-	niveauA.Nmap[2].ennemi=true;
-	niveauA.Nmap[3].s=3;
-	niveauA.Nmap[3].Next=0;	//cette carte n'a pas de sortie
-	niveauA.Nmap[3].previous=2;
-	niveauA.Nmap[3].loadStatus=false;
-	niveauA.Nmap[4].s=3;
-	niveauA.Nmap[4].Next=0;	//cette carte n'a pas de sortie
-	niveauA.Nmap[4].previous=2;
-	niveauA.Nmap[4].loadStatus=false;
-	niveauA.Nmap[5].s=4;
-	niveauA.Nmap[5].Next=0;	//cette carte n'a pas de sortie
-	niveauA.Nmap[5].previous=2;
-	niveauA.Nmap[5].loadStatus=false;
-	niveauA.Nmap[6].s=4;
-	niveauA.Nmap[6].Next=0;	//cette carte n'a pas de sortie
-	niveauA.Nmap[6].previous=2;
-	niveauA.Nmap[6].loadStatus=false;
-	niveauA.Nmap[7].s=6;
-	niveauA.Nmap[7].Next=5;	//cette carte n'a pas de sortie
-	niveauA.Nmap[7].previous=2;
-	niveauA.Nmap[7].loadStatus=false;
-	*/
+	score=0;
 	niveauA.current=0;
 	int i=0;
 	do{
@@ -463,6 +406,8 @@ void loadMaps(int *tMapX,int* tMapY){
 	supprimer_ennemi_numero(liste, 0);
 	camera.x=currentMap.taille.x/2;//position initiale de la camera affichant une map complète au centre. 
 	camera.y=currentMap.taille.y/2;
+	free(tMapX);
+	free(tMapY);
 	return;
 }
 //PRE:
@@ -517,6 +462,8 @@ Joueur loadJoueur(int select){
 	
 	}
 	J.vie=3;
+	J.hp=5;
+	J.dir=4;
 	J.tirs=creer_liste_tirs();
 	J.maxTirs=4;
 	return J;

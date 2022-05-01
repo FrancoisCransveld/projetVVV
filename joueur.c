@@ -52,12 +52,12 @@ void moveLeft(){		//la fonction va vérifier si on peut se déplacer vers la gau
 	 //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	replacement_joueur(x,y,&MapJ);
 	//printf("moveLeft\n");
-
+	j.dir=3;
 	//recherche position par rapport à current 
 	/*  */
 	if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#')
 	{
-		j.dir=3;
+		
 		j.pos.x = x;
 		if(autorisation_scroll( x, y,MapJ,j.dir)){
 			camera.x--;//position initiale de la camera affichant une map complète au centre. 
@@ -83,10 +83,11 @@ void moveRight()		//la fonction va vérifier si on peut se déplacer vers la dro
 	
 	 //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	replacement_joueur(x,y,&MapJ);
+	j.dir=1;
 	//printf("moveRight\n");
-	if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#')
+	if (*(*(MapJ.c + MapJ.taille.y) + (MapJ.taille.x))!='#')
 	{
-		j.dir=1;
+
 		j.pos.x = x;
 		if(autorisation_scroll( x, y,MapJ,j.dir)){
 			camera.x++;
@@ -107,12 +108,12 @@ void moveUp()
 	y = j.pos.y-1;
 	
 	Map MapJ;
-	
+	j.dir=0;
 	 //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	replacement_joueur(x,y,&MapJ);
 	//printf("moveUp\n");
 	if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#'&&*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='!'){//attention a changer
-		j.dir=0;
+		
 		j.pos.y = y;
 		if(autorisation_scroll( x, y,MapJ,j.dir)){
 			camera.y--;
@@ -137,8 +138,9 @@ void moveDown()
 	//printf("moveDown\n");
 	 //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	replacement_joueur(x,y,&MapJ);	//dans MapJ la structure taille correspond au futur coordonée du joueur dans le plateau logique qui lui correspond
-   if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#'&&*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='!'){   
-		j.dir=2;
+	j.dir=2;
+   if (*(*(MapJ.c + (MapJ.taille.y)) + MapJ.taille.x)!='#'&&*(*(MapJ.c + (MapJ.taille.y)) + MapJ.taille.x)!='!'){   
+		
 		j.pos.y = y;
 		if(autorisation_scroll( x, y,MapJ,j.dir)){
 			camera.y++;
@@ -208,160 +210,66 @@ bool collisionEnnemiJoueur(){
 	bool collision=false;
 	for(int i=0;i<liste->nombre;i++){
 				Coordonnee EnnemiActuel=pos_Ennemi(liste,i);
-				if((EnnemiActuel.x==j.pos.x)&&(EnnemiActuel.y==j.pos.y)){
-					j.vie--;
-					switch(j.dir){
-						case 0:
-							moveDown();
-							moveDown();
-							break;
-						case 1:
-							moveLeft();
-							moveLeft();
-							break;
-						case 2:
-							moveUp();
-							moveUp();
-							break;
-						case 3:
-							moveRight();
-							moveRight();
-							break;
-						case 4:
-							moveDown();
-							moveDown();
-							break;
+				if(EnnemiActuel.x==j.pos.x){
+					if((EnnemiActuel.y==j.pos.y)||((EnnemiActuel.y-1==j.pos.y)&&j.dir==2)||((EnnemiActuel.y+1==j.pos.y)&&j.dir==0)){
+						j.hp--;
+						switch(j.dir){
+							case 0:
+								moveDown();
+								moveDown();
+								break;
+							case 1:
+								moveLeft();
+								moveLeft();
+								break;
+							case 2:
+								moveUp();
+								moveUp();
+								break;
+							case 3:
+								moveRight();
+								moveRight();
+								break;
+							case 4:
+								moveDown();
+								moveDown();
+								break;
+						}
+						collision=true;
+						return collision;
 					}
-					collision=true;
-					return collision;
+				}
+				if(EnnemiActuel.y==j.pos.y){
+					if((EnnemiActuel.x==j.pos.x)||((EnnemiActuel.x+1==j.pos.y)&&j.dir==3)||((EnnemiActuel.x-1==j.pos.y)&&j.dir==1)){
+						j.hp--;
+						switch(j.dir){
+							case 0:
+								moveDown();
+								moveDown();
+								break;
+							case 1:
+								moveLeft();
+								moveLeft();
+								break;
+							case 2:
+								moveUp();
+								moveUp();
+								break;
+							case 3:
+								moveRight();
+								moveRight();
+								break;
+							case 4:
+								moveDown();
+								moveDown();
+								break;
+						}
+						collision=true;
+						return collision;
+					}
 				}
 	
 	}
 	return collision;
 }
-/*
-void mapLoader(Map MapJ,Direction jDir){
-	
-	printf("mapLoader\n");
-	int nextLoad=-1;
-	switch(jDir){
-		case 0:
-			if(MapJ.taille.y<26){
-			printf("up: jdirP%d next dir%d current%d previous dir%d next%d nextLR %d \n",jDir,niveauA.Nmap[niveauA.current].Next,niveauA.current,niveauA.Nmap[niveauA.current].previous,niveauA.next,niveauA.nextLR);
-				int i=0;
-				while(niveauA.Nmap[niveauA.current+i].Next!=5&&i<2){
-					if(jDir==niveauA.Nmap[niveauA.current+i].Next){
-						nextLoad=niveauA.current+1+i;
-						break;
-					}
-					i++;
-				}
-				i=0;
-				while(niveauA.Nmap[niveauA.current-i].previous!=5&&i<2){
-					if(jDir==niveauA.Nmap[niveauA.current-i].previous){
-						nextLoad=niveauA.current-1-i;
-						break;
-					}
-					i++;
-				}	
-				}
-			break;
-		case 1:
-			if(MapJ.taille.x>38){
-			printf("right: jdirP%d next dir%d current%d previous dir%d next%d \n",jDir,niveauA.Nmap[niveauA.current].Next,niveauA.current,niveauA.Nmap[niveauA.current].previous,niveauA.next);
-				int i=0;
-				while(niveauA.Nmap[niveauA.current+i].Next!=5&&i<2){
-					if(jDir==niveauA.Nmap[niveauA.current+i].Next){
-						nextLoad=niveauA.current+1+i;
-						break;
-					}
-					i++;
-				}
-				i=0;
-				while(niveauA.Nmap[niveauA.current-i].previous!=5&&i<2){
-					if(jDir==niveauA.Nmap[niveauA.current-i].previous){
-						nextLoad=niveauA.current-1-i;
-						break;
-					}
-					i++;
-				}	
-			}
-			
-			break;
-		case 2:
-			if(MapJ.taille.y>38){
-				printf("down: jdirP%d next dir%d current%d previous dir%d next%d \n",jDir,niveauA.Nmap[niveauA.current].Next,niveauA.current,niveauA.Nmap[niveauA.current].previous,niveauA.next);
-				int i=0;
-				while(niveauA.Nmap[niveauA.current+i].Next!=5&&i<2){
-					if(jDir==niveauA.Nmap[niveauA.current+i].Next){
-						nextLoad=niveauA.current+1+i;
-						break;
-					}
-					i++;
-				}
-				i=0;
-				while(niveauA.Nmap[niveauA.current-i].previous!=5&&i<2){
-					if(jDir==niveauA.Nmap[niveauA.current-i].previous){
-						nextLoad=niveauA.current-1-i;
-						break;
-					}
-					i++;
-				}	
-			}
-			break;
-		case 3:
-			if(MapJ.taille.x<26){
-			printf("left: jdirP%d next dir%d current%d previous dir%d next%d \n",jDir,niveauA.Nmap[niveauA.current].Next,niveauA.current,niveauA.Nmap[niveauA.current].previous,niveauA.next);
-				int i=0;
-				while(niveauA.Nmap[niveauA.current+i].Next!=5&&i<2){
-					if(jDir==niveauA.Nmap[niveauA.current+i].Next){
-						nextLoad=niveauA.current+1+i;
-						break;
-					}
-					i++;
-				}
-				i=0;
-				while(niveauA.Nmap[niveauA.current-i].previous!=5&&i<2){
-					if(jDir==niveauA.Nmap[niveauA.current-i].previous){
-						nextLoad=niveauA.current-1-i;
-						break;
-					}
-					i++;
-				}	
-			}
-			break;
-		case 4:
-			break;
-	}
-	if(nextLoad>=0){
-		if(!niveauA.Nmap[nextLoad].loadStatus){
-			printf("nextLoad pre %d\n",nextLoad);
-			loadNext(nextLoad);
-			printf("nextLoad %d\n",nextLoad);
-		}
-	}
-	else{
-		printf("nothing\n");
-	}
-}
-*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//void movePlayer(

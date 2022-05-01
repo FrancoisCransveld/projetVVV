@@ -18,4 +18,5 @@ void interface(int nb);
 void drawMap(void);
 void drawJoueur(void);
 void drawEnnemis(void);
+void interface_menu(void);
 #endif

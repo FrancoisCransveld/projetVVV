@@ -6,23 +6,34 @@
 #endif
 #include <stdlib.h>
 #include <stdio.h>
+
 #include "jeu.h"
 #include "LoadMaps.h"
 #include "interface.h"
 #include "joueur.h"
+#include "menu.h"
 bool UP = false;
 bool LEFT = false;
 bool RIGHT = false;
 bool DOWN = false;
 bool ESCAPE = false;
 bool SPACE = false;
+
 void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les input
 {
-	//printf("Keyboard \n");
+	printf("Keyboard \n");
 	switch(key)
 	{
 		case 27:
-			exit(0);
+			ESCAPE=true;
+			if(MENU&&ESCAPE){
+				exit(0);
+				ESCAPE=false;
+			}
+			else{
+				MENU=true;
+				selectionMenu=0;
+			}
 		case'z':
 			UP = true;
 			break;
@@ -59,7 +70,18 @@ void KeyboardSpecial(int key, int x, int y)  // fonction allant gérer les input
 			break;
 	}	
 };
-//glutTimerFunc(500, InputLoop, 1);
+void mouse_pos(int button, int etat, int x, int y){
+	
+	if(button==GLUT_LEFT_BUTTON){
+		if(etat==GLUT_UP){
+		
+			coordonneeSouris.x=x;//coordonnee en pixel par rapport à (0;0) coin supérieur gauche
+			coordonneeSouris.y=y;
+			printf(" CoordonneeSouris: (%d,%d)\n",coordonneeSouris.x,coordonneeSouris.y);
+		}
+	}
+};
+
 void upDateKeyboard(int num){
 	//printf("updateKeyboard \n");
 	jeu();
@@ -86,7 +108,7 @@ void upDateTirs(int num){
 					Coordonnee EnnemiActuel=pos_Ennemi(liste,i);
 					//printf("PreCoordonneeTirs %d\n", tirs);
 					Coordonnee tirsActuel=pos_tirs(j.tirs,tirs);
-					if((EnnemiActuel.x==tirsActuel.x)&&(EnnemiActuel.y==tirsActuel.y)){ 
+					if(((EnnemiActuel.x*2)==tirsActuel.x)&&((EnnemiActuel.y*2)==tirsActuel.y)){ 
 						retirer_vie_numero(liste, i,degat_tirs(j.tirs, tirs));
 						supprimer_tirs_numero(j.tirs,tirs);
 						//printf("sortie de suppresion tirs \n");
@@ -190,6 +212,17 @@ void switchMap(){
 		//printf("limite du niveau\n");
 	}
 };
+void mort(){
+	j.vie--;
+	j.hp=5;
+	
+	if(j.vie==0){
+		
+	}
+};
+void game_over(){
+	
+};
 void jeu()
 {
 	//printf("jeu \n");
@@ -218,15 +251,11 @@ void jeu()
 	if (DOWN == true)
 	{
 		//printf("DOWN ");
-        moveDown(j);
+        	moveDown(j);
 		DOWN = false;
 	}
-	/*if (SPACE == true){
-		if(j.tirs->nombre<j.maxTirs){
-			tirs(j.tirs,j.pos,pistolet,j.dir);
-		}
-		SPACE=false;
-	}*/
-	
+	if (j.hp==0){
+		mort();
+	}
 	glutPostRedisplay();
 };
