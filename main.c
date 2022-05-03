@@ -36,22 +36,22 @@ void Display()
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         interface(1);
-        printf("sortie interface\n"); 
+        //printf("sortie interface\n"); 
         glMatrixMode(GL_PROJECTION);
-        printf("matrixModeDisplay\n");
+        //printf("matrixModeDisplay\n");
 	glLoadIdentity();
-	printf("LoadIdentity\n");
+	//printf("LoadIdentity\n");
 	if(MENU){
-		printf("MENU true glutOrtho\n");
+		//printf("MENU true glutOrtho\n");
 		gluOrtho2D(0, width, heigth, 0);
 	}
 	else{
-		printf("MENU false glutOrtho\n");
-		gluOrtho2D(TILE_SIZE*(camera.x)-width/4, TILE_SIZE*(camera.x)+width/4, TILE_SIZE*(camera.y)+heigth/4, TILE_SIZE*(camera.y)-heigth/4);
+		//printf("MENU false glutOrtho\n");
+		gluOrtho2D(TILE_SIZE*(camera.x)-(width/4+(TILE_SIZE*3)), TILE_SIZE*(camera.x)+(width/4+(TILE_SIZE*3)), TILE_SIZE*(camera.y)+heigth/4, TILE_SIZE*(camera.y)-heigth/4);
 	}
-	printf("gluOrtho\n");
+	printf("gluOrtho %d,%d\n",width,heigth);
 	glFlush();
-	printf("fin display\n");
+	//printf("fin display\n");
 	
 }
 int main (int argc,char* argv[]){

@@ -11,11 +11,12 @@ int width;
 int heigth;
 
 Coordonnee camera;
+void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap);
 void drawNext(void);
 void drawPrevious(void);
 void drawCurrent(void);
 void interface(int nb);
-void drawMap(void);
+void drawMapCall(void);
 void drawJoueur(void);
 void drawEnnemis(void);
 void interface_menu(void);

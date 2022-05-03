@@ -75,11 +75,415 @@ void vStrokeOutput(GLfloat x, GLfloat y, char *string, void *font)
 }
 
 GLuint _textureId; //The id of the texture
+void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
+	
+	printf("DrawMap\n");
+	char carActuel;
+	int nbrRandom=0;
+	Image* image=NULL;
+	
+	/*image = loadBMP("velo1.bmp");
+	_textureId = loadTexture(image);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_TEXTURE_2D);						
+	for(y=minY;y<maxY;y++){
+		for(x=minX;x<maxX;x++){
+			if((x>=camera.x-(width/(2*TILE_SIZE))-1)&&(x<=(camera.x+(width/(2*TILE_SIZE))+1))&&(y<=(camera.y+(width/(2*TILE_SIZE))+1))&&(y>=(camera.y-(width/(2*TILE_SIZE))-1))){
+		carActuel=*(*(pDrawnMap+y-minY)+x-minX);
+				if(carActuel=='#'){
+					glBindTexture(GL_TEXTURE_2D, _textureId);
+					
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+					if(image->RGBA){
+						glColor4f(1.0f,1.0f,1.0f,1.0f);
+					}
+					else{
+						glColor3f(1.0f,1.0f,1.0f);
+					}	
+					glMatrixMode(GL_MODELVIEW);		
+					glLoadIdentity();
+					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2f(TILE_SIZE,TILE_SIZE);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2f(0.0f,TILE_SIZE);
+					glTexCoord2f(1.0f,1.0f);
+					glVertex2f(0.0,0.0);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2f(TILE_SIZE,0.0f);
+					glEnd();
+					
+				}
+			}
+		}
+	}
+
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_BLEND);*/
+	image = loadBMP("herbe1.bmp");
+	_textureId = loadTexture(image);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_TEXTURE_2D);						
+	for(y=minY;y<maxY;y++){
+		for(x=minX;x<maxX;x++){
+			if((x>=camera.x-(width/(2*TILE_SIZE))-1)&&(x<=(camera.x+(width/(2*TILE_SIZE))+1))&&(y<=(camera.y+(width/(2*TILE_SIZE))+1))&&(y>=(camera.y-(width/(2*TILE_SIZE))-1))){
+		carActuel=*(*(pDrawnMap+y-minY)+x-minX);
+				if(carActuel=='h'){
+					glBindTexture(GL_TEXTURE_2D, _textureId);
+					
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+					if(image->RGBA){
+						glColor4f(1.0f,1.0f,1.0f,1.0f);
+					}
+					else{
+						glColor3f(1.0f,1.0f,1.0f);
+					}	
+					glMatrixMode(GL_MODELVIEW);		
+					glLoadIdentity();
+					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2f(TILE_SIZE,TILE_SIZE);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2f(0.0f,TILE_SIZE);
+					glTexCoord2f(1.0f,1.0f);
+					glVertex2f(0.0,0.0);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2f(TILE_SIZE,0.0f);
+					glEnd();
+					
+				}
+			}
+		}
+	}
+
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_BLEND);
+	image = loadBMP("route1.bmp");
+	_textureId = loadTexture(image);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_TEXTURE_2D);						
+	for(y=minY;y<maxY;y++){
+		for(x=minX;x<maxX;x++){
+			if((x>=camera.x-(width/(2*TILE_SIZE))-1)&&(x<=(camera.x+(width/(2*TILE_SIZE))+1))&&(y<=(camera.y+(width/(2*TILE_SIZE))+1))&&(y>=(camera.y-(width/(2*TILE_SIZE))-1))){
+			
+				
+				carActuel=*(*(pDrawnMap+y-minY)+x-minX);
+				if(carActuel==' '||carActuel=='c'||carActuel=='v'||carActuel=='j'||carActuel=='m'){
+					
+					
+					nbrRandom=((x+y)%4);
+					
+					glBindTexture(GL_TEXTURE_2D, _textureId);
+					
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+					if(image->RGBA){
+						glColor4f(1.0f,1.0f,1.0f,1.0f);
+					}
+					else{
+						glColor3f(1.0f,1.0f,1.0f);
+					}	
+					glMatrixMode(GL_MODELVIEW);		
+					glLoadIdentity();
+					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+					switch (nbrRandom){
+						case 0:
+							glTexCoord2f(0.0f, 0.0f);
+							glVertex2f(TILE_SIZE,TILE_SIZE);
+							glTexCoord2f(1.0f, 0.0f);
+							glVertex2f(0.0f,TILE_SIZE);
+							glTexCoord2f(1.0f,1.0f);
+							glVertex2f(0.0,0.0);
+							glTexCoord2f(0.0f, 1.0f);
+							glVertex2f(TILE_SIZE,0.0f);
+							break;
+						case 1:
+							glTexCoord2f(0.0f, 0.0f);
+							glVertex2f(0.0,0.0);
+							glTexCoord2f(1.0f, 0.0f);
+							glVertex2f(0.0f,TILE_SIZE);
+							glTexCoord2f(1.0f,1.0f);
+							glVertex2f(TILE_SIZE,TILE_SIZE);
+							glTexCoord2f(0.0f, 1.0f);
+							glVertex2f(TILE_SIZE,0.0f);
+							break;
+
+						case 2:
+							glTexCoord2f(0.0f, 0.0f);
+							glVertex2f(0.0,0.0);
+							glTexCoord2f(1.0f, 0.0f);
+							glVertex2f(TILE_SIZE,0.0f);
+							glTexCoord2f(1.0f,1.0f);
+							glVertex2f(TILE_SIZE,TILE_SIZE);
+							glTexCoord2f(0.0f, 1.0f);
+							glVertex2f(0.0f,TILE_SIZE);
+							break;
+						case 3:
+							glTexCoord2f(0.0f, 0.0f);
+							glVertex2f(TILE_SIZE,TILE_SIZE);
+							glTexCoord2f(1.0f, 0.0f);
+							glVertex2f(TILE_SIZE,0.0f);
+							glTexCoord2f(1.0f,1.0f);
+							glVertex2f(0.0,0.0);
+							glTexCoord2f(0.0f, 1.0f);
+							glVertex2f(0.0f,TILE_SIZE);
+							break;
+						default:
+							glTexCoord2f(0.0f, 0.0f);
+							glVertex2f(TILE_SIZE,TILE_SIZE);
+							glTexCoord2f(1.0f, 0.0f);
+							glVertex2f(0.0f,TILE_SIZE);
+							glTexCoord2f(1.0f,1.0f);
+							glVertex2f(0.0,0.0);
+							glTexCoord2f(0.0f, 1.0f);
+							glVertex2f(TILE_SIZE,0.0f);
+							break;	
+					}
+					nbrRandom++;
+					glEnd();
+					
+				}
+			}
+		}
+	}
+
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_BLEND);
+	
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_BLEND);
+	image = loadBMP("trotoir.bmp");
+	_textureId = loadTexture(image);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_TEXTURE_2D);						
+	for(y=minY;y<maxY;y++){
+		for(x=minX;x<maxX;x++){
+			if((x>=camera.x-(width/(2*TILE_SIZE))-1)&&(x<=(camera.x+(width/(2*TILE_SIZE))+1))&&(y<=(camera.y+(width/(2*TILE_SIZE))+1))&&(y>=(camera.y-(width/(2*TILE_SIZE))-1))){
+				printf("pos c %d,%d\n",x,y);
+				carActuel=*(*(pDrawnMap+y-minY)+x-minX);
+				if(carActuel=='b'){
+					glBindTexture(GL_TEXTURE_2D, _textureId);
+					
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+					if(image->RGBA){
+						glColor4f(1.0f,1.0f,1.0f,1.0f);
+					}
+					else{
+						glColor3f(1.0f,1.0f,1.0f);
+					}	
+					glMatrixMode(GL_MODELVIEW);		
+					glLoadIdentity();
+					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2f(TILE_SIZE,TILE_SIZE);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2f(0.0f,TILE_SIZE);
+					glTexCoord2f(1.0f,1.0f);
+					glVertex2f(0.0,0.0);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2f(TILE_SIZE,0.0f);
+					glEnd();
+					
+				}
+			}
+		}
+	}
+
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_BLEND);
+	
+	image = loadBMP("ligne.bmp");
+	_textureId = loadTexture(image);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_TEXTURE_2D);						
+	for(y=minY;y<maxY;y++){
+		for(x=minX;x<maxX;x++){
+			if((x>=camera.x-(width/(2*TILE_SIZE))-1)&&(x<=(camera.x+(width/(2*TILE_SIZE))+1))&&(y<=(camera.y+(width/(2*TILE_SIZE))+1))&&(y>=(camera.y-(width/(2*TILE_SIZE))-1))){
+		carActuel=*(*(pDrawnMap+y-minY)+x-minX);
+				if(carActuel=='l'){
+					glBindTexture(GL_TEXTURE_2D, _textureId);
+					
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+					if(image->RGBA){
+						glColor4f(1.0f,1.0f,1.0f,1.0f);
+					}
+					else{
+						glColor3f(1.0f,1.0f,1.0f);
+					}	
+					glMatrixMode(GL_MODELVIEW);		
+					glLoadIdentity();
+					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2f(TILE_SIZE,TILE_SIZE);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2f(0.0f,TILE_SIZE);
+					glTexCoord2f(1.0f,1.0f);
+					glVertex2f(0.0,0.0);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2f(TILE_SIZE,0.0f);
+					glEnd();
+					
+				}
+			}
+		}
+	}
+
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_BLEND);
+	
+	image = loadBMP("barrière.bmp");
+	_textureId = loadTexture(image);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_TEXTURE_2D);						
+	char carSuivant;
+	for(y=minY;y<maxY;y++){
+		for(x=minX;x<maxX;x++){
+			if((x>=camera.x-(width/(2*TILE_SIZE))-1)&&(x<=(camera.x+(width/(2*TILE_SIZE))+1))&&(y<=(camera.y+(width/(2*TILE_SIZE))+1))&&(y>=(camera.y-(width/(2*TILE_SIZE))-1))){
+			
+				
+				carActuel=*(*(pDrawnMap+y-minY)+x-minX);
+				if(carActuel=='#'){
+					if(x<63){
+						carSuivant=*(*(pDrawnMap+(y-minY))+(x-minX+1));
+					}
+					if(carSuivant=='b'){
+						//printf("%d\n",nbrRandom);
+						nbrRandom=2;
+						
+					}
+					if(x>0){
+						carSuivant=*(*(pDrawnMap+(y-minY))+(x-minX-1));
+					}
+					if(carSuivant=='b'){
+						//printf("%d\n",nbrRandom);
+						nbrRandom=0;	
+					}
+					if(y>0){
+						carSuivant=*(*(pDrawnMap+(y-minY-1))+(x-minX));
+					}
+					if(carSuivant=='b'||carSuivant==' '){
+						//printf("%d\n",nbrRandom);
+						nbrRandom=3;
+						
+					}
+					if(y<64){
+						carSuivant=*(*(pDrawnMap+(y-minY+1))+(x-minX));
+					}
+					if(carSuivant=='b'||carSuivant==' '){
+						//printf("%d\n",nbrRandom);
+						nbrRandom=1;
+					}
+					
+						
+					glBindTexture(GL_TEXTURE_2D, _textureId);
+					
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+					if(image->RGBA){
+						glColor4f(1.0f,1.0f,1.0f,1.0f);
+					}
+					else{
+						glColor3f(1.0f,1.0f,1.0f);
+					}	
+					glMatrixMode(GL_MODELVIEW);		
+					glLoadIdentity();
+					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+					switch (nbrRandom){
+						case 0:
+							glTexCoord2f(0.0f, 0.0f);
+							glVertex2f(TILE_SIZE,TILE_SIZE);
+							glTexCoord2f(1.0f, 0.0f);
+							glVertex2f(0.0f,TILE_SIZE);
+							glTexCoord2f(1.0f,1.0f);
+							glVertex2f(0.0,0.0);
+							glTexCoord2f(0.0f, 1.0f);
+							glVertex2f(TILE_SIZE,0.0f);
+							break;
+						case 1:
+							glTexCoord2f(0.0f, 0.0f);
+							glVertex2f(0.0,0.0);
+							glTexCoord2f(1.0f, 0.0f);
+							glVertex2f(0.0f,TILE_SIZE);
+							glTexCoord2f(1.0f,1.0f);
+							glVertex2f(TILE_SIZE,TILE_SIZE);
+							glTexCoord2f(0.0f, 1.0f);
+							glVertex2f(TILE_SIZE,0.0f);
+							break;
+
+						case 2:
+							glTexCoord2f(0.0f, 0.0f);
+							glVertex2f(0.0,0.0);
+							glTexCoord2f(1.0f, 0.0f);
+							glVertex2f(TILE_SIZE,0.0f);
+							glTexCoord2f(1.0f,1.0f);
+							glVertex2f(TILE_SIZE,TILE_SIZE);
+							glTexCoord2f(0.0f, 1.0f);
+							glVertex2f(0.0f,TILE_SIZE);
+							break;
+						case 3:
+							glTexCoord2f(0.0f, 0.0f);
+							glVertex2f(TILE_SIZE,TILE_SIZE);
+							glTexCoord2f(1.0f, 0.0f);
+							glVertex2f(TILE_SIZE,0.0f);
+							glTexCoord2f(1.0f,1.0f);
+							glVertex2f(0.0,0.0);
+							glTexCoord2f(0.0f, 1.0f);
+							glVertex2f(0.0f,TILE_SIZE);
+							break;
+						default:
+							glTexCoord2f(0.0f, 0.0f);
+							glVertex2f(TILE_SIZE,TILE_SIZE);
+							glTexCoord2f(1.0f, 0.0f);
+							glVertex2f(0.0f,TILE_SIZE);
+							glTexCoord2f(1.0f,1.0f);
+							glVertex2f(0.0,0.0);
+							glTexCoord2f(0.0f, 1.0f);
+							glVertex2f(TILE_SIZE,0.0f);
+							break;
+					}
+					glEnd();
+				}
+					
+			}
+		}
+	}
+	free(image);
+							
+							
+	
+	
+}
 //Pre: reçoit en argument nextMap et niveauA
 //Post:Fonction qui dessine la map nextMap; c'est dans cette fonction qu'on détermine ou dessinner NextMap par rapport à current
 void drawNext(){
 	
-	//printf("drawNext \n");
+	printf("drawNext \n");
 	//printf("etat Map :%d %d",nextMap.taille.x, nextMap.taille.y);
 	//printf("etat niveauA : \n  -niveauA.next: %d\n  -niveauA.current: %d\n  -niveauA.nextLR: %d",niveauA.next,niveauA.current,niveauA.nextLR);
 	int y=0;
@@ -90,78 +494,8 @@ void drawNext(){
 	int maxY=0;
 	char** pDrawnMap=nextMap.c;
 	char carActuel;
-
-	//printf("taille x, y: %d, %d et MaxX ,Y : %d %d\n",minX,minY,maxX,maxY);
-	for(y=minY;y<maxY;y++){
-		for(x=minX;x<maxX;x++){
-			carActuel=*(*(pDrawnMap+y-minY)+x-minX);
-			
-			switch (carActuel){	//switch sur la valeur du char à l'emplacement [x].[y] dans nextMap
-				case '#':	//cas des bords de la carte
-					glColor3f(1.0f,1.0f,1.0f); //couleurs blanche
-					glMatrixMode(GL_MODELVIEW);
-					glLoadIdentity();	//on remplace la matrice modelview par la matrice identité
-					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);//positionnement vers la case [x].[y] ou on dessinne l'élément en cours
-					
-					glBegin(GL_QUADS);
-					
-					glVertex2f(0.0,0.0);
-					glVertex2f(TILE_SIZE,0.0f);
-					glVertex2f(TILE_SIZE,TILE_SIZE);
-					glVertex2f(0.0f,TILE_SIZE);
-					
-					glEnd();
-					break;
-				case '!':
-					glColor3f(1.0f,1.0f,1.0f);
-					glMatrixMode(GL_MODELVIEW);
-					glLoadIdentity();
-					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
-					
-					glBegin(GL_QUADS);
-					
-					glVertex2f(0.0,0.0);
-					glVertex2f(TILE_SIZE,0.0f);
-					glVertex2f(TILE_SIZE,TILE_SIZE);
-					glVertex2f(0.0f,TILE_SIZE);
-					
-					glEnd();
-					break;
-				case ' ' :	//cas du sol classique
-					glColor3f(0.25f,0.25f,0.25f); //couleurs verte
-					glMatrixMode(GL_MODELVIEW);
-					glLoadIdentity();
-					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
-					
-					glBegin(GL_QUADS);
-					
-					glVertex2f(0.0,0.0);
-					glVertex2f(TILE_SIZE,0.0f);
-					glVertex2f(TILE_SIZE,TILE_SIZE);
-					glVertex2f(0.0f,TILE_SIZE);
 	
-					glEnd();
-					break;
-				default :	//cas du sol classique
-					glColor3f(0.25f,0.25f,0.25f); //couleurs verte
-					glMatrixMode(GL_MODELVIEW);
-					glLoadIdentity();
-					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
-					
-					glBegin(GL_QUADS);
-					
-					glVertex2f(0.0,0.0);
-					glVertex2f(TILE_SIZE,0.0f);
-					glVertex2f(TILE_SIZE,TILE_SIZE);
-					glVertex2f(0.0f,TILE_SIZE);
-	
-					glEnd();
-					break;
-				
-			}
-		}
-		
-	}
+	drawMap(y,x,minX,minY,maxX,maxY,pDrawnMap);
 	
 }
 //Pre: reçoit en argument nextLRMap et niveauA
@@ -176,173 +510,22 @@ void drawPrevious(){
 	int maxY=previousMap.taille.y+currentMap.taille.y;
 	char** pDrawnMap=previousMap.c;
 	char carActuel;
-
-	//printf("taille x, y: %d, %d et MaxX ,Y : %d %d\n",minX,minY,maxX,maxY);
-	for(y=minY;y<maxY;y++){
-		for(x=minX;x<maxX;x++){
-			carActuel=*(*(pDrawnMap+y-minY)+x-minX);
-			switch (carActuel){	//switch sur la valeur du char à l'emplacement [x].[y] dans nextLRMap
-				case '#':	//cas des bords de la carte
-					glColor3f(1.0f,1.0f,1.0f); //couleurs blanche
-					glMatrixMode(GL_MODELVIEW);
-					glLoadIdentity();	//on remplace la matrice modelview par la matrice identité
-					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);//positionnement vers la case [x].[y] ou on dessinne l'élément en cours
-					
-					glBegin(GL_QUADS);
-					
-					glVertex2f(0.0,0.0);
-					glVertex2f(TILE_SIZE,0.0f);
-					glVertex2f(TILE_SIZE,TILE_SIZE);
-					glVertex2f(0.0f,TILE_SIZE);
-					
-					glEnd();
-					break;
-				case '!':
-					glColor3f(1.0f,1.0f,1.0f);
-					glMatrixMode(GL_MODELVIEW);
-					glLoadIdentity();
-					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
-					
-					glBegin(GL_QUADS);
-					
-					glVertex2f(0.0,0.0);
-					glVertex2f(TILE_SIZE,0.0f);
-					glVertex2f(TILE_SIZE,TILE_SIZE);
-					glVertex2f(0.0f,TILE_SIZE);
-					
-					glEnd();
-					break;
-				case ' ' :	//cas du sol classique
-					glColor3f(0.25f,0.25f,0.25f); //couleurs verte
-					glMatrixMode(GL_MODELVIEW);
-					glLoadIdentity();
-					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
-					
-					glBegin(GL_QUADS);
-					
-					glVertex2f(0.0,0.0);
-					glVertex2f(TILE_SIZE,0.0f);
-					glVertex2f(TILE_SIZE,TILE_SIZE);
-					glVertex2f(0.0f,TILE_SIZE);
 	
-					glEnd();
-					break;
-				default :	//cas du sol classique
-					glColor3f(0.25f,0.25f,0.25f); //couleurs verte
-					glMatrixMode(GL_MODELVIEW);
-					glLoadIdentity();
-					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
-					
-					glBegin(GL_QUADS);
-					
-					glVertex2f(0.0,0.0);
-					glVertex2f(TILE_SIZE,0.0f);
-					glVertex2f(TILE_SIZE,TILE_SIZE);
-					glVertex2f(0.0f,TILE_SIZE);
-	
-					glEnd();
-					break;
-			}
-		}
-		
-	}
+	drawMap(y,x,minX,minY,maxX,maxY,pDrawnMap);
 	
 }
 void drawCurrent(){
 
-	//printf("drawCurrent\n");
-	int y;
-	int x;
+	printf("drawCurrent\n");
+	int y=0;
+	int x=0;
 	char** pDrawnMap=currentMap.c;
 	char carActuel;
-
-	for(y=0;y<currentMap.taille.y;y++){
-		for(x=0;x<currentMap.taille.x;x++){
-			carActuel=*(*(pDrawnMap+y)+x);
-			
-			switch (carActuel){
-				case '#':
-					glColor3f(1.0f,1.0f,1.0f);
-					glMatrixMode(GL_MODELVIEW);
-					glLoadIdentity();
-					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
-					
-					glBegin(GL_QUADS);
-					
-					glVertex2f(0.0,0.0);
-					glVertex2f(TILE_SIZE,0.0f);
-					glVertex2f(TILE_SIZE,TILE_SIZE);
-					glVertex2f(0.0f,TILE_SIZE);
-					
-					glEnd();
-					break;
-				case '!':
-					glColor3f(1.0f,1.0f,1.0f);
-					glMatrixMode(GL_MODELVIEW);
-					glLoadIdentity();
-					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
-					
-					glBegin(GL_QUADS);
-					
-					glVertex2f(0.0,0.0);
-					glVertex2f(TILE_SIZE,0.0f);
-					glVertex2f(TILE_SIZE,TILE_SIZE);
-					glVertex2f(0.0f,TILE_SIZE);
-					
-					glEnd();
-					break;
-				case ' ' :
-					glColor3f(0.25f,0.25f,0.25f);
-					glMatrixMode(GL_MODELVIEW);
-					glLoadIdentity();
-					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
-					
-					glBegin(GL_QUADS);
-					
-					glVertex2f(0.0,0.0);
-					glVertex2f(TILE_SIZE,0.0f);
-					glVertex2f(TILE_SIZE,TILE_SIZE);
-					glVertex2f(0.0f,TILE_SIZE);
 	
-					glEnd();
-					break;
-				case 'j' :	//cas du sol classique
-					glColor3f(0.25f,0.25f,0.25f); //couleurs verte
-					glMatrixMode(GL_MODELVIEW);
-					glLoadIdentity();
-					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
-					
-					glBegin(GL_QUADS);
-					
-					glVertex2f(0.0,0.0);
-					glVertex2f(TILE_SIZE,0.0f);
-					glVertex2f(TILE_SIZE,TILE_SIZE);
-					glVertex2f(0.0f,TILE_SIZE);
-	
-					glEnd();
-					break;
-				default :	//cas du sol classique
-					glColor3f(0.25f,0.25f,0.25f); //gris
-					glMatrixMode(GL_MODELVIEW);
-					glLoadIdentity();
-					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
-					
-					glBegin(GL_QUADS);
-					
-					glVertex2f(0.0,0.0);
-					glVertex2f(TILE_SIZE,0.0f);
-					glVertex2f(TILE_SIZE,TILE_SIZE);
-					glVertex2f(0.0f,TILE_SIZE);
-	
-					glEnd();
-					break;
-			}
-		}
-		
-	}
+	drawMap(y,x,0,0,currentMap.taille.x,currentMap.taille.y,pDrawnMap);
 	
 }
-void drawMap(){
+void drawMapCall(){
 	
 	//printf("drawMap\n");
 	drawCurrent();
@@ -620,7 +803,7 @@ void drawJoueur(){
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
-	//glutSwapBuffers();
+	free(image);
 
 };
 void drawTirs(){
@@ -769,7 +952,7 @@ void interface(int nb){
 		interface_menu();
 	}
 	else if(!MENU){
-		drawMap();
+		drawMapCall();
 		drawEnnemis();
 		drawJoueur();
 		drawTirs();

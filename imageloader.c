@@ -149,7 +149,7 @@ Image* loadBMP(const char* filename) {
 	unsigned char* pixels2;
 	unsigned char R=0xff;
 	if(V5){
-		printf("V5\n");
+		
 		pixels2 = (unsigned char*)malloc (sizeof (unsigned char)*width * height * 4);
 		for( y = 0; y < height; y++) {
 			for( x = 0; x < width; x++) {
@@ -166,7 +166,7 @@ Image* loadBMP(const char* filename) {
 		}
 	}
 	else{
-		printf("pas V5\n");
+		
 		pixels2 = (unsigned char*)malloc (sizeof (unsigned char)*width * height * 3);	
 	
 	
@@ -179,7 +179,7 @@ Image* loadBMP(const char* filename) {
 			}
 		}
 	}
-//	input.close();
+
 	fclose (input);
 
 	im_tmp = (Image*) malloc (sizeof (Image));
@@ -189,6 +189,7 @@ Image* loadBMP(const char* filename) {
 	else{
 		im_tmp->RGBA=false;
 	}
+	free(pixels);
 	im_tmp->pixels = pixels2;
 	im_tmp->width = width;
 	im_tmp->height = height;

@@ -303,7 +303,7 @@ void deplacement_tirs(ListeTirs* listeT){
 		int nombreRegistre=0;
 		for(int i=0;i<listeT->nombre;i++){
 			if(actuel->t.distanceMax>0){
-				//printf("deplacement tirs normal %d\n",i);
+				printf("deplacement tirs normal %d\n",i);
 				switch(actuel->t.dir){
 					case Up:
 						actuel->t.pos.y--;
@@ -338,18 +338,18 @@ void deplacement_tirs(ListeTirs* listeT){
 			}
 		
 		}
-		//printf("registre ");
+		printf("registre ");
 		for(int n=0;n<nombreRegistre;n++){
 			printf("%d ",*(registre+n));
 		}
-		//printf("fin\n");
+		printf("fin\n");
 		for(int n=0;n<nombreRegistre;n++){
 		
-			//printf("deplacement tirs suppression %d\n", *(registre+n));
-			//printf("suprimer tirs %d adresse %hx nombre%d\n",*(registre+n),actuel,listeT->nombre);
-			//afficher_liste_tirs(listeT);
+			printf("deplacement tirs suppression %d\n", *(registre+n));
+			printf("suprimer tirs %d adresse %hx nombre%d\n",*(registre+n),actuel,listeT->nombre);
+			afficher_liste_tirs(listeT);
 			supprimer_tirs_numero(listeT,*(registre+n));
-			//afficher_liste_tirs(listeT);
+			afficher_liste_tirs(listeT);
 		}
 		free(registre);
 	}
