@@ -82,49 +82,7 @@ void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 	int nbrRandom=0;
 	Image* image=NULL;
 	
-	/*image = loadBMP("velo1.bmp");
-	_textureId = loadTexture(image);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_TEXTURE_2D);						
-	for(y=minY;y<maxY;y++){
-		for(x=minX;x<maxX;x++){
-			if((x>=camera.x-(width/(2*TILE_SIZE))-1)&&(x<=(camera.x+(width/(2*TILE_SIZE))+1))&&(y<=(camera.y+(width/(2*TILE_SIZE))+1))&&(y>=(camera.y-(width/(2*TILE_SIZE))-1))){
-		carActuel=*(*(pDrawnMap+y-minY)+x-minX);
-				if(carActuel=='#'){
-					glBindTexture(GL_TEXTURE_2D, _textureId);
-					
-					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-					if(image->RGBA){
-						glColor4f(1.0f,1.0f,1.0f,1.0f);
-					}
-					else{
-						glColor3f(1.0f,1.0f,1.0f);
-					}	
-					glMatrixMode(GL_MODELVIEW);		
-					glLoadIdentity();
-					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
-					
-					glBegin(GL_QUADS);
-
-					glTexCoord2f(0.0f, 0.0f);
-					glVertex2f(TILE_SIZE,TILE_SIZE);
-					glTexCoord2f(1.0f, 0.0f);
-					glVertex2f(0.0f,TILE_SIZE);
-					glTexCoord2f(1.0f,1.0f);
-					glVertex2f(0.0,0.0);
-					glTexCoord2f(0.0f, 1.0f);
-					glVertex2f(TILE_SIZE,0.0f);
-					glEnd();
-					
-				}
-			}
-		}
-	}
-
-	glDisable(GL_TEXTURE_2D);
-	glDisable(GL_BLEND);*/
+	printf("herbe\n");
 	image = loadBMP("herbe1.bmp");
 	_textureId = loadTexture(image);
 	glEnable(GL_BLEND);
@@ -168,6 +126,8 @@ void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
+	
+	printf("route\n");
 	image = loadBMP("route1.bmp");
 	_textureId = loadTexture(image);
 	glEnable(GL_BLEND);
@@ -262,9 +222,7 @@ void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
-	
-	glDisable(GL_TEXTURE_2D);
-	glDisable(GL_BLEND);
+	printf("trotoir\n");
 	image = loadBMP("trotoir.bmp");
 	_textureId = loadTexture(image);
 	glEnable(GL_BLEND);
@@ -273,7 +231,7 @@ void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 	for(y=minY;y<maxY;y++){
 		for(x=minX;x<maxX;x++){
 			if((x>=camera.x-(width/(2*TILE_SIZE))-1)&&(x<=(camera.x+(width/(2*TILE_SIZE))+1))&&(y<=(camera.y+(width/(2*TILE_SIZE))+1))&&(y>=(camera.y-(width/(2*TILE_SIZE))-1))){
-				printf("pos c %d,%d\n",x,y);
+				//printf("pos c %d,%d\n",x,y);
 				carActuel=*(*(pDrawnMap+y-minY)+x-minX);
 				if(carActuel=='b'){
 					glBindTexture(GL_TEXTURE_2D, _textureId);
@@ -309,7 +267,7 @@ void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
-	
+	printf("ligne\n");
 	image = loadBMP("ligne.bmp");
 	_textureId = loadTexture(image);
 	glEnable(GL_BLEND);
@@ -353,7 +311,7 @@ void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
-	
+	printf("barrière\n");
 	image = loadBMP("barrière.bmp");
 	_textureId = loadTexture(image);
 	glEnable(GL_BLEND);
@@ -367,7 +325,7 @@ void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 				
 				carActuel=*(*(pDrawnMap+y-minY)+x-minX);
 				if(carActuel=='#'){
-					if(x<63){
+					if(x-minX<63){
 						carSuivant=*(*(pDrawnMap+(y-minY))+(x-minX+1));
 					}
 					if(carSuivant=='b'){
@@ -375,14 +333,14 @@ void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 						nbrRandom=2;
 						
 					}
-					if(x>0){
+					if(x-minX>0){
 						carSuivant=*(*(pDrawnMap+(y-minY))+(x-minX-1));
 					}
 					if(carSuivant=='b'){
 						//printf("%d\n",nbrRandom);
 						nbrRandom=0;	
 					}
-					if(y>0){
+					if(y-minY>0){
 						carSuivant=*(*(pDrawnMap+(y-minY-1))+(x-minX));
 					}
 					if(carSuivant=='b'||carSuivant==' '){
@@ -390,7 +348,7 @@ void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 						nbrRandom=3;
 						
 					}
-					if(y<64){
+					if(y-minY<63){
 						carSuivant=*(*(pDrawnMap+(y-minY+1))+(x-minX));
 					}
 					if(carSuivant=='b'||carSuivant==' '){
@@ -473,11 +431,159 @@ void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 			}
 		}
 	}
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_BLEND);
+	
+	printf("blocage\n");
+	image = loadBMP("blocage.bmp");
+	_textureId = loadTexture(image);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_TEXTURE_2D);						
+	for(y=minY;y<maxY;y++){
+		for(x=minX;x<maxX;x++){
+			if((x>=camera.x-(width/(2*TILE_SIZE))-1)&&(x<=(camera.x+(width/(2*TILE_SIZE))+1))&&(y<=(camera.y+(width/(2*TILE_SIZE))+1))&&(y>=(camera.y-(width/(2*TILE_SIZE))-1))){
+		carActuel=*(*(pDrawnMap+y-minY)+x-minX);
+				if(carActuel=='t'){
+					glBindTexture(GL_TEXTURE_2D, _textureId);
+					
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+					if(image->RGBA){
+						glColor4f(1.0f,1.0f,1.0f,1.0f);
+					}
+					else{
+						glColor3f(1.0f,1.0f,1.0f);
+					}	
+					glMatrixMode(GL_MODELVIEW);		
+					glLoadIdentity();
+					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2f(TILE_SIZE,TILE_SIZE);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2f(0.0f,TILE_SIZE);
+					glTexCoord2f(1.0f,1.0f);
+					glVertex2f(0.0,0.0);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2f(TILE_SIZE,0.0f);
+					glEnd();
+					
+				}
+			}
+		}
+	}
+
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_BLEND);
+	
+	printf("limite\n");
+	image = loadBMP("limite.bmp");
+	_textureId = loadTexture(image);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_TEXTURE_2D);						
+	for(y=minY;y<maxY;y++){
+		for(x=minX;x<maxX;x++){
+			if((x>=camera.x-(width/(2*TILE_SIZE))-1)&&(x<=(camera.x+(width/(2*TILE_SIZE))+1))&&(y<=(camera.y+(width/(2*TILE_SIZE))+1))&&(y>=(camera.y-(width/(2*TILE_SIZE))-1))){
+			
+				
+				carActuel=*(*(pDrawnMap+y-minY)+x-minX);
+				if(carActuel=='!'){
+					if(x-minX==63){
+						nbrRandom=1;
+					}
+					if(x-minX==0){
+						nbrRandom=3;	
+					}
+					if(y-minY==0){
+						nbrRandom=0;	
+					}
+					if(y-minY==63){
+						nbrRandom=2;
+					}
+					
+						
+					glBindTexture(GL_TEXTURE_2D, _textureId);
+					
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+					if(image->RGBA){
+						glColor4f(1.0f,1.0f,1.0f,1.0f);
+					}
+					else{
+						glColor3f(1.0f,1.0f,1.0f);
+					}	
+					glMatrixMode(GL_MODELVIEW);		
+					glLoadIdentity();
+					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+					switch (nbrRandom){
+						case 0:
+							glTexCoord2f(0.0f, 0.0f);
+							glVertex2f(TILE_SIZE,TILE_SIZE);
+							glTexCoord2f(1.0f, 0.0f);
+							glVertex2f(0.0f,TILE_SIZE);
+							glTexCoord2f(1.0f,1.0f);
+							glVertex2f(0.0,0.0);
+							glTexCoord2f(0.0f, 1.0f);
+							glVertex2f(TILE_SIZE,0.0f);
+							break;
+						case 1:
+							glTexCoord2f(0.0f, 0.0f);
+							glVertex2f(0.0,0.0);
+							glTexCoord2f(1.0f, 0.0f);
+							glVertex2f(0.0f,TILE_SIZE);
+							glTexCoord2f(1.0f,1.0f);
+							glVertex2f(TILE_SIZE,TILE_SIZE);
+							glTexCoord2f(0.0f, 1.0f);
+							glVertex2f(TILE_SIZE,0.0f);
+							break;
+
+						case 2:
+							glTexCoord2f(0.0f, 0.0f);
+							glVertex2f(0.0,0.0);
+							glTexCoord2f(1.0f, 0.0f);
+							glVertex2f(TILE_SIZE,0.0f);
+							glTexCoord2f(1.0f,1.0f);
+							glVertex2f(TILE_SIZE,TILE_SIZE);
+							glTexCoord2f(0.0f, 1.0f);
+							glVertex2f(0.0f,TILE_SIZE);
+							break;
+						case 3:
+							glTexCoord2f(0.0f, 0.0f);
+							glVertex2f(TILE_SIZE,TILE_SIZE);
+							glTexCoord2f(1.0f, 0.0f);
+							glVertex2f(TILE_SIZE,0.0f);
+							glTexCoord2f(1.0f,1.0f);
+							glVertex2f(0.0,0.0);
+							glTexCoord2f(0.0f, 1.0f);
+							glVertex2f(0.0f,TILE_SIZE);
+							break;
+						default:
+							glTexCoord2f(0.0f, 0.0f);
+							glVertex2f(TILE_SIZE,TILE_SIZE);
+							glTexCoord2f(1.0f, 0.0f);
+							glVertex2f(0.0f,TILE_SIZE);
+							glTexCoord2f(1.0f,1.0f);
+							glVertex2f(0.0,0.0);
+							glTexCoord2f(0.0f, 1.0f);
+							glVertex2f(TILE_SIZE,0.0f);
+							break;
+					}
+					glEnd();
+				}
+					
+			}
+		}
+	}
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_BLEND);
 	free(image);
-							
-							
-	
-	
+	printf("sortie DrawMap\n");
 }
 //Pre: reçoit en argument nextMap et niveauA
 //Post:Fonction qui dessine la map nextMap; c'est dans cette fonction qu'on détermine ou dessinner NextMap par rapport à current
@@ -541,13 +647,100 @@ void drawMapCall(){
 
 void drawEnnemis(){
 	
-	//printf("drawEnnemi\n");
+	printf("drawEnnemi\n");
 	ElementEnnemi* actuel=liste->premier;
-
+	
+	Image* image=NULL;
 	for(int i=0;i<liste->nombre;i++){
 		
 		switch (actuel->e.type){
 				case voiture:
+						image = loadBMP("voiture2.bmp");
+						_textureId = loadTexture(image);
+						glEnable(GL_BLEND);
+						glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+						glEnable(GL_TEXTURE_2D);
+						glBindTexture(GL_TEXTURE_2D, _textureId);
+						
+						glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+						glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+						if(image->RGBA){
+							glColor4f(1.0f,1.0f,1.0f,1.0f);
+						}
+						else{
+							glColor3f(1.0f,1.0f,1.0f);
+						}
+						glMatrixMode(GL_MODELVIEW);
+						glLoadIdentity();
+						glTranslatef(actuel->e.pos.x*TILE_SIZE,actuel->e.pos.y*TILE_SIZE,0.0f);
+						
+						glBegin(GL_QUADS);
+						switch (actuel->e.dir){
+							case 0:
+								glTexCoord2f(0.0f, 0.0f);
+								glVertex2f(2*TILE_SIZE,3*TILE_SIZE);
+								glTexCoord2f(1.0f, 0.0f);
+								glVertex2f(0.0f,3*TILE_SIZE);
+								glTexCoord2f(1.0f,1.0f);
+								glVertex2f(0.0,0.0);
+								glTexCoord2f(0.0f, 1.0f);
+								glVertex2f(2*TILE_SIZE,0.0f);
+
+								
+								break;
+							case 1:
+								glTexCoord2f(0.0f, 0.0f);
+								glVertex2f(0.0,0.0);
+								glTexCoord2f(1.0f, 0.0f);
+								glVertex2f(0.0f,2*TILE_SIZE);
+								glTexCoord2f(1.0f,1.0f);
+								glVertex2f(3*TILE_SIZE,2*TILE_SIZE);
+								glTexCoord2f(0.0f, 1.0f);
+								glVertex2f(3*TILE_SIZE,0.0f);
+
+								
+								break;
+							case 2:
+								glTexCoord2f(0.0f, 0.0f);
+								glVertex2f(0.0,0.0);
+								glTexCoord2f(1.0f, 0.0f);
+								glVertex2f(2*TILE_SIZE,0.0f);
+								glTexCoord2f(1.0f,1.0f);
+								glVertex2f(2*TILE_SIZE,3*TILE_SIZE);
+								glTexCoord2f(0.0f, 1.0f);
+								glVertex2f(0.0f,3*TILE_SIZE);
+
+								
+								break;
+							case 3:
+								glTexCoord2f(0.0f, 0.0f);
+								glVertex2f(3*TILE_SIZE,2*TILE_SIZE);
+								glTexCoord2f(1.0f, 0.0f);
+								glVertex2f(3*TILE_SIZE,0.0f);
+								glTexCoord2f(1.0f,1.0f);
+								glVertex2f(0.0,0.0);
+								glTexCoord2f(0.0f, 1.0f);
+								glVertex2f(0.0f,2*TILE_SIZE);
+								
+								
+								break;
+							case 4:
+								glTexCoord2f(0.0f, 0.0f);
+								glVertex2f(2*TILE_SIZE,3*TILE_SIZE);
+								glTexCoord2f(1.0f, 0.0f);
+								glVertex2f(0.0f,3*TILE_SIZE);
+								glTexCoord2f(1.0f,1.0f);
+								glVertex2f(0.0,0.0);
+								glTexCoord2f(0.0f, 1.0f);
+								glVertex2f(2*TILE_SIZE,0.0f);
+
+								
+								break;
+						}
+						glEnd();
+						glDisable(GL_TEXTURE_2D);
+						glDisable(GL_BLEND);
+					/*
 					glColor3f(1.0f,1.0f,0.0f);
 					glMatrixMode(GL_MODELVIEW);
 					glLoadIdentity();
@@ -560,7 +753,7 @@ void drawEnnemis(){
 					glVertex2f(2*TILE_SIZE,3*TILE_SIZE);
 					glVertex2f(0.0f,3*TILE_SIZE);
 					
-					glEnd();
+					glEnd();*/
 					break;
 				case moto :
 					glColor3f(0.5f,0.5f,0.0f);
@@ -615,11 +808,12 @@ void drawEnnemis(){
 			actuel=actuel->suivant;
 		}
 	}
+	free(image);
 };
 
 void drawJoueur(){
 	
-	//printf("drawJoueur\n");
+	printf("drawJoueur\n");
 
 	Image* image = loadBMP("velo1.bmp");
 	_textureId = loadTexture(image);
@@ -807,7 +1001,7 @@ void drawJoueur(){
 
 };
 void drawTirs(){
-	//printf("drawTirs debut\n");
+	printf("drawTirs debut\n");
 
 	for(int i=0;i<j.tirs->nombre;i++){
 		Coordonnee posT=pos_tirs(j.tirs,i);
@@ -920,7 +1114,7 @@ void hub_info_jeu(){
 
 
 	glColor3d(0.9,0.9,0.9); // Texte en blanc
-	vBitmapOutput(0,0,"Blanc HELVETICA",GLUT_BITMAP_HELVETICA_18);
+
 	char* valeur=NULL;
 	valeur=int_vers_char(score);
 	char scoreString[MAX_NOM]={"score:"};
@@ -953,6 +1147,7 @@ void interface(int nb){
 	}
 	else if(!MENU){
 		drawMapCall();
+		printf("Ennemi\n");
 		drawEnnemis();
 		drawJoueur();
 		drawTirs();

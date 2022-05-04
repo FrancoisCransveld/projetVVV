@@ -47,9 +47,9 @@ void Display()
 	}
 	else{
 		//printf("MENU false glutOrtho\n");
-		gluOrtho2D(TILE_SIZE*(camera.x)-(width/4+(TILE_SIZE*3)), TILE_SIZE*(camera.x)+(width/4+(TILE_SIZE*3)), TILE_SIZE*(camera.y)+heigth/4, TILE_SIZE*(camera.y)-heigth/4);
+		gluOrtho2D(TILE_SIZE*(camera.x)-(width/4), TILE_SIZE*(camera.x)+(width/4), TILE_SIZE*(camera.y)+heigth/4, TILE_SIZE*(camera.y)-heigth/4);
 	}
-	printf("gluOrtho %d,%d\n",width,heigth);
+	//printf("gluOrtho %d,%d\n",width,heigth);
 	glFlush();
 	//printf("fin display\n");
 	

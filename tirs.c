@@ -223,7 +223,7 @@ void supprimer_tirs_numero(ListeTirs* listeT, int numero){
 				
 				
 			}
-			//printf("suprimer tirs %d adresse %hx nombre%d\n",numero,actuel,listeT->nombre);
+			printf("suprimer tirs %d adresse %hx nombre%d\n",numero,actuel,listeT->nombre);
 			free(actuel);
 			listeT->nombre--;
 			
@@ -334,6 +334,8 @@ void deplacement_tirs(ListeTirs* listeT){
 				}
 				*(registre+nombreRegistre)=i;
 				nombreRegistre++;
+				actuel->t.distanceMax--;
+				actuel=actuel->suivant;
 				
 			}
 		

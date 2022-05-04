@@ -1,61 +1,65 @@
 p4 n0 s64
-################bl              l             lb################
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl       v      l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l      v      lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              lm            lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l          v  lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl          j   l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l      m      lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#blttttttttttttttttttttttttttttlb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bl              l             lb#hhhhhhhhhhhhhh#
-################################################################
-################################!###############################
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl     v       l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l   v        lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l        v   lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l    m       lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl         j   l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl          m  l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l    m       lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bblttttttttttttttttttttttttttlbb#hhhhhhhhhhhhhh!
+!hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh!
+!##############################################################!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

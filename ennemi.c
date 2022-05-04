@@ -53,6 +53,7 @@ void nouvel_ennemi(ListeEnnemi* liste, char* nom, int vie, Coordonnee pos, TypeE
 		nouveau->e.vie=vie;
 		nouveau->e.pos=pos;
 		nouveau->e.type=t;
+		nouveau->e.dir=4;
 		nouveau->e.attente=true;
 		nouveau->suivant=NULL;
 		actuel->suivant=nouveau;
@@ -71,6 +72,7 @@ void nouvel_ennemi(ListeEnnemi* liste, char* nom, int vie, Coordonnee pos, TypeE
 		nouveau->e.vie=vie;
 		nouveau->e.pos=pos;
 		nouveau->e.type=t;
+		nouveau->e.dir=4;
 		nouveau->e.attente=true;
 		nouveau->suivant=NULL;
 		nouveau->precedent=NULL;
@@ -418,16 +420,20 @@ void action_voiture(Ennemi* voiture){
 	int y=voiture->pos.y;
 	if(voiture->pos.x-j.pos.x<0){
 		x++;
+		voiture->dir=1;
 	}
 	else if(voiture->pos.x-j.pos.x>0){
 		x--;
+		voiture->dir=3;
 	}
 	else{
 		if(voiture->pos.y-j.pos.y<0){
 			y++;
+			voiture->dir=2;
 		}
 		else if(voiture->pos.y-j.pos.y>0){
 			y--;
+			voiture->dir=0;
 		}
 	}
 	Map Emap;

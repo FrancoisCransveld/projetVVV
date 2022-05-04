@@ -14,6 +14,7 @@ struct ennemi{
   int vie;
   TypeEnnemi type;
   bool attente;
+  Direction dir;
 };
 typedef struct ennemi Ennemi;
 
