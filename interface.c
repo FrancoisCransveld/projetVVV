@@ -599,7 +599,6 @@ void drawNext(){
 	int maxX=nextMap.taille.x;
 	int maxY=0;
 	char** pDrawnMap=nextMap.c;
-	char carActuel;
 	
 	drawMap(y,x,minX,minY,maxX,maxY,pDrawnMap);
 	
@@ -615,7 +614,6 @@ void drawPrevious(){
 	int maxX=previousMap.taille.x;
 	int maxY=previousMap.taille.y+currentMap.taille.y;
 	char** pDrawnMap=previousMap.c;
-	char carActuel;
 	
 	drawMap(y,x,minX,minY,maxX,maxY,pDrawnMap);
 	
@@ -626,7 +624,6 @@ void drawCurrent(){
 	int y=0;
 	int x=0;
 	char** pDrawnMap=currentMap.c;
-	char carActuel;
 	
 	drawMap(y,x,0,0,currentMap.taille.x,currentMap.taille.y,pDrawnMap);
 	
@@ -680,35 +677,35 @@ void drawEnnemis(){
 								glTexCoord2f(0.0f, 0.0f);
 								glVertex2f(2*TILE_SIZE,3*TILE_SIZE);
 								glTexCoord2f(1.0f, 0.0f);
-								glVertex2f(0.0f,3*TILE_SIZE);
+								glVertex2f(0*TILE_SIZE,3*TILE_SIZE);
 								glTexCoord2f(1.0f,1.0f);
-								glVertex2f(0.0,0.0);
+								glVertex2f(0*TILE_SIZE,0*TILE_SIZE);
 								glTexCoord2f(0.0f, 1.0f);
-								glVertex2f(2*TILE_SIZE,0.0f);
+								glVertex2f(2*TILE_SIZE,0*TILE_SIZE);
 
 								
 								break;
 							case 1:
 								glTexCoord2f(0.0f, 0.0f);
-								glVertex2f(0.0,0.0);
+								glVertex2f(0*TILE_SIZE,0*TILE_SIZE);
 								glTexCoord2f(1.0f, 0.0f);
-								glVertex2f(0.0f,2*TILE_SIZE);
+								glVertex2f(0*TILE_SIZE,2*TILE_SIZE);
 								glTexCoord2f(1.0f,1.0f);
 								glVertex2f(3*TILE_SIZE,2*TILE_SIZE);
 								glTexCoord2f(0.0f, 1.0f);
-								glVertex2f(3*TILE_SIZE,0.0f);
+								glVertex2f(3*TILE_SIZE,0*TILE_SIZE);
 
 								
 								break;
 							case 2:
 								glTexCoord2f(0.0f, 0.0f);
-								glVertex2f(0.0,0.0);
+								glVertex2f(0*TILE_SIZE,0*TILE_SIZE);
 								glTexCoord2f(1.0f, 0.0f);
-								glVertex2f(2*TILE_SIZE,0.0f);
+								glVertex2f(2*TILE_SIZE,0*TILE_SIZE);
 								glTexCoord2f(1.0f,1.0f);
 								glVertex2f(2*TILE_SIZE,3*TILE_SIZE);
 								glTexCoord2f(0.0f, 1.0f);
-								glVertex2f(0.0f,3*TILE_SIZE);
+								glVertex2f(0*TILE_SIZE,3*TILE_SIZE);
 
 								
 								break;
@@ -716,11 +713,11 @@ void drawEnnemis(){
 								glTexCoord2f(0.0f, 0.0f);
 								glVertex2f(3*TILE_SIZE,2*TILE_SIZE);
 								glTexCoord2f(1.0f, 0.0f);
-								glVertex2f(3*TILE_SIZE,0.0f);
+								glVertex2f(3*TILE_SIZE,0*TILE_SIZE);
 								glTexCoord2f(1.0f,1.0f);
-								glVertex2f(0.0,0.0);
+								glVertex2f(0*TILE_SIZE,0*TILE_SIZE);
 								glTexCoord2f(0.0f, 1.0f);
-								glVertex2f(0.0f,2*TILE_SIZE);
+								glVertex2f(0*TILE_SIZE,2*TILE_SIZE);
 								
 								
 								break;
@@ -740,35 +737,94 @@ void drawEnnemis(){
 						glEnd();
 						glDisable(GL_TEXTURE_2D);
 						glDisable(GL_BLEND);
-					/*
-					glColor3f(1.0f,1.0f,0.0f);
-					glMatrixMode(GL_MODELVIEW);
-					glLoadIdentity();
-					glTranslatef(actuel->e.pos.x*TILE_SIZE,actuel->e.pos.y*TILE_SIZE,0.0f);
 					
-					glBegin(GL_QUADS);
-					
-					glVertex2f(0.0,0.0);
-					glVertex2f(2*TILE_SIZE,0.0f);
-					glVertex2f(2*TILE_SIZE,3*TILE_SIZE);
-					glVertex2f(0.0f,3*TILE_SIZE);
-					
-					glEnd();*/
 					break;
 				case moto :
-					glColor3f(0.5f,0.5f,0.0f);
-					glMatrixMode(GL_MODELVIEW);
-					glLoadIdentity();
-					glTranslatef(actuel->e.pos.x*TILE_SIZE,actuel->e.pos.y*TILE_SIZE,0.0f);
-					
-					glBegin(GL_QUADS);
-					
-					glVertex2f(0.0,0.0);
-					glVertex2f(TILE_SIZE,0.0f);
-					glVertex2f(TILE_SIZE,TILE_SIZE);
-					glVertex2f(0.0f,TILE_SIZE);
-	
-					glEnd();
+					image = loadBMP("moto1.bmp");
+						_textureId = loadTexture(image);
+						glEnable(GL_BLEND);
+						glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+						glEnable(GL_TEXTURE_2D);
+						glBindTexture(GL_TEXTURE_2D, _textureId);
+						
+						glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+						glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+						if(image->RGBA){
+							glColor4f(1.0f,1.0f,1.0f,1.0f);
+						}
+						else{
+							glColor3f(1.0f,1.0f,1.0f);
+						}
+						glMatrixMode(GL_MODELVIEW);
+						glLoadIdentity();
+						glTranslatef(actuel->e.pos.x*TILE_SIZE,actuel->e.pos.y*TILE_SIZE,0.0f);
+						
+						glBegin(GL_QUADS);
+						switch (actuel->e.dir){
+							case 0:
+								glTexCoord2f(0.0f, 0.0f);
+								glVertex2f(1*TILE_SIZE,2*TILE_SIZE);
+								glTexCoord2f(1.0f, 0.0f);
+								glVertex2f(0*TILE_SIZE,2*TILE_SIZE);
+								glTexCoord2f(1.0f,1.0f);
+								glVertex2f(0*TILE_SIZE,0*TILE_SIZE);
+								glTexCoord2f(0.0f, 1.0f);
+								glVertex2f(1*TILE_SIZE,0*TILE_SIZE);
+
+								
+								break;
+							case 1:
+								glTexCoord2f(0.0f, 0.0f);
+								glVertex2f(0*TILE_SIZE,0*TILE_SIZE);
+								glTexCoord2f(1.0f, 0.0f);
+								glVertex2f(0*TILE_SIZE,1*TILE_SIZE);
+								glTexCoord2f(1.0f,1.0f);
+								glVertex2f(2*TILE_SIZE,1*TILE_SIZE);
+								glTexCoord2f(0.0f, 1.0f);
+								glVertex2f(2*TILE_SIZE,0*TILE_SIZE);
+
+								
+								break;
+							case 2:
+								glTexCoord2f(0.0f, 0.0f);
+								glVertex2f(0*TILE_SIZE,0*TILE_SIZE);
+								glTexCoord2f(1.0f, 0.0f);
+								glVertex2f(1*TILE_SIZE,0*TILE_SIZE);
+								glTexCoord2f(1.0f,1.0f);
+								glVertex2f(1*TILE_SIZE,2*TILE_SIZE);
+								glTexCoord2f(0.0f, 1.0f);
+								glVertex2f(0*TILE_SIZE,2*TILE_SIZE);
+
+								
+								break;
+							case 3:
+								glTexCoord2f(0.0f, 0.0f);
+								glVertex2f(2*TILE_SIZE,1*TILE_SIZE);
+								glTexCoord2f(1.0f, 0.0f);
+								glVertex2f(2*TILE_SIZE,0*TILE_SIZE);
+								glTexCoord2f(1.0f,1.0f);
+								glVertex2f(0*TILE_SIZE,0*TILE_SIZE);
+								glTexCoord2f(0.0f, 1.0f);
+								glVertex2f(0*TILE_SIZE,1*TILE_SIZE);
+								
+								
+								break;
+							case 4:
+								glTexCoord2f(0.0f, 0.0f);
+								glVertex2f(1*TILE_SIZE,2*TILE_SIZE);
+								glTexCoord2f(1.0f, 0.0f);
+								glVertex2f(0.0f,2*TILE_SIZE);
+								glTexCoord2f(1.0f,1.0f);
+								glVertex2f(0.0,0.0);
+								glTexCoord2f(0.0f, 1.0f);
+								glVertex2f(1*TILE_SIZE,0.0f);
+
+								
+								break;
+						}
+						glEnd();
+						glDisable(GL_TEXTURE_2D);
+						glDisable(GL_BLEND);
 					break;
 				case camion :	//cas du sol classique
 					glColor3f(0.5f,0.0f,1.0f); //couleurs verte

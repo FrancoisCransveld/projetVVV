@@ -52,23 +52,27 @@ void upDatemenu(int num){
 		if(selectionMenu>0){
 			MENU=false;
 			printf("MENU=false\n");
+			int nombreMap=8;
 			if(!MENU&&selectionMenu==1){
+				
 				liste = creer_liste();
 				afficher_liste(liste);
-				loadMaps(8);
+				preparation_niveau(nombreMap);
+				loadMaps();
 				j=loadJoueur(0);
-				glutTimerFunc(25, upDateKeyboard, 0);
-				glutTimerFunc(25, upDateTirs,1);
-				glutTimerFunc(75, upDateEnnemi,2);
+				upDateKeyboard(0);
+				upDateTirs(1);
+				upDateEnnemi(2);
 			}
 			else if(!MENU&&selectionMenu==2){
 				liste = creer_liste();
 				afficher_liste(liste);
-				loadMaps(8);
+				preparation_niveau(nombreMap);
+				loadMaps();
 				j=loadJoueur(0);
-				glutTimerFunc(25, upDateKeyboard, 0);
-				glutTimerFunc(25, upDateTirs,1);
-				glutTimerFunc(75, upDateEnnemi,2);
+				upDateKeyboard( 0);
+				upDateTirs(1);
+				upDateEnnemi(2);
 			}
 			else if(!MENU&&selectionMenu==3){
 				

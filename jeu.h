@@ -23,4 +23,6 @@ void upDateTirs(int num);
 void upDateEnnemi(int num);
 void upDateKeyboard(int i);
 void switchMap(void);
+void mort();
+void game_over();
 #endif

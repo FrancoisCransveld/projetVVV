@@ -296,7 +296,7 @@ void Entree_sortie_Map( int select, Direction* entreeN, Direction* sortieN){
 void choix_map_aleatoire(void){
 	
 	Direction sortieC=0;
-	Direction entreeC=4;
+	
 	Direction sortieN;
 	Direction entreeN;
 	
@@ -309,7 +309,7 @@ void choix_map_aleatoire(void){
 	niveauA.Nmap[0].ennemi=true;
 	niveauA.Nmap[0].loadStatus=false;
 	sortieC=sortieN;
-	entreeC=entreeN;
+	
 	
 	//sélection de toute les map du niveau hors startMap, pre-BossMap et BossMap
 	printf("maps\n");
@@ -331,7 +331,7 @@ void choix_map_aleatoire(void){
 		niveauA.Nmap[i].ennemi=true;
 		niveauA.Nmap[i].loadStatus=false;
 		sortieC=sortieN;
-		entreeC=entreeN;
+		
 	}
 	//selection pre-BossMap, qui fait le lien entre la dernière map et la map de boss qui sera toujours en entree 0
 	printf("preBoss\n");
@@ -378,12 +378,7 @@ void initialisation_Map(Map* initMap){
 	initMap->previous=false;
 	return ;
 };
-//PRE: prend en argument deux int pour la largeur et la hauteur des maps( cette fonction sera changé pour prendre une int qui déterminera le nombre de carte du niveau
-//POST: Fait initialement une sélection de map aléatoirement et charge les maps nécessaire au jeux au fur et a mesure (pas encore finit )
-void loadMaps( int nombreMap){
-	
-	int* tMapX=malloc(sizeof(int*));
-	int* tMapY=malloc(sizeof(int*));
+void preparation_niveau(int nombreMap){
 	nombreMap=8;
 	niveauA.nombreMap=nombreMap;
 	initialisation_Map(&previousMap);
@@ -393,13 +388,20 @@ void loadMaps( int nombreMap){
 	choix_map_aleatoire();
 	score=0;
 	niveauA.current=0;
+}
+//PRE: prend en argument deux int pour la largeur et la hauteur des maps( cette fonction sera changé pour prendre une int qui déterminera le nombre de carte du niveau
+//POST: Fait initialement une sélection de map aléatoirement et charge les maps nécessaire au jeux au fur et a mesure (pas encore finit )
+void loadMaps(void){
+	
+	int* tMapX=malloc(sizeof(int*));
+	int* tMapY=malloc(sizeof(int*));
 	int i=0;
 	do{
 		tailleMap(tMapX,tMapY,niveauA, i);
 		loadMap(*tMapX,*tMapY,&niveauA, i);
 		i++;
 	}while(i<2);
-	for(i=0;i<nombreMap;i++){
+	for(i=0;i<niveauA.nombreMap;i++){
 		niveauA.Nmap[i].ennemi=true;
 	}
 	loadEnnemi(liste, 0);
@@ -422,6 +424,49 @@ void loadNext(int select){
 }
 //PRE:Pas vraiment nécessaire pour le moment mais originellement cette foncton devait prendre un argument en entrée pour savoir ou charger la pos joueur (dans quel map)
 //POST:Récupération de la position du joueur dans la map de niveauA.Nmap[0] (pour le moment)
+Coordonnee load_respawn_Joueur(int select){
+	
+	printf("loadJoueur\n");
+	
+	int x=0;
+	int y=0;
+	char c=' ';
+	bool END=true; //variable booleen pour sortir de la double boucle dés que l'on a trouver la position du joueur
+	char nom[MAX_NOM]={"\0"};
+	Coordonnee CoordonneeRespawn;
+	FILE* fNewMap=NULL;
+	map_select(select,nom);
+	fNewMap=fopen(nom,"r");
+	
+	if(fNewMap==NULL){
+		printf("Le fichier n'a pu être ouvert loadJoueur\n");
+		
+		exit(-1);
+	}
+	else{
+	
+	while(c!='\n'){	//boucle pour éviter de charger dans la map la pemière ligne du fichier texte qui contient des infos
+		c=fgetc(fNewMap);
+	}
+	do{	//boucle parcourrant tous le fichier pour retrouver la position du joueur dans la carte
+		x=0;
+		do{
+			c=fgetc(fNewMap);
+			if(c=='j'){
+				CoordonneeRespawn.x=x;
+				CoordonneeRespawn.y=y;
+				END=false;
+			}
+			x++;
+		}while(c!='\n'&&c!=EOF&&END);
+		y++;
+	}while(c!=EOF&&END);
+	fclose(fNewMap);
+	
+	}
+	j.dir=4;
+	return CoordonneeRespawn;
+};
 Joueur loadJoueur(int select){
 	
 	printf("loadJoueur\n");
@@ -471,6 +516,7 @@ Joueur loadJoueur(int select){
 void loadEnnemi(ListeEnnemi* liste, int select){
 	
 	printf("loadEnnemi\n");
+	afficher_liste(liste);
 	Coordonnee e;	//tampon coordonnée des ennemis
 	//int Dx=0;
 	int Dy=0;//variation de position par rapport à currentmap de la position chargée des ennemis

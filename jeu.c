@@ -6,12 +6,14 @@
 #endif
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <stdbool.h>
 #include "jeu.h"
 #include "LoadMaps.h"
 #include "interface.h"
 #include "joueur.h"
 #include "menu.h"
+#include "collision.h"
+
 bool UP = false;
 bool LEFT = false;
 bool RIGHT = false;
@@ -104,14 +106,14 @@ void upDateTirs(int num){
 			
 			for(int tirs=0;tirs<j.tirs->nombre;tirs++){
 				if(i<liste->nombre){
-					//printf("PreCoordonneeEnnemi %d\n", i);
+					/*//printf("PreCoordonneeEnnemi %d\n", i);
 					Coordonnee EnnemiActuel=pos_Ennemi(liste,i);
 					//printf("PreCoordonneeTirs %d\n", tirs);
-					Coordonnee tirsActuel=pos_tirs(j.tirs,tirs);
-					if(((EnnemiActuel.x*2)==tirsActuel.x)&&((EnnemiActuel.y*2)==tirsActuel.y)){ 
+					Coordonnee tirsActuel=pos_tirs(j.tirs,tirs);*/
+					if(collision_tirs_ennemi(i,tirs)){ 
 						retirer_vie_numero(liste, i,degat_tirs(j.tirs, tirs));
 						supprimer_tirs_numero(j.tirs,tirs);
-						//printf("sortie de suppresion tirs \n");
+						printf("sortie de suppresion tirs \n");
 					}
 				}
 				//printf("sortie for 2\n");
@@ -122,6 +124,7 @@ void upDateTirs(int num){
 	//printf("fin UpdateTirs\n");
 	glutTimerFunc(25, upDateTirs,1);
 };
+
 //PRE:
 //POST:
 void upDateEnnemi(int num){
@@ -215,13 +218,26 @@ void switchMap(){
 void mort(){
 	j.vie--;
 	j.hp=5;
-	
-	if(j.vie==0){
-		
+	supprimer_liste_ennemi(liste);
+	if(j.vie<=0){
+		game_over();
+	}
+	else{
+		liste = creer_liste();
+		niveauA.current=0;
+		niveauA.next=1;
+		loadMaps();
+		j.pos=load_respawn_Joueur(niveauA.current);
+		upDateKeyboard(0);
+		upDateTirs(1);
+		upDateEnnemi(2);
 	}
 };
 void game_over(){
-	
+
+	//inscription_score();
+	MENU=true;
+	selectionMenu=0;
 };
 void jeu()
 {
@@ -254,7 +270,7 @@ void jeu()
         	moveDown(j);
 		DOWN = false;
 	}
-	if (j.hp==0){
+	if (j.hp<=0){
 		mort();
 	}
 	glutPostRedisplay();

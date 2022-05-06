@@ -38,6 +38,7 @@ ListeEnnemi* creer_liste(void);
 void nouvel_ennemi(ListeEnnemi* liste, char nom[], int vie, Coordonnee pos, TypeEnnemi t);
 void modifier_ennemi(ListeEnnemi* liste, int numero, char nom[], int vie, Coordonnee pos, TypeEnnemi t,bool a);
 void supprimer_ennemi_numero(ListeEnnemi* liste, int numero);
+void supprimer_liste_ennemi(ListeEnnemi* liste);
 void retirer_vie_numero(ListeEnnemi* liste, int numero, int degat);
 void modifier_pos_ennemi(ListeEnnemi* liste, int numero, Coordonnee pos);
 void modifier_pos_ennemis(ListeEnnemi* liste, Coordonnee variation);

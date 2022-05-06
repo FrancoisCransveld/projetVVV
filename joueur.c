@@ -10,6 +10,7 @@
 //#include "LoadMaps.h"
 #include "interface.h"
 #include "joueur.h"
+#include "collision.h"
 void replacement_joueur(int x, int y, Map* map){
 	
 	//printf("replacementJoueur\n");
@@ -205,7 +206,7 @@ bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir){
 	}
 	return(SCROLL_J&&SCROLL_LOCK);
 };
-
+/*
 bool collisionEnnemiJoueur(){
 	bool collision=false;
 	for(int i=0;i<liste->nombre;i++){
@@ -272,4 +273,4 @@ bool collisionEnnemiJoueur(){
 	}
 	return collision;
 }
-
+*/

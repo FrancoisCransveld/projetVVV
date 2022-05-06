@@ -13,6 +13,7 @@
 #include "ennemi.h"
 #include "LoadMaps.h"
 #include "interface.h"
+
 //PRE:aucun argument d'entree
 //POST:crée la liste chainée et initialise le premier element de cette liste chainee avec la vie de l'ennemi à 1, la position à(0;0) le type à 0 et le nom à Bot1
 ListeEnnemi* creer_liste(void){
@@ -190,6 +191,20 @@ void supprimer_ennemi_numero(ListeEnnemi* liste, int numero){
 		}
 	}
 };
+void supprimer_liste_ennemi(ListeEnnemi* liste){
+	
+	if(liste->premier!=NULL){
+		int i=0;
+		while(i<liste->nombre){
+			supprimer_ennemi_numero(liste, 0);	
+			i++;	
+		}
+		liste->nombre=0;
+		liste->premier=NULL;
+		liste->dernier=NULL;
+	}
+
+};
 //PRE: argument d'entrée nécessaire la structure liste de la chaine, le numéro de l'ennemi et les dégats infligé
 //POST:Retire un nombre de vie égale à (int degat) à l'ennemi numéro (int numero) de la liste chainée d'ennemi (ListeEnnemi liste)
 void retirer_vie_numero(ListeEnnemi* liste, int numero, int degat){
@@ -231,6 +246,9 @@ void retirer_vie_numero(ListeEnnemi* liste, int numero, int degat){
 					break;
 				case 3:
 					score+=50;
+					break;
+				case 4:
+					score+=0;
 					break;
 			}
 			printf("score :%d\n",score);
@@ -355,6 +373,7 @@ Coordonnee pos_Ennemi(ListeEnnemi* liste,int numero){
 	}
 	return(ennemiPos);
 }
+
 //PRE:cette fontion reçoit un pointeur de map, une coordonnee x et une coordonnee y de l'ennemi ou il veut se déplacer
 //POST:la fonction renvoie la coordonnee de l'ennemi sur la map qui le concerne next, current ou previous dans la structure coordonnee du pointeur de map donné en entrée ce qui premettra de vérifier la correspondance avec les murs sur les cartes.
 void replacement_ennemi(int x, int y, Map* map){
@@ -453,20 +472,27 @@ void action_moto(Ennemi* moto){
 	int y=moto->pos.y;
 	if((moto->pos.x-moto->pos.y)%2==0){
 		if(moto->pos.x-j.pos.x<0){
+			
 			x++;
+			moto->dir=1;
 		}
 		else if(moto->pos.x-j.pos.x>0){
 			x--;
+			moto->dir=3;
 		}
 	}
 	else{
 		if(moto->pos.y-j.pos.y<0){
 			y++;
+			moto->dir=2;
 		}
 		else if(moto->pos.y-j.pos.y>0){
 			y--;
+			moto->dir=0;
 		}
 	}
+	
+	//moto->pos.x-j.pos.x
 	Map Emap;
 	replacement_ennemi(x,y,&Emap);
 	if(*(*(Emap.c+Emap.taille.y)+Emap.taille.x)!='#'){

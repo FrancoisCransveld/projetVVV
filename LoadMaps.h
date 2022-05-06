@@ -43,7 +43,8 @@ TabNiveau niveauA; // tableau des niveaux aléatoirement choisis
 char* int_vers_char(int nombre);
 void map_select(int select,char* nom);
 void Entree_sortie_Map( int select, Direction* entreeN, Direction* sortieN);
-void loadMaps( int nombreMap);
+void preparation_niveau(int nombreMap);
+void loadMaps( void);
 void loadMap(int tMapX, int tMapy,TabNiveau* niveauA, int select);
 void loadNext(int select);
 void tailleMap(int* tMapX,int* tMapY,TabNiveau niveauA, int selectedMap);
@@ -51,6 +52,7 @@ void choix_map_aleatoire(void);
 #include "joueur.h"
 #include "ennemi.h"
 Joueur loadJoueur(int select);
+Coordonnee load_respawn_Joueur(int select);
 void loadEnnemi(ListeEnnemi* liste, int select);
 void initialisation_Map(Map* initMap);
 #endif

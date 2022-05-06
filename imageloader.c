@@ -147,7 +147,6 @@ Image* loadBMP(const char* filename) {
 //	auto_array<char> pixels2(new char[width * height * 3]);
 
 	unsigned char* pixels2;
-	unsigned char R=0xff;
 	if(V5){
 		
 		pixels2 = (unsigned char*)malloc (sizeof (unsigned char)*width * height * 4);
