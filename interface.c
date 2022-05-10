@@ -15,6 +15,7 @@
 #include "menu.h"
 #include "joueur.h"
 #include "imageloader.h"
+#include "score.h"
 
 //
 //Makes the image into a texture, and returns the id of the texture
@@ -77,12 +78,12 @@ void vStrokeOutput(GLfloat x, GLfloat y, char *string, void *font)
 GLuint _textureId; //The id of the texture
 void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 	
-	printf("DrawMap\n");
+	//printf("DrawMap\n");
 	char carActuel;
 	int nbrRandom=0;
 	Image* image=NULL;
 	
-	printf("herbe\n");
+	//printf("herbe\n");
 	image = loadBMP("herbe1.bmp");
 	_textureId = loadTexture(image);
 	glEnable(GL_BLEND);
@@ -127,7 +128,7 @@ void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
 	
-	printf("route\n");
+	//printf("route\n");
 	image = loadBMP("route1.bmp");
 	_textureId = loadTexture(image);
 	glEnable(GL_BLEND);
@@ -222,7 +223,7 @@ void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
-	printf("trotoir\n");
+	//printf("trotoir\n");
 	image = loadBMP("trotoir.bmp");
 	_textureId = loadTexture(image);
 	glEnable(GL_BLEND);
@@ -267,7 +268,7 @@ void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
-	printf("ligne\n");
+	//printf("ligne\n");
 	image = loadBMP("ligne.bmp");
 	_textureId = loadTexture(image);
 	glEnable(GL_BLEND);
@@ -311,7 +312,7 @@ void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
-	printf("barrière\n");
+	//printf("barrière\n");
 	image = loadBMP("barrière.bmp");
 	_textureId = loadTexture(image);
 	glEnable(GL_BLEND);
@@ -434,7 +435,7 @@ void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
 	
-	printf("blocage\n");
+	//printf("blocage\n");
 	image = loadBMP("blocage.bmp");
 	_textureId = loadTexture(image);
 	glEnable(GL_BLEND);
@@ -479,7 +480,7 @@ void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
 	
-	printf("limite\n");
+	//printf("limite\n");
 	image = loadBMP("limite.bmp");
 	_textureId = loadTexture(image);
 	glEnable(GL_BLEND);
@@ -583,13 +584,13 @@ void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
 	free(image);
-	printf("sortie DrawMap\n");
+	//printf("sortie DrawMap\n");
 }
 //Pre: reçoit en argument nextMap et niveauA
 //Post:Fonction qui dessine la map nextMap; c'est dans cette fonction qu'on détermine ou dessinner NextMap par rapport à current
 void drawNext(){
 	
-	printf("drawNext \n");
+	//printf("drawNext \n");
 	//printf("etat Map :%d %d",nextMap.taille.x, nextMap.taille.y);
 	//printf("etat niveauA : \n  -niveauA.next: %d\n  -niveauA.current: %d\n  -niveauA.nextLR: %d",niveauA.next,niveauA.current,niveauA.nextLR);
 	int y=0;
@@ -620,7 +621,7 @@ void drawPrevious(){
 }
 void drawCurrent(){
 
-	printf("drawCurrent\n");
+	//printf("drawCurrent\n");
 	int y=0;
 	int x=0;
 	char** pDrawnMap=currentMap.c;
@@ -644,7 +645,7 @@ void drawMapCall(){
 
 void drawEnnemis(){
 	
-	printf("drawEnnemi\n");
+	//printf("drawEnnemi\n");
 	ElementEnnemi* actuel=liste->premier;
 	
 	Image* image=NULL;
@@ -869,7 +870,7 @@ void drawEnnemis(){
 
 void drawJoueur(){
 	
-	printf("drawJoueur\n");
+	//printf("drawJoueur\n");
 
 	Image* image = loadBMP("velo1.bmp");
 	_textureId = loadTexture(image);
@@ -1057,7 +1058,7 @@ void drawJoueur(){
 
 };
 void drawTirs(){
-	printf("drawTirs debut\n");
+	//printf("drawTirs debut\n");
 
 	for(int i=0;i<j.tirs->nombre;i++){
 		Coordonnee posT=pos_tirs(j.tirs,i);
@@ -1162,10 +1163,80 @@ void interface_menu(){
 			
 			
 		}
-		//printf("\n",x,y);
-		
 	}
-};
+	glColor3d(0,0,0); // Texte en noir
+	
+	vBitmapOutput(15*TILE_SIZE,18*TILE_SIZE+8,"New Game",GLUT_BITMAP_TIMES_ROMAN_24);
+	vBitmapOutput(12*TILE_SIZE,26*TILE_SIZE+8,"Tableaux des Scores",GLUT_BITMAP_TIMES_ROMAN_24);
+	vBitmapOutput(15*TILE_SIZE,34*TILE_SIZE+8,"Commandes",GLUT_BITMAP_TIMES_ROMAN_24);
+	vBitmapOutput(15*TILE_SIZE,42*TILE_SIZE+8,"Exit Game",GLUT_BITMAP_TIMES_ROMAN_24);
+	
+	glFlush(); 
+}
+void interface_tableau_score(void){
+
+	int x;
+	int debutCadre=8;
+	
+	int nombreScore=listeAffichage->nombre;
+	ElementScore* actuel=listeAffichage->premier;
+	
+	glColor3f(0.9f,0.8f,0.3f);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glTranslatef(0,0,0.0f);
+	
+	glBegin(GL_QUADS);
+	
+	glVertex2f(0.0,0.0);
+	glVertex2f(64*TILE_SIZE,0.0f);
+	glVertex2f(64*TILE_SIZE,64*TILE_SIZE);
+	glVertex2f(0.0f,64*TILE_SIZE);
+
+	glEnd();
+	for(x=0;x<nombreScore;x++){
+		
+		glColor3f(0.9f,0.6f,0.0f);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		glTranslatef(8*TILE_SIZE,debutCadre*TILE_SIZE,0.0f);
+		
+		glBegin(GL_QUADS);
+		
+		glVertex2f(0.0,0.0);
+		glVertex2f(38*TILE_SIZE,0.0f);
+		glVertex2f(38*TILE_SIZE,4*TILE_SIZE);
+		glVertex2f(0.0f,4*TILE_SIZE);
+		
+		glEnd();
+		debutCadre+=6;
+	}
+	debutCadre=8;
+	printf("nombreScore %d\n",nombreScore);
+	for(x=0;x<nombreScore;x++){
+		char* valeur=NULL;
+		valeur=int_vers_char(actuel->element.place);
+		char String[MAX_NOM]={" ->"};
+		char tamponString[MAX_NOM*2]={"\0"};
+		strcpy(tamponString,valeur);
+		strcat(tamponString,String);
+		strcat(tamponString,actuel->element.nom);
+		
+		glColor3d(1,0.1,0.1);
+		
+		vBitmapOutput(10*TILE_SIZE,(debutCadre+2)*TILE_SIZE+8,tamponString,GLUT_BITMAP_TIMES_ROMAN_24);
+		
+		valeur=int_vers_char(actuel->element.sco);
+
+		vBitmapOutput(30*TILE_SIZE,(debutCadre+2)*TILE_SIZE+8,valeur,GLUT_BITMAP_TIMES_ROMAN_24);
+		
+		debutCadre+=6;
+		actuel=actuel->suivant;
+		free(valeur);
+	}
+	glFlush(); 
+
+}
 void hub_info_jeu(){
 
 
@@ -1193,21 +1264,69 @@ void hub_info_jeu(){
    
 	glFlush(); 
 }
+void interface_entree_nom(char* nom){
+
+	int y=camera.y-2;
+	int x=camera.x-10;
+	
+		glColor3f(0.1f,0.1f,0.6f);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+		
+		glBegin(GL_QUADS);
+		
+		glVertex2f(0.0,0.0);
+		glVertex2f(TILE_SIZE*24,0.0f);
+		glVertex2f(TILE_SIZE*24,TILE_SIZE*4);
+		glVertex2f(0.0f,TILE_SIZE*4);
+		
+		glEnd();
+	
+	glColor3d(0.9,0.9,0.9); // Texte en blanc
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	char string[MAX_NOM+12]={"Votre nom: "};
+	strcat(string,nom);
+	printf("%s\n",string);
+	vBitmapOutput((x+3)*TILE_SIZE,(y+2)*TILE_SIZE+(TILE_SIZE/2),string,GLUT_BITMAP_TIMES_ROMAN_24);
+
+}
 void interface(int nb){
 	
 	
 	//printf("Interface\n");
-	if(MENU){
+	if(MENU||MenuTabScore){
 		printf("interface_menu\n");
-		interface_menu();
+		switch (selectionMenu){
+			case 0:
+				interface_menu();
+				break;
+			case 1:
+				
+				break;
+			case 2:
+				interface_tableau_score();
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			default:
+				break;
+
+		}
+			
 	}
 	else if(!MENU){
 		drawMapCall();
-		printf("Ennemi\n");
 		drawEnnemis();
 		drawJoueur();
 		drawTirs();
 		hub_info_jeu();
+		if(selectionMenu==5||selectionMenu==6){
+			interface_entree_nom(nomEncode);
+		}
 	}
 };
 

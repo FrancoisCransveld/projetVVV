@@ -193,10 +193,19 @@ void supprimer_ennemi_numero(ListeEnnemi* liste, int numero){
 };
 void supprimer_liste_ennemi(ListeEnnemi* liste){
 	
+	printf("suprimer_liste_ennemi %d\n",liste->nombre);
+	int nombreEnnemis=liste->nombre;
 	if(liste->premier!=NULL){
 		int i=0;
-		while(i<liste->nombre){
-			supprimer_ennemi_numero(liste, 0);	
+		ElementEnnemi* actuel=liste->premier;
+		while(i<nombreEnnemis){
+			actuel->e.attente=false;
+			actuel=actuel->suivant;
+			i++;	
+		}
+		i=0;
+		while(i<nombreEnnemis){
+			supprimer_ennemi_numero(liste, 0);
 			i++;	
 		}
 		liste->nombre=0;

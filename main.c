@@ -13,8 +13,10 @@
 #include "joueur.h"
 #include "ennemi.h"
 #include "menu.h"
+#include "keyboard.h"
+#include "score.h"
 #define MAX_NOM 32
-//#include ""
+
 
 
 void initRendering()
@@ -38,7 +40,7 @@ void Display()
         interface(1);
         glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	if(MENU){
+	if(MENU||MenuTabScore){
 		gluOrtho2D(0, width, heigth, 0);
 	}
 	else{
@@ -49,12 +51,21 @@ void Display()
 }
 int main (int argc,char* argv[]){
 	
-	selectionMenu=0;
+	//if(selectionMenu!=1){
+		selectionMenu=0;
+	//}
 	
 	MENU=true;
-	printf("MENU=true\n");
+	UP = false;
+	LEFT = false;
+	RIGHT = false;
+	DOWN = false;
+	ESCAPE = false;
+	SPACE = false;
+	lettre='\0';
 	srand(time(NULL));
-
+	listeAffichage=creer_liste_score();
+	
 	width=64*TILE_SIZE;
 	heigth=64*TILE_SIZE;
 	glutInit(&argc,argv);
@@ -75,6 +86,10 @@ int main (int argc,char* argv[]){
 		}
 		glutTimerFunc(50, upDatemenu, 3);
 	}
+	glutTimerFunc(25,upDateKeyboard,0);
+	glutTimerFunc(25,upDateTirs,1);
+	glutTimerFunc(100,upDateEnnemi,2);
+	glutTimerFunc(500, upDatemenu, 3);
 	glutMainLoop();
 	return 0;
 }

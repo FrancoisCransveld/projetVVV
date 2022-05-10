@@ -5,7 +5,8 @@
 
 int selectionMenu;
 int keyboardMenuSelection;
-
+bool MenuTabScore;
+bool MOUSECLICK;
 int menu(void);
 void upDatemenu(int num);
 #endif

@@ -15,8 +15,8 @@ enum direction{Up, Right, Down, Left, fin};
 typedef enum direction Direction;
 
 Coordonnee coordonneeSouris;
-void KeyboardSpecial(int key, int x, int y);
-void Keyboard(unsigned char key, int x, int y);
+void KeyboardSpecialJeu(int key, int x, int y);
+void KeyboardJeu(unsigned char key, int x, int y);
 void mouse_pos(int button, int etat, int x, int y);
 void jeu( void );
 void upDateTirs(int num);

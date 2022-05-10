@@ -13,124 +13,67 @@
 #include "joueur.h"
 #include "menu.h"
 #include "collision.h"
+#include "score.h"
+#include "keyboard.h"
 
-bool UP = false;
-bool LEFT = false;
-bool RIGHT = false;
-bool DOWN = false;
-bool ESCAPE = false;
-bool SPACE = false;
 
-void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les input
-{
-	printf("Keyboard \n");
-	switch(key)
-	{
-		case 27:
-			ESCAPE=true;
-			if(MENU&&ESCAPE){
-				exit(0);
-				ESCAPE=false;
-			}
-			else{
-				MENU=true;
-				selectionMenu=0;
-			}
-		case'z':
-			UP = true;
-			break;
-		case'q':
-			LEFT = true;
-			break;
-		case'd':
-			RIGHT = true;
-			break;
-		case's':
-			DOWN = true;
-			break;
-		case' ':
-			SPACE = true;
-			break;
-	}	
-};
-void KeyboardSpecial(int key, int x, int y)  // fonction allant gérer les input
-{
-	//printf("KeyboardSpecial \n");
-	switch(key)
-	{
-		case GLUT_KEY_UP:
-			UP = true;
-			break;
-		case GLUT_KEY_LEFT:
-			LEFT = true;
-			break;
-		case GLUT_KEY_RIGHT:
-			RIGHT = true;
-			break;
-		case GLUT_KEY_DOWN:
-			DOWN = true;
-			break;
-	}	
-};
-void mouse_pos(int button, int etat, int x, int y){
-	
-	if(button==GLUT_LEFT_BUTTON){
-		if(etat==GLUT_UP){
-		
-			coordonneeSouris.x=x;//coordonnee en pixel par rapport à (0;0) coin supérieur gauche
-			coordonneeSouris.y=y;
-			printf(" CoordonneeSouris: (%d,%d)\n",coordonneeSouris.x,coordonneeSouris.y);
-		}
-	}
-};
 
 void upDateKeyboard(int num){
-	//printf("updateKeyboard \n");
-	jeu();
+	printf("updateKeyboard %d \n",selectionMenu);
+	if(selectionMenu==1){
+		jeu();
+	}
 	glutTimerFunc(25, upDateKeyboard, 0);
 };
 //PRE:
 //POST:
 void upDateTirs(int num){
-	//printf("upDateTirs\n");
-	if (SPACE == true){
-		if(j.tirs->nombre<j.maxTirs){
-			tirs(j.tirs,j.pos,pistolet,j.dir);
-		}
-		SPACE=false;
-	}
-	if(j.tirs->nombre>0){
-		//printf("preDeplacement\n");
-		deplacement_tirs(j.tirs);
-		for(int i=0;i<liste->nombre;i++){
-			
-			for(int tirs=0;tirs<j.tirs->nombre;tirs++){
-				if(i<liste->nombre){
-					/*//printf("PreCoordonneeEnnemi %d\n", i);
-					Coordonnee EnnemiActuel=pos_Ennemi(liste,i);
-					//printf("PreCoordonneeTirs %d\n", tirs);
-					Coordonnee tirsActuel=pos_tirs(j.tirs,tirs);*/
-					if(collision_tirs_ennemi(i,tirs)){ 
-						retirer_vie_numero(liste, i,degat_tirs(j.tirs, tirs));
-						supprimer_tirs_numero(j.tirs,tirs);
-						printf("sortie de suppresion tirs \n");
-					}
-				}
-				//printf("sortie for 2\n");
+	printf("upDateTirs\n");
+	if(selectionMenu==1){
+		if (SPACE == true){
+			if(j.tirs->nombre<j.maxTirs){
+				tirs(j.tirs,j.pos,pistolet,j.dir);
 			}
-			//printf("sortie for 1\n");
+			SPACE=false;
 		}
+		if(j.tirs->nombre>0){
+			//printf("preDeplacement\n");
+			deplacement_tirs(j.tirs);
+			for(int i=0;i<liste->nombre;i++){
+				
+				for(int tirs=0;tirs<j.tirs->nombre;tirs++){
+					if(i<liste->nombre){
+						/*//printf("PreCoordonneeEnnemi %d\n", i);
+						Coordonnee EnnemiActuel=pos_Ennemi(liste,i);
+						//printf("PreCoordonneeTirs %d\n", tirs);
+						Coordonnee tirsActuel=pos_tirs(j.tirs,tirs);*/
+						if(collision_tirs_ennemi(i,tirs)){ 
+							retirer_vie_numero(liste, i,degat_tirs(j.tirs, tirs));
+							supprimer_tirs_numero(j.tirs,tirs);
+							printf("sortie de suppresion tirs \n");
+						}
+					}
+					//printf("sortie for 2\n");
+				}
+				//printf("sortie for 1\n");
+			}
+		}
+		//printf("fin UpdateTirs\n");
 	}
-	//printf("fin UpdateTirs\n");
 	glutTimerFunc(25, upDateTirs,1);
 };
 
 //PRE:
 //POST:
 void upDateEnnemi(int num){
-	//printf("upDateEnnemi\n");
-	action_ennemi(liste);
-	if(collisionEnnemiJoueur()){
+	printf("upDateEnnemi\n");
+	bool colli=true;
+	if(selectionMenu==1){
+		action_ennemi(liste);
+		colli=collisionEnnemiJoueur();
+	}
+
+	if(colli){
 		glutTimerFunc(1000, upDateEnnemi,2);
 	}
 	else{
@@ -228,49 +171,47 @@ void mort(){
 		niveauA.next=1;
 		loadMaps();
 		j.pos=load_respawn_Joueur(niveauA.current);
-		upDateKeyboard(0);
-		upDateTirs(1);
-		upDateEnnemi(2);
+		
 	}
 };
 void game_over(){
-
-	//inscription_score();
-	MENU=true;
-	selectionMenu=0;
+	
+	selectionMenu=5;
+	inscription_score();
+	
 };
 void jeu()
 {
-	//printf("jeu \n");
-	glutKeyboardFunc(Keyboard);		//fonction de glut gérant le clavier
-	glutSpecialFunc(KeyboardSpecial);
+	printf("jeu \n");
+	glutKeyboardFunc(KeyboardJeu);		//fonction de glut gérant le clavier
+	glutSpecialFunc(KeyboardSpecialJeu);
 	if (LEFT == true)
 	{
-		
 		moveLeft(j);		//va se déplacer vers la gauche si on appuie sur q
 		LEFT = false;
-		//printf("LEFT ");
+		printf("LEFT ");
 	}
 	if (RIGHT == true)
 	{
-		//printf("RIGHT ");
+		printf("RIGHT ");
 		moveRight(j);		//va se déplacer vers la droite si on apppuie sur d
 		RIGHT = false;
 	}
 	if (UP == true)
 	{
-		//printf("UP ");
+		printf("UP ");
 		moveUp(j);
 		UP = false;
 	}
 	
 	if (DOWN == true)
 	{
-		//printf("DOWN ");
+		printf("DOWN ");
         	moveDown(j);
 		DOWN = false;
 	}
 	if (j.hp<=0){
+		printf("mort\n");
 		mort();
 	}
 	glutPostRedisplay();

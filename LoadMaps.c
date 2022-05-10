@@ -506,7 +506,7 @@ Joueur loadJoueur(int select){
 	fclose(fNewMap);
 	
 	}
-	J.vie=3;
+	J.vie=1;
 	J.hp=5;
 	J.dir=4;
 	J.tirs=creer_liste_tirs();

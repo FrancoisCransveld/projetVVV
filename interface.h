@@ -19,5 +19,8 @@ void interface(int nb);
 void drawMapCall(void);
 void drawJoueur(void);
 void drawEnnemis(void);
+void interface_entree_nom(char* nom);
+void interface_tableau_score(void);
+void hub_info_jeu(void);
 void interface_menu(void);
 #endif
