@@ -131,6 +131,7 @@ void switchMap(){
 		nextMap.taille.y=0;
 		nextMap.taille.x=0;
 		niveauA.Nmap[niveauA.previous].loadStatus=false;//on change le status de previous avant de modifié sa position dans le tableau
+		niveauA.Nmap[niveauA.previous].ennemi=true;
 		niveauA.previous=niveauA.current;
 		niveauA.current=niveauA.next;
 		nextLoad=niveauA.next+1;
@@ -143,6 +144,7 @@ void switchMap(){
 		previousMap.taille.y=0;
 		previousMap.taille.x=0;
 		niveauA.Nmap[niveauA.next].loadStatus=false;//on change le status de previous avant de modifié sa position dans le tableau
+		niveauA.Nmap[niveauA.next].ennemi=true;
 		niveauA.next=niveauA.current;
 		niveauA.current=niveauA.previous;
 		nextLoad=niveauA.previous-1;

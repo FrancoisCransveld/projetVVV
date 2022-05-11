@@ -53,12 +53,17 @@ void vBitmapOutput(int x, int y, char *string, void *font)
 {
 	int len,i; // len donne la longueur de la chaîne de caractères
 	
+	glPushMatrix();
 	glLoadIdentity();
+	printf("glraster\n");
 	glRasterPos2f(x,y); // Positionne le premier caractère de la chaîne
 	len = (int) strlen(string); // Calcule la longueur de la chaîne
 	for (i = 0; i < len; i++) {
+		printf("%c",string[i]);
 		glutBitmapCharacter(font,string[i]); // Affiche chaque caractère de la chaîne
-	} 
+	}
+	printf("\n",string[i]);
+	glPopMatrix();
 }
 
 void vStrokeOutput(GLfloat x, GLfloat y, char *string, void *font)
@@ -1081,7 +1086,8 @@ void drawTirs(){
 void interface_menu(){
 	int y;
 	int x;
-
+	
+	printf("interface_menu\n");
 	for(y=0;y<64;y++){
 		for(x=0;x<64;x++){
 			//printf("(x:%d y%d) ",x,y);
@@ -1205,34 +1211,39 @@ void interface_tableau_score(void){
 		
 		glVertex2f(0.0,0.0);
 		glVertex2f(38*TILE_SIZE,0.0f);
-		glVertex2f(38*TILE_SIZE,4*TILE_SIZE);
-		glVertex2f(0.0f,4*TILE_SIZE);
+		glVertex2f(38*TILE_SIZE,3*TILE_SIZE);
+		glVertex2f(0.0f,3*TILE_SIZE);
 		
 		glEnd();
-		debutCadre+=6;
+		debutCadre+=4;
 	}
 	debutCadre=8;
 	printf("nombreScore %d\n",nombreScore);
 	for(x=0;x<nombreScore;x++){
-		char* valeur=NULL;
-		valeur=int_vers_char(actuel->element.place);
+		char* valeurPlace=NULL;
+		valeurPlace=int_vers_char(actuel->element.place);
 		char String[MAX_NOM]={" ->"};
 		char tamponString[MAX_NOM*2]={"\0"};
-		strcpy(tamponString,valeur);
+		strcpy(tamponString,valeurPlace);
 		strcat(tamponString,String);
 		strcat(tamponString,actuel->element.nom);
 		
 		glColor3d(1,0.1,0.1);
+		printf("premier vBitmap %d\n",x);
+		vBitmapOutput(10*TILE_SIZE,((debutCadre+2)*TILE_SIZE)+8,tamponString,GLUT_BITMAP_TIMES_ROMAN_24);
 		
-		vBitmapOutput(10*TILE_SIZE,(debutCadre+2)*TILE_SIZE+8,tamponString,GLUT_BITMAP_TIMES_ROMAN_24);
+		free(valeurPlace);
 		
-		valeur=int_vers_char(actuel->element.sco);
-
-		vBitmapOutput(30*TILE_SIZE,(debutCadre+2)*TILE_SIZE+8,valeur,GLUT_BITMAP_TIMES_ROMAN_24);
+		char* valeurScore=NULL;
+		//char nomp[MAX_NOM]={"test"};
+		valeurScore=int_vers_char(actuel->element.sco);
 		
-		debutCadre+=6;
+		printf("deuxieme vBitmap\n");
+		vBitmapOutput(30*TILE_SIZE,((debutCadre+2)*TILE_SIZE)+8,valeurScore,GLUT_BITMAP_TIMES_ROMAN_24);
+		
+		debutCadre+=4;
 		actuel=actuel->suivant;
-		free(valeur);
+		free(valeurScore);
 	}
 	glFlush(); 
 
@@ -1290,14 +1301,14 @@ void interface_entree_nom(char* nom){
 	strcat(string,nom);
 	printf("%s\n",string);
 	vBitmapOutput((x+3)*TILE_SIZE,(y+2)*TILE_SIZE+(TILE_SIZE/2),string,GLUT_BITMAP_TIMES_ROMAN_24);
-
+	 
 }
 void interface(int nb){
 	
 	
-	//printf("Interface\n");
+	printf("Interface\n");
 	if(MENU||MenuTabScore){
-		printf("interface_menu\n");
+		
 		switch (selectionMenu){
 			case 0:
 				interface_menu();

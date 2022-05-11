@@ -19,6 +19,7 @@
 //POST: crée une liste chainée d'ennemi et renvoie un pointeur vers cette structure contenant l'adresse du premier élément créé. Cet élément est initialiser avec nom=Bot1 et hp=1 et le pointeur suivant=NULL
 ListeScore* creer_liste_score(void){
 	
+	printf("creer_listeScore\n");
 	char nom[MAX_NOM]={"\0"};
 	ListeScore* listeSc=malloc(sizeof(ListeScore));
 	ElementScore* eScore=malloc(sizeof(ElementScore));

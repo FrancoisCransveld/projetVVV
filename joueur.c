@@ -6,14 +6,12 @@
 #endif
 #include <stdlib.h>
 #include <stdio.h>
-//#include "jeu.h"
-//#include "LoadMaps.h"
 #include "interface.h"
 #include "joueur.h"
 #include "collision.h"
 void replacement_joueur(int x, int y, Map* map){
 	
-	//printf("replacementJoueur\n");
+	
 	int mjX, mjY;
  	//variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	//recherche position par rapport à current 
@@ -34,11 +32,8 @@ void replacement_joueur(int x, int y, Map* map){
 		mjX=x;
 		mjY=y;
 	}
-	//printf("car %c\n",map->c[0][0]);
 	map->taille.x=mjX;	//Coordonnée de j dans la carte logique/le plateau qui le concerne contenu dans map->taille
 	map->taille.y=mjY;
-	//printf("j pos x: %d j pos y: %d et mjX: %d mjY: %d\n",j.pos.x,j.pos.y, mjX,mjY);
-	//printf("niveau.current %d %dniveau.Next %d %dniveau.LR %d %d\n",niveauA.current,niveauA.Nmap[niveauA.current].s,niveauA.next,niveauA.Nmap[niveauA.next].s,niveauA.previous,niveauA.Nmap[niveauA.previous].s);
 	return ;
 
 };
@@ -52,7 +47,6 @@ void moveLeft(){		//la fonction va vérifier si on peut se déplacer vers la gau
 	
 	 //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	replacement_joueur(x,y,&MapJ);
-	//printf("moveLeft\n");
 	j.dir=3;
 	//recherche position par rapport à current 
 	/*  */
@@ -63,13 +57,11 @@ void moveLeft(){		//la fonction va vérifier si on peut se déplacer vers la gau
 		if(autorisation_scroll( x, y,MapJ,j.dir)){
 			camera.x--;//position initiale de la camera affichant une map complète au centre. 
 		}
-		//mapLoader(MapJ,j.dir);
 		switchMap();
 		supprimer_ennemi_hors_portee(liste);
 		activer_ennemi_a_portee(liste);
 	}
-	//printf("moveLeft\n");
-	//printf("j pos x: %d j pos y: %d",j.pos.x,j.pos.y);
+
 
 };
 void moveRight()		//la fonction va vérifier si on peut se déplacer vers la droite et le faire le cas échéant
@@ -85,7 +77,6 @@ void moveRight()		//la fonction va vérifier si on peut se déplacer vers la dro
 	 //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	replacement_joueur(x,y,&MapJ);
 	j.dir=1;
-	//printf("moveRight\n");
 	if (*(*(MapJ.c + MapJ.taille.y) + (MapJ.taille.x))!='#')
 	{
 
@@ -93,12 +84,10 @@ void moveRight()		//la fonction va vérifier si on peut se déplacer vers la dro
 		if(autorisation_scroll( x, y,MapJ,j.dir)){
 			camera.x++;
 		}
-		//mapLoader(MapJ,j.dir);
 		switchMap();
 		supprimer_ennemi_hors_portee(liste);
 		activer_ennemi_a_portee(liste);
 	}
-	//printf("j pos x: %d j pos y: %d",j.pos.x,j.pos.y);
 
 };
 void moveUp()
@@ -112,20 +101,17 @@ void moveUp()
 	j.dir=0;
 	 //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	replacement_joueur(x,y,&MapJ);
-	//printf("moveUp\n");
 	if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#'&&*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='!'){//attention a changer
 		
 		j.pos.y = y;
 		if(autorisation_scroll( x, y,MapJ,j.dir)){
 			camera.y--;
 		}
-		//mapLoader(MapJ,j.dir);
 		switchMap();
 		supprimer_ennemi_hors_portee(liste);
 		activer_ennemi_a_portee(liste);
 		
-	}
-	//printf("j pos x: %d j pos y: %d",j.pos.x,j.pos.y);     
+	} 
 	
 };
 void moveDown()
@@ -136,7 +122,6 @@ void moveDown()
    y = j.pos.y+1;
    
    Map MapJ;
-	//printf("moveDown\n");
 	 //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	replacement_joueur(x,y,&MapJ);	//dans MapJ la structure taille correspond au futur coordonée du joueur dans le plateau logique qui lui correspond
 	j.dir=2;
@@ -147,13 +132,11 @@ void moveDown()
 			camera.y++;
 		}
 		
-		//mapLoader(MapJ,j.dir);
 		switchMap();
 		supprimer_ennemi_hors_portee(liste);
 		activer_ennemi_a_portee( liste);
 		
       }
-      //printf("j pos x: %d j pos y: %d",j.pos.x,j.pos.y);
 };
 //PRE: les argument sont la postion du joueur après le déplacement et la carte sur laquel il évolue.
 //POST: fonction qui va testé si oui ou non la caméra doit scroller
@@ -162,7 +145,6 @@ bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir){
 	bool SCROLL_J=false;	//booleen vérifiant que la position du joueur par rapport à la caméra selon sa direction est suffisament éloignée
 	int xLock=32;	//position x du verrou du srcolling pour la direction
 	int yLock=32;	//position y du verrou du srcolling pour la direction
-	//printf("Srcrolllock\n");
 	switch(jDir){
 		case 0:
 			yLock=0;
@@ -206,71 +188,3 @@ bool autorisation_scroll(int x,int y,Map MapJ,Direction jDir){
 	}
 	return(SCROLL_J&&SCROLL_LOCK);
 };
-/*
-bool collisionEnnemiJoueur(){
-	bool collision=false;
-	for(int i=0;i<liste->nombre;i++){
-				Coordonnee EnnemiActuel=pos_Ennemi(liste,i);
-				if(EnnemiActuel.x==j.pos.x){
-					if((EnnemiActuel.y==j.pos.y)||((EnnemiActuel.y-1==j.pos.y)&&j.dir==2)||((EnnemiActuel.y+1==j.pos.y)&&j.dir==0)){
-						j.hp--;
-						switch(j.dir){
-							case 0:
-								moveDown();
-								moveDown();
-								break;
-							case 1:
-								moveLeft();
-								moveLeft();
-								break;
-							case 2:
-								moveUp();
-								moveUp();
-								break;
-							case 3:
-								moveRight();
-								moveRight();
-								break;
-							case 4:
-								moveDown();
-								moveDown();
-								break;
-						}
-						collision=true;
-						return collision;
-					}
-				}
-				if(EnnemiActuel.y==j.pos.y){
-					if((EnnemiActuel.x==j.pos.x)||((EnnemiActuel.x+1==j.pos.y)&&j.dir==3)||((EnnemiActuel.x-1==j.pos.y)&&j.dir==1)){
-						j.hp--;
-						switch(j.dir){
-							case 0:
-								moveDown();
-								moveDown();
-								break;
-							case 1:
-								moveLeft();
-								moveLeft();
-								break;
-							case 2:
-								moveUp();
-								moveUp();
-								break;
-							case 3:
-								moveRight();
-								moveRight();
-								break;
-							case 4:
-								moveDown();
-								moveDown();
-								break;
-						}
-						collision=true;
-						return collision;
-					}
-				}
-	
-	}
-	return collision;
-}
-*/
