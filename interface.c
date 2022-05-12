@@ -148,7 +148,7 @@ void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 				if(carActuel==' '||carActuel=='c'||carActuel=='v'||carActuel=='j'||carActuel=='m'){
 					
 					
-					nbrRandom=((x+y)%4);
+					nbrRandom=((x-minX+y-minY)%4);
 					
 					glBindTexture(GL_TEXTURE_2D, _textureId);
 					
@@ -283,7 +283,7 @@ void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 		for(x=minX;x<maxX;x++){
 			if((x>=camera.x-(width/(2*TILE_SIZE))-1)&&(x<=(camera.x+(width/(2*TILE_SIZE))+1))&&(y<=(camera.y+(width/(2*TILE_SIZE))+1))&&(y>=(camera.y-(width/(2*TILE_SIZE))-1))){
 		carActuel=*(*(pDrawnMap+y-minY)+x-minX);
-				if(carActuel=='l'){
+				if(carActuel=='l'||carActuel=='H'){
 					glBindTexture(GL_TEXTURE_2D, _textureId);
 					
 					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -299,15 +299,103 @@ void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap){
 					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
 					
 					glBegin(GL_QUADS);
+					if(carActuel=='l'){
+						glTexCoord2f(0.0f, 0.0f);
+						glVertex2f(TILE_SIZE,TILE_SIZE);
+						glTexCoord2f(1.0f, 0.0f);
+						glVertex2f(0.0f,TILE_SIZE);
+						glTexCoord2f(1.0f,1.0f);
+						glVertex2f(0.0,0.0);
+						glTexCoord2f(0.0f, 1.0f);
+						glVertex2f(TILE_SIZE,0.0f);
+					}
+					else{
+						glTexCoord2f(0.0f, 0.0f);
+						glVertex2f(0.0f,TILE_SIZE);
+						glTexCoord2f(1.0f, 0.0f);
+						glVertex2f(0.0,0.0);
+						glTexCoord2f(1.0f,1.0f);
+						glVertex2f(TILE_SIZE,0.0f);
+						glTexCoord2f(0.0f, 1.0f);
+						glVertex2f(TILE_SIZE,TILE_SIZE);
+						
+						
+					}
+					glEnd();
+					
+				}
+			}
+		}
+	}
 
-					glTexCoord2f(0.0f, 0.0f);
-					glVertex2f(TILE_SIZE,TILE_SIZE);
-					glTexCoord2f(1.0f, 0.0f);
-					glVertex2f(0.0f,TILE_SIZE);
-					glTexCoord2f(1.0f,1.0f);
-					glVertex2f(0.0,0.0);
-					glTexCoord2f(0.0f, 1.0f);
-					glVertex2f(TILE_SIZE,0.0f);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_BLEND);
+	
+	image = loadBMP("ligneDiagonale.bmp");
+	_textureId = loadTexture(image);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_TEXTURE_2D);						
+	for(y=minY;y<maxY;y++){
+		for(x=minX;x<maxX;x++){
+			if((x>=camera.x-(width/(2*TILE_SIZE))-1)&&(x<=(camera.x+(width/(2*TILE_SIZE))+1))&&(y<=(camera.y+(width/(2*TILE_SIZE))+1))&&(y>=(camera.y-(width/(2*TILE_SIZE))-1))){
+		carActuel=*(*(pDrawnMap+y-minY)+x-minX);
+				if(carActuel=='d'||carActuel=='D'||carActuel=='O'||carActuel=='o'){
+					glBindTexture(GL_TEXTURE_2D, _textureId);
+					
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+					if(image->RGBA){
+						glColor4f(1.0f,1.0f,1.0f,1.0f);
+					}
+					else{
+						glColor3f(1.0f,1.0f,1.0f);
+					}	
+					glMatrixMode(GL_MODELVIEW);		
+					glLoadIdentity();
+					glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+					
+					glBegin(GL_QUADS);
+					if(carActuel=='d'){
+						glTexCoord2f(0.0f, 0.0f);
+						glVertex2f(TILE_SIZE,TILE_SIZE);
+						glTexCoord2f(1.0f, 0.0f);
+						glVertex2f(0.0f,TILE_SIZE);
+						glTexCoord2f(1.0f,1.0f);
+						glVertex2f(0.0,0.0);
+						glTexCoord2f(0.0f, 1.0f);
+						glVertex2f(TILE_SIZE,0.0f);
+					}
+					else if(carActuel=='D'){
+						glTexCoord2f(0.0f, 0.0f);
+						glVertex2f(0.0,0.0);
+						glTexCoord2f(1.0f, 0.0f);
+						glVertex2f(TILE_SIZE,0.0f);
+						glTexCoord2f(1.0f,1.0f);
+						glVertex2f(TILE_SIZE,TILE_SIZE);
+						glTexCoord2f(0.0f, 1.0f);
+						glVertex2f(0.0f,TILE_SIZE);
+					}
+					else if(carActuel=='O'){
+						glTexCoord2f(0.0f, 0.0f);
+						glVertex2f(0.0f,TILE_SIZE);
+						glTexCoord2f(1.0f, 0.0f);
+						glVertex2f(0.0,0.0);
+						glTexCoord2f(1.0f,1.0f);
+						glVertex2f(TILE_SIZE,0.0f);
+						glTexCoord2f(0.0f, 1.0f);
+						glVertex2f(TILE_SIZE,TILE_SIZE);
+					}
+					else if(carActuel=='o'){
+						glTexCoord2f(0.0f, 0.0f);
+						glVertex2f(TILE_SIZE,0.0f);
+						glTexCoord2f(1.0f, 0.0f);
+						glVertex2f(TILE_SIZE,TILE_SIZE);
+						glTexCoord2f(1.0f,1.0f);
+						glVertex2f(0.0f,TILE_SIZE);
+						glTexCoord2f(0.0f, 1.0f);
+						glVertex2f(0.0,0.0);
+					}
 					glEnd();
 					
 				}

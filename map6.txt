@@ -1,65 +1,65 @@
 p3 n1 s64
-###################################          ######            #
-#                                 #                            #
-#                        v        #                            #
-########################   ########################            #
-########################   #######################             #
-########################   #######################             #
-########################   #######################             #
-########################   #######################             #
-#######################    #######################             #
-########################  ########################             #
-######################     #######################             #
-#               m               c                #             #
-#                                                #      m      #
-######################     #######################             #
-#                                                #             #
-#                                                #             #
-######################     #######################             #
-#                                                #             #
-#                                                #             #
-######################     #######################             #
-#                                                #             #
-#                                                #             #
-######################     #######################             #
-#                                                #             #
-#                                                #             #
-######################     #######################             #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                           m                  #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                v             #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-#       v                                                      #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-#                                                              #
-##                           ###################################
-##                           ###################################
+!hhhhhhhhhhhhhhhhhhhhhhhhhhhh#bbl      l      l      l     lbb#!
+!hhhhhhhhhhhhhhhhhhhhhhhhhhhh#bbl             l            lbb#!
+!hhhhhhhhhhhhhhhhhhhhhhhhhhhh#bbl      l      l      l     lbb#!
+!hhhhhhhhhhhhhhhhhhhhhhhhhhhh#bbl             l            lbb#!
+!hhhhhhhhhhhhhhhhhhhhhhhhhhhh#bbl      l      l      l     lbb#!
+!hhhhhhhhhhhhhhhhhhhhhhhhhhhh#bbl             l            lbb#!
+!hhhhhhhhhhhhhhhhhhhhhhhhhhhh#bbl      l      l      l     lbb#!
+!hhhhhhhhhhhhhhhhhhhhhhhhhhhh#bbl             l            lbb#!
+!hhhhhhhhhhhhhhhhhhhhhhhhhhhh#bbl      l      l      l     lbb#!
+!hhhhhhhhhhhhhhhhhhhhhhhhhhhh#bbl             l            lbb#!
+!hhhhhhhhhhhhhhhhhhhhhhhhhhhh#bbl      l      l      l     lbb#!
+!#############################bbl             l            lbb#!
+!#bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbl      l      l      l     lbb#!
+!#bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbl             l            lbb#!
+!#bbboHHHHHHHHHHHHHHHHHHHHHHHHHHO      l      l      l     lbb#!
+!#bboO                                        l            lbb#!
+!#bbl                                  l      l      l     lbb#!
+!#bbl                                         l            lbb#!
+!#bbl                                  l      l      l     lbb#!
+!#bbl                                         l            lbb#!
+!#bbl                                  l      l      l     lbb#!
+!#bbl      oH H H H H H H H H H H H H HO      l            lbb#!
+!#bbl      l                                  l      l     lbb#!
+!#bbl                                         l            lbb#!
+!#bbl      l                                  l      l     lbb#!
+!#bbl                                         l            lbb#!
+!#bbl      l                                  l      l     lbb#!
+!#bbl                                         l            lbb#!
+!#bbl      l      oHHHHHHHHHHHHHHHHHHHHHHHHHHHO      l     lbb#!
+!#bbl             l                                        lbb#!
+!#bbl      l      l                                  l     lbb#!
+!#bbl             l                                        lbb#!
+!#bbl      l      l                                  l     lbb#!
+!#bbl             l                                        lbb#!
+!#bbl      l      l                                  l     lbb#!
+!#bbl             l      oH H H H H H H H H H H H H HO     lbb#!
+!#bbl      l      l      l                                 lbb#!
+!#bbl             l                                        lbb#!
+!#bbl      l      l      l                                 lbb#!
+!#bbl  c          l                   v                    lbb#!
+!#bbl      l      l      l                                 lbb#!
+!#bbl             l                                       oObb#!
+!#bbl      l      l      l     oHHHHHHHHHHHHHHHHHHHHHHHHHHObbb#!
+!#bbl             l            lbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb#!
+!#bbl      l      l      l     lbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb#!
+!#bbl             l            lbb#############################!
+!#bbl      l      l      l     lbb#hhhhhhhhhhhhhhhhhhhhhhhhhhhh!
+!#bbl             l            lbb#hhhhhhhhhhhhhhhhhhhhhhhhhhhh!
+!#bbl      l      l      l     lbb#hhhhhhhhhhhhhhhhhhhhhhhhhhhh!
+!#bbl             l            lbb#hhhhhhhhhhhhhhhhhhhhhhhhhhhh!
+!#bbl      l      l      l     lbb#hhhhhhhhhhhhhhhhhhhhhhhhhhhh!
+!#bbl             l            lbb#hhhhhhhhhhhhhhhhhhhhhhhhhhhh!
+!#bbl      l      l      l     lbb#hhhhhhhhhhhhhhhhhhhhhhhhhhhh!
+!#bbl             l            lbb#hhhhhhhhhhhhhhhhhhhhhhhhhhhh!
+!#bbl      l      l      l     lbb#hhhhhhhhhhhhhhhhhhhhhhhhhhhh!
+!#bbl             l            lbb#hhhhhhhhhhhhhhhhhhhhhhhhhhhh!
+!#bbl      l      l      l     lbb#hhhhhhhhhhhhhhhhhhhhhhhhhhhh!
+!#bbl             l            lbb#hhhhhhhhhhhhhhhhhhhhhhhhhhhh!
+!#bbl      l      l      l     lbb#hhhhhhhhhhhhhhhhhhhhhhhhhhhh!
+!#bbl             l            lbb#hhhhhhhhhhhhhhhhhhhhhhhhhhhh!
+!#bbl      l      l      l     lbb#hhhhhhhhhhhhhhhhhhhhhhhhhhhh!
+!#bbl             l            lbb#hhhhhhhhhhhhhhhhhhhhhhhhhhhh!
+!#bbl      l      l      l     lbb#hhhhhhhhhhhhhhhhhhhhhhhhhhhh!
+!#bbl             l            lbb#hhhhhhhhhhhhhhhhhhhhhhhhhhhh!

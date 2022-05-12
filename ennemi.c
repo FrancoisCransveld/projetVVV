@@ -13,6 +13,7 @@
 #include "ennemi.h"
 #include "LoadMaps.h"
 #include "interface.h"
+#include "collision.h"
 
 //PRE:aucun argument d'entree
 //POST:crée la liste chainée et initialise le premier element de cette liste chainee avec la vie de l'ennemi à 1, la position à(0;0) le type à 0 et le nom à Bot1
@@ -33,7 +34,7 @@ ListeEnnemi* creer_liste(void){
 	ennemi->e.type=vide;
 	ennemi->suivant=NULL;
   	ennemi->precedent=NULL;
-  	ennemi->e.attente=true;
+  	ennemi->e.attente=false;
   	ennemi->e.nom=malloc(sizeof(char*)*MAX_NOM);
 	strcpy(ennemi->e.nom,nom);
 	liste->premier=ennemi;
@@ -299,7 +300,7 @@ void modifier_pos_ennemi(ListeEnnemi* liste, int numero, Coordonnee pos){
 //POST:On déplace tous les ennemis de la variation
 void modifier_pos_ennemis(ListeEnnemi* liste, Coordonnee variation){
 	int i=0;
-	
+	printf("modifier pos\n");
 	ElementEnnemi* actuel=liste->premier;
 	int nombreMax=liste->nombre;
 	for(i=0;i<nombreMax;i++){
@@ -317,17 +318,43 @@ void modifier_pos_ennemis(ListeEnnemi* liste, Coordonnee variation){
 void supprimer_ennemi_hors_portee(ListeEnnemi* liste){
 	ElementEnnemi* actuel=liste->premier;
 	int nombreMax=liste->nombre;
+	int* registre=NULL;
+	int nombreRegistre=0;
 	for(int i=0;i<nombreMax;i++){
 		if(actuel->e.pos.y>camera.y+(CAM_RANGE*8)||actuel->e.pos.y<camera.y-(CAM_RANGE*8)){
 			//printf("suprimer %d adresse %hx\n",i,actuel);
 			actuel->e.attente=false;
-			supprimer_ennemi_numero(liste, i);
+			if(registre==NULL){
+				registre=malloc(sizeof(int*));
+
+			}
+			else{
+				registre=realloc(registre, sizeof(int*)*nombreRegistre+1);
+
+			}
+			*(registre+nombreRegistre)=i;
+			nombreRegistre++;
+			actuel=actuel->suivant;
 		}
 		else{
 			actuel=actuel->suivant;
 		}
 	}
-	//	afficher_liste(liste);
+	printf("registre ");
+	for(int n=0;n<nombreRegistre;n++){
+		printf("%d ",*(registre+n));
+	}
+	printf("fin\n");
+	for(int n=nombreRegistre;n>0;n--){
+	
+		printf("ennemis suppression %d\n", *(registre+(n-1)));
+		printf("suprimer ennemi %d adresse %hx nombre%d\n",*(registre+(n-1)),actuel,liste->nombre);
+		afficher_liste(liste);
+		supprimer_ennemi_numero(liste,*(registre+(n-1)));
+		afficher_liste(liste);
+	}
+	free(registre);
+	afficher_liste(liste);
 };
 //PRE:
 //POST:active et désactive les ennemis: e.attente=true en attente e.attente=false ennemi actif
@@ -465,14 +492,62 @@ void action_voiture(Ennemi* voiture){
 		}
 	}
 	Map Emap;
+	bool DIFFERENTMAP;
 	replacement_ennemi(x,y,&Emap);
-	if(*(*(Emap.c+Emap.taille.y)+Emap.taille.x)!='#'){
-		voiture->pos.x=x;
-		voiture->pos.y=y;
+	Coordonnee limiteBD;
+	limiteBD=HitBoxEnnemi_collision_decors(voiture->type,voiture->dir,Emap.taille,&DIFFERENTMAP);
+	if(!DIFFERENTMAP){
+		if(collision_ennemi_decor(Emap.taille,limiteBD,voiture->dir,Emap.c)){
+			voiture->pos.x=x;
+			voiture->pos.y=y;
+		}
+		else{
+			printf("Ennemi bloqué\n");
+		}
 	}
 	else{
-		
+		if(voiture->dir==0){
+			if(collision_ennemi_decor(Emap.taille,limiteBD,voiture->dir,Emap.c)){
+				voiture->pos.x=x;
+				voiture->pos.y=y;
+			}
+			else{
+				printf("Ennemi bloqué\n");
+			}
+		}
+		else if(voiture->dir==2){
+			if(y<0){
+				Emap.c=currentMap.c;
+			}
+			else if(y<64){
+				Emap.c=previousMap.c;
+			}
+			if(collision_ennemi_decor(Emap.taille,limiteBD,voiture->dir,Emap.c)){
+			voiture->pos.x=x;
+			voiture->pos.y=y;
+			}
+			else{
+				printf("Ennemi bloqué\n");
+			}
+		}
+		else{
+			Map differentMap;
+			if(y<0){
+				differentMap=currentMap;
+			}
+			else if(y<64){
+				differentMap=previousMap;
+			}
+			if(collision_ennemi_decor_limiteMap(Emap.taille,limiteBD,voiture->dir,Emap.c,differentMap.c)){
+				voiture->pos.x=x;
+				voiture->pos.y=y;
+			}
+			else{
+				printf("Ennemi bloqué\n");
+			}
+		}
 	}
+	
 };
 //PRE:on envoie le pointeur de l'ennemi moto dont le traitement est en cours dans action_ennemi
 //POST:fonction ou l'on retrouve les actions automatique d'un ennemi type moto appelé par action_ennemi
@@ -481,7 +556,6 @@ void action_moto(Ennemi* moto){
 	int y=moto->pos.y;
 	if((moto->pos.x-moto->pos.y)%2==0){
 		if(moto->pos.x-j.pos.x<0){
-			
 			x++;
 			moto->dir=1;
 		}

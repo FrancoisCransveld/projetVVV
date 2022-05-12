@@ -44,7 +44,7 @@ void Display()
 		gluOrtho2D(0, width, heigth, 0);
 	}
 	else{
-		gluOrtho2D(TILE_SIZE*(camera.x)-(width/4), TILE_SIZE*(camera.x)+(width/4), TILE_SIZE*(camera.y)+heigth/4, TILE_SIZE*(camera.y)-heigth/4);
+		gluOrtho2D(TILE_SIZE*(camera.x)-(width/4)-2*TILE_SIZE, TILE_SIZE*(camera.x)+(width/4)+2*TILE_SIZE, TILE_SIZE*(camera.y)+(heigth/4)+2*TILE_SIZE, TILE_SIZE*(camera.y)-(heigth/4)-2*TILE_SIZE);
 	}
 	glFlush();
 	

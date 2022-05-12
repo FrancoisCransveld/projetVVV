@@ -34,39 +34,87 @@ void KeyboardJeu(unsigned char key, int x, int y)  // fonction allant gérer les
 				selectionMenu=0;
 			}
 		case'z':
+			INPUT=true;
 			UP = true;
+			LEFT=false;
+			RIGHT=false;
+			DOWN=false;
 			break;
 		case'q':
-			LEFT = true;
+			INPUT=true;
+			UP=false;
+			LEFT=true;
+			RIGHT=false;
+			DOWN=false;
 			break;
 		case'd':
-			RIGHT = true;
+			INPUT=true;
+			UP=false;
+			LEFT=false;
+			RIGHT=true;
+			DOWN=false;
 			break;
 		case's':
-			DOWN = true;
+			INPUT=true;
+			UP=false;
+			LEFT=false;
+			RIGHT=false;
+			DOWN=true;
 			break;
 		case' ':
+			INPUT=true;
 			SPACE = true;
+			UP=false;
+			LEFT=false;
+			RIGHT=false;
+			DOWN=false;
+			break;
+		default:
+			UP=false;
+			LEFT=false;
+			RIGHT=false;
+			DOWN=false;
+			SPACE=false;
 			break;
 	}	
 };
 void KeyboardSpecialJeu(int key, int x, int y)  // fonction allant gérer les input
 {
 	//printf("KeyboardSpecial \n");
+
 	switch(key)
 	{
 		case GLUT_KEY_UP:
+			INPUT=true;
 			UP = true;
+			LEFT=false;
+			RIGHT=false;
+			DOWN=false;
 			printf("UP\n");
 			break;
 		case GLUT_KEY_LEFT:
-			LEFT = true;
+			INPUT=true;
+			UP=false;
+			LEFT=true;
+			RIGHT=false;
+			DOWN=false;
 			break;
 		case GLUT_KEY_RIGHT:
-			RIGHT = true;
+			INPUT=true;
+			UP=false;
+			LEFT=false;
+			RIGHT=true;
+			DOWN=false;
 			break;
 		case GLUT_KEY_DOWN:
-			DOWN = true;
+			INPUT=true;
+			UP=false;
+			LEFT=false;
+			RIGHT=false;
+			DOWN=true;
+			break;
+		default:
+			INPUT=true;
 			break;
 	}	
 };

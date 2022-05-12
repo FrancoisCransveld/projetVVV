@@ -23,7 +23,17 @@ void upDateKeyboard(int num){
 	if(selectionMenu==1){
 		jeu();
 	}
-	glutTimerFunc(25, upDateKeyboard, 0);
+	if(INPUT){
+		INPUT=false;
+	}
+	else{
+		UP=false;
+		LEFT=false;
+		RIGHT=false;
+		DOWN=false;
+		SPACE=false;
+	}
+	glutTimerFunc(50, upDateKeyboard, 0);
 };
 //PRE:
 //POST:
@@ -77,7 +87,7 @@ void upDateEnnemi(int num){
 		glutTimerFunc(1000, upDateEnnemi,2);
 	}
 	else{
-		glutTimerFunc(100, upDateEnnemi,2); 
+		glutTimerFunc(120, upDateEnnemi,2); 
 	}
 };
 //PRE:
@@ -190,27 +200,27 @@ void jeu()
 	if (LEFT == true)
 	{
 		moveLeft(j);		//va se déplacer vers la gauche si on appuie sur q
-		LEFT = false;
+		//LEFT = false;
 		printf("LEFT ");
 	}
 	if (RIGHT == true)
 	{
 		printf("RIGHT ");
 		moveRight(j);		//va se déplacer vers la droite si on apppuie sur d
-		RIGHT = false;
+		//RIGHT = false;
 	}
 	if (UP == true)
 	{
 		printf("UP ");
 		moveUp(j);
-		UP = false;
+		//UP = false;
 	}
 	
 	if (DOWN == true)
 	{
 		printf("DOWN ");
         	moveDown(j);
-		DOWN = false;
+		//DOWN = false;
 	}
 	if (j.hp<=0){
 		printf("mort\n");

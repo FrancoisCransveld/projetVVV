@@ -1,65 +1,65 @@
 p0 n0 s64
+#hhhhhhhhhhhhhh#bbl      l      l      l     lbb#hhhhhhhhhhhhhh#
 #hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhh#bbl      lv     l      l     lbb#hhhhhhhhhhhhhh#
 #hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bbl       v     l            lbb#hhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhh#bbl      l      l     vl     lbb#hhhhhhhhhhhhhh#
 #hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bbl             l     v      lbb#hhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhh#bbl      l      l      l     lbb#hhhhhhhhhhhhhh#
 #hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhh#bbl      l      l      l     lbb#hhhhhhhhhhhhhh#
 #hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhh#bbl      l      lm     l     lbb#hhhhhhhhhhhhhh#
 #hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bbl             lm           lbb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhh#bbl      l      l      l     lbb#hhhhhhhhhhhhhh#
 #hhhhhhhhhhhhhh#bbl             l         v  lbb#hhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhh#bbl      l      l      l     lbb#hhhhhhhhhhhhhh#
 #hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhh#bbl      l      l      l     lbb#hhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhh#bbDd            l           oObb#hhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhh#bbDd    l      l      l   oObb#hhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhh#bbDd          l         oObb#hhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhh#bbDd  l      l      l oObb#hhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhh#bbDd        l       oObb#hhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhhh#bbDd       l      oObb#hhhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhhhh#bbDd m    l      lbb#hhhhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhhhhh#bbl      l      lbb#hhhhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhhhhh#bbl      l      lbb#hhhhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhhhhh#bbl      l      lbb#hhhhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhhhhh#bbl      l      lbb#hhhhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhhhhh#bbl      l      lbb#hhhhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhhhh#bboO      l      lbb#hhhhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhhh#bboO       l      Ddbb#hhhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhh#bboO        l       Ddbb#hhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhh#bboO         l        Ddbb#hhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhh#bboO   l      l      l  Ddbb#hhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhh#bboO           l          Ddbb#hhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhh#bboO     l      l      l    Ddbb#hhhhhhhhhhhhhh#
 #hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhh#bbl      l      l      l     lbb#hhhhhhhhhhhhhh#
 #hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhh#bbl            l           lbb#hhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhh#bbl           l          lbb#hhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhh#bbl          l         lbb#hhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhh#bbl         l        lbb#hhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhh#bbl        l       lbb#hhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhhh#bbl       l      lbb#hhhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhhh#bbl   m   l      lbb#hhhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhhh#bbl       l      lbb#hhhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhhh#bbl       l      lbb#hhhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhhh#bbl       l      lbb#hhhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhhh#bbl       l      lbb#hhhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhhh#bbl       l      lbb#hhhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhhh#bbl       l      lbb#hhhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhh#bbl        l       lbb#hhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhh#bbl         l        lbb#hhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhh#bbl          l         lbb#hhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhh#bbl           l          lbb#hhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhh#bbl            l           lbb#hhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhh#bbDd     l      l      l    oObb#hhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhh#bbDd           l          oObb#hhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhh#bbDd   l      l      l  oObb#hhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhh#bbDd         l        oObb#hhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhh#bbDd        l       oObb#hhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhhh#bbDd       l      oObb#hhhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhhhh#bbDd m    l      lbb#hhhhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhhhhh#bbl      l      lbb#hhhhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhhhhh#bbl      l      lbb#hhhhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhhhhh#bbl      l      lbb#hhhhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhhhhh#bbl      l      lbb#hhhhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhhhhh#bbl      l      lbb#hhhhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhhhh#bboO      l      lbb#hhhhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhhh#bboO       l      Ddbb#hhhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhhh#bboO        l       Ddbb#hhhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhhh#bboO  l      l      l Ddbb#hhhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhhh#bboO          l         Ddbb#hhhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhhh#bboO    l      l      l   Ddbb#hhhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhh#bboO            l           Ddbb#hhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhh#bbl      l      l      l     lbb#hhhhhhhhhhhhhh#
 #hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhh#bbl      l      l      l     lbb#hhhhhhhhhhhhhh#
 #hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhh#bbl            l           lbb#hhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhh#bbl           l          lbb#hhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhh#bbl          l         lbb#hhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhh#bbl         l        lbb#hhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhh#bbl        l       lbb#hhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhhh#bbl       l      lbb#hhhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhhh#bbl   m   l      lbb#hhhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhhh#bbl       l      lbb#hhhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhhh#bbl       l      lbb#hhhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhhh#bbl       l      lbb#hhhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhhh#bbl       l      lbb#hhhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhhh#bbl       l      lbb#hhhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhhh#bbl       l      lbb#hhhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhhh#bbl       l      lbb#hhhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhhh#bbl        l       lbb#hhhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhhh#bbl         l        lbb#hhhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhhh#bbl          l         lbb#hhhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhhh#bbl           l          lbb#hhhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhhh#bbl            l           lbb#hhhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
-#hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#
+#hhhhhhhhhhhhhh#bbl      l      l      l     lbb#hhhhhhhhhhhhhh#
 #hhhhhhhhhhhhhh#bbl             l            lbb#hhhhhhhhhhhhhh#

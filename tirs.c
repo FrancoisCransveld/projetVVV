@@ -345,12 +345,12 @@ void deplacement_tirs(ListeTirs* listeT){
 			printf("%d ",*(registre+n));
 		}
 		printf("fin\n");
-		for(int n=0;n<nombreRegistre;n++){
+		for(int n=nombreRegistre;n>0;n--){
 		
-			printf("deplacement tirs suppression %d\n", *(registre+n));
-			printf("suprimer tirs %d adresse %hx nombre%d\n",*(registre+n),actuel,listeT->nombre);
+			printf("deplacement tirs suppression %d\n", *(registre+(n-1)));
+			printf("suprimer tirs %d adresse %hx nombre%d\n",*(registre+(n-1)),actuel,listeT->nombre);
 			afficher_liste_tirs(listeT);
-			supprimer_tirs_numero(listeT,*(registre+n));
+			supprimer_tirs_numero(listeT,*(registre+(n-1)));
 			afficher_liste_tirs(listeT);
 		}
 		free(registre);

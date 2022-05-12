@@ -13,6 +13,83 @@
 #include "ennemi.h"
 #include "tirs.h"
 
+Coordonnee  HitBoxEnnemi_collision_decors(TypeEnnemi type,Direction dir,Coordonnee limiteHG,bool* DIFFERENTMAP){
+	
+	int longueur;
+	int largeur;
+	Coordonnee Cadre;
+	*DIFFERENTMAP=false;
+	switch (type){
+		case voiture:
+				longueur=2;
+				largeur=1;
+				break;
+		case moto:
+				longueur=1;
+				largeur=0;
+				break;
+		case camion:
+				longueur=4;
+				largeur=2;
+				break;
+		case SUV:
+				longueur=3;
+				largeur=2;
+				break;
+		case vide:
+				longueur=0;
+				largeur=0;
+				break;
+		default:
+				longueur=0;
+				largeur=0;
+				break;
+	}
+	switch (dir){
+		case Up:
+			Cadre.x=largeur;
+			Cadre.y=longueur;
+			break;
+		case Right:
+			Cadre.y=largeur;
+			Cadre.x=longueur;
+			break;
+		case Down:
+			Cadre.x=largeur;
+			Cadre.y=longueur;
+			break;
+		case Left:
+			Cadre.y=largeur;
+			Cadre.x=longueur;
+			break;
+		case fin:
+			Cadre.x=largeur;
+			Cadre.y=longueur;
+			break;
+		default:
+			Cadre.x=largeur;
+			Cadre.y=longueur;
+			break;
+	}
+	Coordonnee LimiteEnnemi;
+	LimiteEnnemi.x=((limiteHG.x)+Cadre.x);
+	LimiteEnnemi.y=((limiteHG.y)+Cadre.y);
+	if(LimiteEnnemi.x>63){
+		LimiteEnnemi.x=63;
+	}
+	else if(LimiteEnnemi.x<0){
+		LimiteEnnemi.x=0;
+	}
+	if(LimiteEnnemi.y<0){
+		LimiteEnnemi.y+=64;
+		*DIFFERENTMAP=true;	
+	}
+	else if(LimiteEnnemi.y>63){
+		LimiteEnnemi.y-=64;
+		*DIFFERENTMAP=true;
+	}
+	return (LimiteEnnemi);
+}
 Coordonnee HitBoxEnnemi(int ennemi,Coordonnee* EnnemiActuel){
 	
 	printf("PreCoordonneeEnnemi %d\n", ennemi);
@@ -165,6 +242,64 @@ bool collision_joueur_ennemi(int ennemi){
 	}
 	
 	return COLLISION;
+}
+bool collision_ennemi_decor_limiteMap(Coordonnee limiteHG, Coordonnee limiteBD, Direction dir, char** MapCol,char** Maplimite){
+	
+	bool DEPLACEMENT=false;
+	switch (dir){
+		case 0:
+			if(*(*(MapCol+limiteHG.y)+limiteHG.x)!='#'&&*(*(MapCol+limiteHG.y)+limiteBD.x)!='#'){
+				DEPLACEMENT=true;
+			}
+			break;
+		case 1:
+			if(*(*(Maplimite+limiteBD.y)+limiteBD.x)!='#'&&*(*(MapCol+limiteHG.y)+limiteBD.x)!='#'){
+				DEPLACEMENT=true;
+			}
+			break;
+		case 2:
+			if(*(*(Maplimite+limiteBD.y)+limiteBD.x)!='#'&&*(*(Maplimite+limiteBD.y)+limiteHG.x)!='#'){
+				DEPLACEMENT=true;
+			}
+			break;
+		case 3:
+			if(*(*(MapCol+limiteHG.y)+limiteHG.x)!='#'&&*(*(Maplimite+limiteBD.y)+limiteHG.x)!='#'){
+				DEPLACEMENT=true;
+			}
+			break;
+		case 4:
+			break;
+	}
+	return DEPLACEMENT;
+}
+bool collision_ennemi_decor(Coordonnee limiteHG, Coordonnee limiteBD, Direction dir, char** MapCol){
+	
+	bool DEPLACEMENT=false;
+	switch (dir){
+		case 0:
+			if(*(*(MapCol+limiteHG.y)+limiteHG.x)!='#'&&*(*(MapCol+limiteHG.y)+limiteBD.x)!='#'){
+				DEPLACEMENT=true;
+			}
+			break;
+		case 1:
+			if(*(*(MapCol+limiteBD.y)+limiteBD.x)!='#'&&*(*(MapCol+limiteHG.y)+limiteBD.x)!='#'){
+				DEPLACEMENT=true;
+			}
+			break;
+		case 2:
+			if(*(*(MapCol+limiteBD.y)+limiteBD.x)!='#'&&*(*(MapCol+limiteBD.y)+limiteHG.x)!='#'){
+				DEPLACEMENT=true;
+			}
+			break;
+		case 3:
+			if(*(*(MapCol+limiteHG.y)+limiteHG.x)!='#'&&*(*(MapCol+limiteBD.y)+limiteHG.x)!='#'){
+				DEPLACEMENT=true;
+			}
+			break;
+		case 4:
+			break;
+	}
+	return DEPLACEMENT;
 }
 
 bool collisionEnnemiJoueur(){
