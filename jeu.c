@@ -45,46 +45,43 @@ void upDateInvulnerabilite(int num){
 		j.invulnerable=false;
 	}
 }
-//PRE:
-//POST:
+
 void upDateTirs(int num){
 	printf("upDateTirs\n");
-	if(selectionMenu==1){
-		if (SPACE == true){
-			if(j.tirs->nombre<j.maxTirs){
-				tirs(j.tirs,j.pos,pistolet,j.dir);
+	if(selectionMenu==1){	
+		if (SPACE == true){	//si on a appuyé la touche Espace SPACE=true
+			if(j.tirs->nombre<j.maxTirs){	//si le nombre de tirs ne dépasse pas le maximum de tirs que peut tirer simultanément le joueur
+				tirs(j.tirs,j.pos,pistolet,j.dir);	//alors on crée un nouveau tirs dans la liste j.tirs
 			}
 			SPACE=false;
 		}
-		if(j.tirs->nombre>0){
-			//printf("preDeplacement\n");
-			deplacement_tirs(j.tirs);
-			for(int i=0;i<liste->nombre;i++){
-				
+		if(j.tirs->nombre>0){	//si il existe au moins un tirs dans la liste j.tirs
+		
+			deplacement_tirs(j.tirs);	//on fait la demande de déplacement des tirs pour tous les tirs
+			for(int i=0;i<liste->nombre;i++){			
+										//double boucle pour vérifier la collision entre un ennemi et un tirs
 				for(int tirs=0;tirs<j.tirs->nombre;tirs++){
-					if(i<liste->nombre){
-						/*//printf("PreCoordonneeEnnemi %d\n", i);
-						Coordonnee EnnemiActuel=pos_Ennemi(liste,i);
-						//printf("PreCoordonneeTirs %d\n", tirs);
-						Coordonnee tirsActuel=pos_tirs(j.tirs,tirs);*/
-						if(collision_tirs_ennemi(i,tirs)){ 
-							retirer_vie_numero(liste, i,degat_tirs(j.tirs, tirs));
-							supprimer_tirs_numero(j.tirs,tirs);
-							printf("sortie de suppresion tirs \n");
+					if(i<liste->nombre){			//étant donné qu'on est susceptible de supprimer des ennemis après un tirs, alors que l'ont doit 
+										//encore tester qu'il n'y a pas de collision entre cette ennemi et les potentiel autre tirs, dans le
+										//case ou l'ennemi est le dernier on va faire des tests sur un ennemi en dehors de la liste et faire
+										//un segmentation fault. cette condition gère ce cas limite empêchant de faire des test en dehors de 
+										//la liste des ennemis
+						
+						if(collision_tirs_ennemi(i,tirs)){ 	//test de collision entre le tirs (tirs) et l'ennemi (i) 
+							retirer_vie_numero(liste, i,degat_tirs(j.tirs, tirs));	//si collision on retire les points de vies à l'ennemi 
+							supprimer_tirs_numero(j.tirs,tirs);				//on supprime le tirs qui a touché
 						}
 					}
-					//printf("sortie for 2\n");
+					
 				}
-				//printf("sortie for 1\n");
+			
 			}
 		}
-		//printf("fin UpdateTirs\n");
+		
 	}
 	glutTimerFunc(25, upDateTirs,1);
 };
 
-//PRE:
-//POST:
 void upDateEnnemi(int num){
 	printf("upDateEnnemi\n");
 	bool colli=true;
@@ -100,46 +97,42 @@ void upDateEnnemi(int num){
 		glutTimerFunc(120, upDateEnnemi,2); 
 	}
 };
-//PRE:
-//POST:Cette fonction va échanger la carte current avec la carte sur laquel le joueur se trouve (previous ou next) et décale la position sur l'axe vertical de tout les objets (joueur, tirs, ennemis)
+
 void switchMap(){
-	//printf("switchMap\n");
-	//printf("x%d y%d\nmap %d %d",camera.x,camera.y,nextMap.taille.x,nextMap.taille.y);
-	//bool switchEffectue=false;
-	bool switchPrevious=false;
-	bool switchNext=false;
-	//bool switchLREffectue=false;
-	int tamponCam=0;
-	int tamponJ=0;
-	int nextLoad;
+	
+	bool switchPrevious=false;	//booleen qui gardera la vérification que l'on doit effectuer un switchMap avec previousMap
+	bool switchNext=false;		//booleen qui gardera la vérification que l'on doit effectuer un switchMap avec previousMap
+	int tamponCam=0;		//entier qui gardera la valeur à appliquer à la composante en y de la position de la camera 
+	int tamponJ=0;			//entier qui gardera la valeur à appliquer à la composante en y de la position de j
+	int nextLoad;			//correspond au numero dans le tableau niveauA.Nmap de la carte à charger (fonction loadMap, mais qui sera appelé par la fonction LoadNext)
 	Coordonnee variationE;//variable qui sera envoyer à modifier_pos_ennemis(ListeEnnemi* liste, Coordonnee variation) pour déplacer les ennemis
-	variationE.x=0;
-	variationE.y=0;
-	if(camera.y<=-nextMap.taille.y/2){
-		tamponCam=camera.y+nextMap.taille.y;
-		tamponJ=j.pos.y+nextMap.taille.y;
+	variationE.x=0;	//entier pour la variation des ennemis qu'on initialise a 0
+	variationE.y=0;	//entier pour la variation des ennemis qu'on initialise a 0
+	if(camera.y<=-nextMap.taille.y/2){		//condition vérifiant si la camera est à une position sur l'axe vertical plus petite que -32 case (remarque dans glut  								// l'axes y a son sens positif vers le bas et négatif vers le haut).
+		tamponCam=camera.y+nextMap.taille.y;	
+		tamponJ=j.pos.y+nextMap.taille.y;	//on donne les nouvelles valeurs des éléments après le switch au tampon 
 		variationE.y+=nextMap.taille.y;
-		switchNext=true;
+		switchNext=true;			//on enregistre que le switch s'effectue avec nextMap
 	}
 	if(camera.y>=((previousMap.taille.y/2)+currentMap.taille.y)){
 		if(nextMap.taille.y!=0){
 			tamponCam=camera.y-nextMap.taille.y;
-			tamponJ=j.pos.y-nextMap.taille.y;
+			tamponJ=j.pos.y-nextMap.taille.y;	//on donne les nouvelles valeurs des éléments après le switch au tampon 
 			variationE.y-=nextMap.taille.y;
-			switchPrevious=true;
+			switchPrevious=true;		//on enregistre que le switch s'effectue avec previousMap
 		}
 		else{
 			tamponCam=camera.y-currentMap.taille.y;
-			tamponJ=j.pos.y-currentMap.taille.y;
+			tamponJ=j.pos.y-currentMap.taille.y;	//on donne les nouvelles valeurs des éléments après le switch au tampon 
 			variationE.y-=currentMap.taille.y;
-			switchPrevious=true;
+			switchPrevious=true;		//on enregistre que le switch s'effectue avec previousMap
 		}
 	}
 	
-	if(switchNext||switchPrevious){
+	if(switchNext||switchPrevious){	//si on a une des deux booleen a true c'est que l'on doit effectuer une rotation de carte
 		printf("switchMap\n");
-		modifier_pos_ennemis(liste,variationE);
-		camera.y=tamponCam;
+		modifier_pos_ennemis(liste,variationE);	//les valeurs tampons de la camera et de joueur, ainsi que la variation pour les ennemis sur l'axe des y 
+		camera.y=tamponCam;				//est appliqué au variable en question		
 		j.pos.y=tamponJ;
 	}
 	if(switchNext){	//si on a un switch vers next lié à la position de la caméra à la moitié de nextMap.
@@ -147,38 +140,37 @@ void switchMap(){
 		printf("ici 1");
 		previousMap=currentMap;
 		currentMap=nextMap;
-		nextMap.c=NULL;
+		nextMap.c=NULL;		//nextMap avant d'être rechargé est réinitialisé à zero
 		nextMap.taille.y=0;
 		nextMap.taille.x=0;
 		niveauA.Nmap[niveauA.previous].loadStatus=false;//on change le status de previous avant de modifié sa position dans le tableau
-		niveauA.Nmap[niveauA.previous].ennemi=true;
+		niveauA.Nmap[niveauA.previous].ennemi=true;	//Les ennemis pourront être rechargé pour cette carte
 		niveauA.previous=niveauA.current;
 		niveauA.current=niveauA.next;
-		nextLoad=niveauA.next+1;
+		nextLoad=niveauA.next+1;	//la prochaine carte à chargée sera à la position niveauA.next+1 du tableau niveauA.nMap
 		
 	}
 	if(switchPrevious){
+	//On passe currentMap à currentMap à nextMap et previousMap à currentMap et on va recharger l'éventuelle previousMap
 		nextMap=currentMap;
 		currentMap=previousMap;
-		previousMap.c=NULL;
+		previousMap.c=NULL;		//previousMap avant d'être rechargé est réinitialisé à zero
 		previousMap.taille.y=0;
 		previousMap.taille.x=0;
 		niveauA.Nmap[niveauA.next].loadStatus=false;//on change le status de previous avant de modifié sa position dans le tableau
-		niveauA.Nmap[niveauA.next].ennemi=true;
+		niveauA.Nmap[niveauA.next].ennemi=true;	//Les ennemis pourront être rechargé pour cette carte
 		niveauA.next=niveauA.current;
 		niveauA.current=niveauA.previous;
-		nextLoad=niveauA.previous-1;
+		nextLoad=niveauA.previous-1;	//la prochaine carte à chargée sera à la position niveauA.previous-1 du tableau niveauA.nMap
 		
 		
 	}
 	if(nextLoad<niveauA.nombreMap&&nextLoad>=0){
 		printf("prochaine Map loade :%d nextMap %d previousMap %d currentmap %d",nextLoad,niveauA.next,niveauA.previous,niveauA.current);
 		printf("cam x%d y%d\n",camera.x,camera.y);
-		loadNext(nextLoad);
+		loadNext(nextLoad);	//On fait le chargement de la carte nextLoad et des ennemis présent dessus
 	}
-	else{
-		//printf("limite du niveau\n");
-	}
+
 };
 void mort(){
 	j.vie--;
@@ -210,31 +202,29 @@ void jeu()
 	if (LEFT == true)
 	{
 		moveLeft(j);		//va se déplacer vers la gauche si on appuie sur q
-		//LEFT = false;
-		printf("LEFT ");
+	
 	}
 	if (RIGHT == true)
 	{
-		printf("RIGHT ");
+		
 		moveRight(j);		//va se déplacer vers la droite si on apppuie sur d
-		//RIGHT = false;
+		
 	}
 	if (UP == true)
 	{
-		printf("UP ");
-		moveUp(j);
-		//UP = false;
+		moveUp(j);		//on se déplace vers le haut en appuyant sur z
+		
 	}
 	
 	if (DOWN == true)
 	{
-		printf("DOWN ");
-        	moveDown(j);
-		//DOWN = false;
+		
+        	moveDown(j);		//on se déplace vers le bas en appuyant sur s
+		
 	}
 	if (j.hp<=0){
-		printf("mort\n");
-		mort();
+
+		mort();		
 	}
 	if(j.invulnerable&&j.debutInvulnerabilite){
 		upDateInvulnerabilite(5);

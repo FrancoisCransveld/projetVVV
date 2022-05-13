@@ -2,7 +2,7 @@
 #define _MENU_H_
 #include<stdbool.h>
 #include "jeu.h"
-
+#include "keyboard.h"
 int selectionMenu;
 int keyboardMenuSelection;
 bool MenuTabScore;

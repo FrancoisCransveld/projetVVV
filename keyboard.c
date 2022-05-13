@@ -39,6 +39,7 @@ void KeyboardJeu(unsigned char key, int x, int y)  // fonction allant gérer les
 			LEFT=false;
 			RIGHT=false;
 			DOWN=false;
+			ENTER=false;
 			break;
 		case'q':
 			INPUT=true;
@@ -46,6 +47,7 @@ void KeyboardJeu(unsigned char key, int x, int y)  // fonction allant gérer les
 			LEFT=true;
 			RIGHT=false;
 			DOWN=false;
+			ENTER=false;
 			break;
 		case'd':
 			INPUT=true;
@@ -53,6 +55,7 @@ void KeyboardJeu(unsigned char key, int x, int y)  // fonction allant gérer les
 			LEFT=false;
 			RIGHT=true;
 			DOWN=false;
+			ENTER=false;
 			break;
 		case's':
 			INPUT=true;
@@ -60,6 +63,7 @@ void KeyboardJeu(unsigned char key, int x, int y)  // fonction allant gérer les
 			LEFT=false;
 			RIGHT=false;
 			DOWN=true;
+			ENTER=false;
 			break;
 		case' ':
 			INPUT=true;
@@ -68,6 +72,16 @@ void KeyboardJeu(unsigned char key, int x, int y)  // fonction allant gérer les
 			LEFT=false;
 			RIGHT=false;
 			DOWN=false;
+			ENTER=false;
+			break;
+		case'\r':
+			INPUT=true;
+			SPACE = false;
+			UP=false;
+			LEFT=false;
+			RIGHT=false;
+			DOWN=false;
+			ENTER=true;
 			break;
 		default:
 			UP=false;

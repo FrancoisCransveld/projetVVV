@@ -9,8 +9,9 @@ bool RIGHT;
 bool DOWN ;
 bool ESCAPE ;
 bool SPACE ;
+bool ENTER ;
 char lettre;
-
+Coordonnee coordonneeSouris;
 void KeyboardJeu(unsigned char key, int x, int y);
 void Keyboard(unsigned char key, int x, int y);
 void KeyboardSpecialJeu(int key, int x, int y);

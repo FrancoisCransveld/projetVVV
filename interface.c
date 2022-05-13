@@ -1178,9 +1178,31 @@ void interface_menu(){
 	printf("interface_menu\n");
 	for(y=0;y<64;y++){
 		for(x=0;x<64;x++){
-			//printf("(x:%d y%d) ",x,y);
-			if((x>=8&&x<30)&&(y>=16&&y<20)){
-				glColor3f(1.0f,1.0f,1.0f);
+			
+			if((x>=16&&x<48)&&(y>=4&&y<9)){
+				
+				glColor3f(0.9f,0.6f,0.1f);
+				
+				glMatrixMode(GL_MODELVIEW);
+				glLoadIdentity();
+				glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
+				
+				glBegin(GL_QUADS);
+				
+				glVertex2f(0.0,0.0);
+				glVertex2f(TILE_SIZE,0.0f);
+				glVertex2f(TILE_SIZE,TILE_SIZE);
+				glVertex2f(0.0f,TILE_SIZE);
+				
+				glEnd();
+			}
+			else if((x>=8&&x<30)&&(y>=16&&y<20)){
+				if(keyboardMenuSelection==0){
+					glColor3f(0.9f,0.9f,0.3f);
+				}
+				else{
+					glColor3f(1.0f,1.0f,1.0f);
+				}
 				glMatrixMode(GL_MODELVIEW);
 				glLoadIdentity();
 				glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
@@ -1195,7 +1217,12 @@ void interface_menu(){
 				glEnd();
 			}
 			else if((x>=8&&x<30)&&(y>=24&&y<28)){
-				glColor3f(1.0f,1.0f,1.0f);
+				if(keyboardMenuSelection==1){
+					glColor3f(0.9f,0.9f,0.3f);
+				}
+				else{
+					glColor3f(1.0f,1.0f,1.0f);
+				}
 				glMatrixMode(GL_MODELVIEW);
 				glLoadIdentity();
 				glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
@@ -1210,7 +1237,12 @@ void interface_menu(){
 				glEnd();
 			}
 			else if((x>=8&&x<30)&&(y>=32&&y<36)){
-				glColor3f(1.0f,1.0f,1.0f);
+				if(keyboardMenuSelection==2){
+					glColor3f(0.9f,0.9f,0.3f);
+				}
+				else{
+					glColor3f(1.0f,1.0f,1.0f);
+				}
 				glMatrixMode(GL_MODELVIEW);
 				glLoadIdentity();
 				glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
@@ -1225,7 +1257,12 @@ void interface_menu(){
 				glEnd();
 			}
 			else if((x>=8&&x<30)&&(y>=40&&y<44)){
-				glColor3f(1.0f,1.0f,1.0f);
+				if(keyboardMenuSelection==3){
+					glColor3f(0.9f,0.9f,0.3f);
+				}
+				else{
+					glColor3f(1.0f,1.0f,1.0f);
+				}
 				glMatrixMode(GL_MODELVIEW);
 				glLoadIdentity();
 				glTranslatef(x*TILE_SIZE,y*TILE_SIZE,0.0f);
@@ -1258,8 +1295,10 @@ void interface_menu(){
 			
 		}
 	}
-	glColor3d(0,0,0); // Texte en noir
+	glColor3d(0.1,0.2,0.8); 
 	
+	vBitmapOutput(25*TILE_SIZE,7*TILE_SIZE,"VELO VS VOITURE",GLUT_BITMAP_TIMES_ROMAN_24);
+	glColor3d(0,0,0); // Texte en noir
 	vBitmapOutput(15*TILE_SIZE,18*TILE_SIZE+8,"New Game",GLUT_BITMAP_TIMES_ROMAN_24);
 	vBitmapOutput(12*TILE_SIZE,26*TILE_SIZE+8,"Tableaux des Scores",GLUT_BITMAP_TIMES_ROMAN_24);
 	vBitmapOutput(15*TILE_SIZE,34*TILE_SIZE+8,"Commandes",GLUT_BITMAP_TIMES_ROMAN_24);
@@ -1275,7 +1314,7 @@ void interface_tableau_score(void){
 	int nombreScore=listeAffichage->nombre;
 	ElementScore* actuel=listeAffichage->premier;
 	
-	glColor3f(0.9f,0.8f,0.3f);
+	glColor3f(0.2f,0.2f,0.3f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glTranslatef(0,0,0.0f);
@@ -1316,14 +1355,14 @@ void interface_tableau_score(void){
 		strcat(tamponString,String);
 		strcat(tamponString,actuel->element.nom);
 		
-		glColor3d(1,0.1,0.1);
+		glColor3d(0.2,0.2,0.6);
 		printf("premier vBitmap %d\n",x);
 		vBitmapOutput(10*TILE_SIZE,((debutCadre+2)*TILE_SIZE)+8,tamponString,GLUT_BITMAP_TIMES_ROMAN_24);
 		
 		free(valeurPlace);
 		
 		char* valeurScore=NULL;
-		//char nomp[MAX_NOM]={"test"};
+		
 		valeurScore=int_vers_char(actuel->element.sco);
 		
 		printf("deuxieme vBitmap\n");
@@ -1368,6 +1407,26 @@ void interface_entree_nom(char* nom){
 	int y=camera.y-2;
 	int x=camera.x-10;
 	
+		glColor3f(0.9f,0.9f,0.9f);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		glTranslatef((x+4)*TILE_SIZE,(y-5)*TILE_SIZE,0.0f);
+		
+		glBegin(GL_QUADS);
+		
+		glVertex2f(0.0,0.0);
+		glVertex2f(TILE_SIZE*18,0.0f);
+		glVertex2f(TILE_SIZE*18,TILE_SIZE*3);
+		glVertex2f(0.0f,TILE_SIZE*3);
+		
+		glEnd();
+		
+	glColor3d(0.1,0.1,0.1); // Texte en noir
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	
+	vBitmapOutput((x+10)*TILE_SIZE,(y-4)*TILE_SIZE+(TILE_SIZE/2),"GAME OVER",GLUT_BITMAP_TIMES_ROMAN_24);
+		
 		glColor3f(0.1f,0.1f,0.6f);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();

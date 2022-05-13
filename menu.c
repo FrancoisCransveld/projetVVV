@@ -25,7 +25,24 @@ int menu(void){
 		glutMouseFunc(mouse_pos);
 		glutKeyboardFunc(KeyboardJeu);		//fonction de glut gérant le clavier
 		glutSpecialFunc(KeyboardSpecialJeu);
-		printf(" CoordonneeSouris: (%d,%d)\n",coordonneeSouris.x,coordonneeSouris.y);	
+		printf(" CoordonneeSouris: (%d,%d)\n",coordonneeSouris.x,coordonneeSouris.y);
+		if(UP){
+			keyboardMenuSelection--;
+			UP=false;	
+		}
+		if(DOWN){
+			keyboardMenuSelection++;
+			DOWN=false;
+		}
+		if(keyboardMenuSelection%4==0){
+			keyboardMenuSelection=0;
+		}
+		if(keyboardMenuSelection<0){
+			keyboardMenuSelection=3;
+		}
+		if(ENTER){
+			choix=keyboardMenuSelection+1;
+		}
 		if(MOUSECLICK){
 			MOUSECLICK=false;
 			if(((coordonneeSouris.x>=8*TILE_SIZE)&&(coordonneeSouris.x<30*TILE_SIZE))&&((coordonneeSouris.y>=16*TILE_SIZE)&&(coordonneeSouris.y<20*TILE_SIZE))){
@@ -96,7 +113,7 @@ void upDatemenu(int num){
 				
 			}
 			else if(selectionMenu==4){
-			
+				exit(0);
 			}
 			
 		}
