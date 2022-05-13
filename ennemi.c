@@ -39,7 +39,7 @@ ListeEnnemi* creer_liste(void){
 	strcpy(ennemi->e.nom,nom);
 	liste->premier=ennemi;
   	liste->dernier=ennemi;
-	liste->nombre=1;
+	liste->nombre=0;
 	
 	return (liste);
 };

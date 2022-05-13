@@ -7,7 +7,7 @@
 enum typeTirs{pistolet,riffle,bazooka,rien};	//déclaration d'un type enumeration typeTirs 
 typedef enum typeTirs TypeTirs;		//redéclaration du nom enum typeTirs en TypeTirs
 						//remarque: cette enumeration n'est pas encore exploité dans le jeu
-struct tirs{		//structure tirs  
+struct tirs{			//structure tirs  
   Coordonnee pos;		//Variable coordonnee qui correspond à la position du tirs (cette position dans la structure en calculée en demi-case (TILE_SIZE/2) )
   TypeTirs t;			//le type du tirs dans t
   int distanceMax;		//entier qui contiendra le nombre de demi-case que le tirs peux se déplacer (ce nombre sera initialisé à la création du tirs selon son type)
