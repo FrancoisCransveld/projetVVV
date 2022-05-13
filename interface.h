@@ -10,7 +10,8 @@
 int width;
 int heigth;
 
-Coordonnee camera;
+Coordonnee camera;// variable camera qui garde la position x et y de la camera dans le jeu exprimé en case.
+//fonction qui affiche la carte qui lui est donnée en entrée au coordonnée comprise entre minX, minY et maxX et maxY
 void drawMap(int y,int x,int minX,int minY,int maxX,int maxY,char** pDrawnMap);
 void drawNext(void);
 void drawPrevious(void);
