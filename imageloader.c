@@ -17,7 +17,16 @@
  * SOFTWARE.
  */
 
-
+/*-------note de Francois Cransveld mai 2022:-------
+	J'ai modifié une partie de ce code pour qu'il puisse accepté le format bmp dernière version la version BITMAPV5HEADER ou le header fait 124 octet et le format couleur est de 		RGBA 8bits*8bits*8bits*8bits* (32bits), comprennant donc un canal alpha qui permet les effets de transparences. 
+	
+	-modification de ce fichier:
+		-modification du switch case sur la variable headerSize pour accepter le format de header de la version BITMAPV5HEADER-->headerSize=124
+		-Gestion de la différence entre le format V3 (BITMAPINFOHEADER) image 24bits par pixel et le format V5 (BITMAPV5HEADER) image 32bits par pixel
+			utilisation d'une variable booleen en plus pour se faire dans la fonction principale bool V5
+		-rangement des octets dans le pour le formats V5 et les avoir dans le bon formats RGBA
+		-Transmission du booleen concernant le format RGBA ou non de l'image dans la structure
+*/
 
 #include <assert.h>
 #include <stdio.h>
@@ -77,7 +86,8 @@ Image* loadBMP(const char* filename) {
 	int headerSize = readInt(input);
 	int width;
 	int height;
-	bool V5=false;
+	bool V5=false;	//variable booleen pour garder en mémoire que le fichier bitmap ouvert est au format BITMAPV5HEADER. Donc son format de tableau d'octet doit être 
+			//adapté à 32 bits en 4 octet 
 	switch(headerSize) {
 		case 40:
 			//V3
@@ -147,7 +157,7 @@ Image* loadBMP(const char* filename) {
 //	auto_array<char> pixels2(new char[width * height * 3]);
 
 	unsigned char* pixels2;
-	if(V5){
+	if(V5){		//Rangement du tableau RGBA 32 bits pour l'utilisation(version adapté par Francois Cransveld)
 		
 		pixels2 = (unsigned char*)malloc (sizeof (unsigned char)*width * height * 4);
 		for( y = 0; y < height; y++) {
@@ -164,7 +174,7 @@ Image* loadBMP(const char* filename) {
 			}
 		}
 	}
-	else{
+	else{			//rangement classique de la version 3 (version d'origine du programme)
 		
 		pixels2 = (unsigned char*)malloc (sizeof (unsigned char)*width * height * 3);	
 	
@@ -182,11 +192,11 @@ Image* loadBMP(const char* filename) {
 	fclose (input);
 
 	im_tmp = (Image*) malloc (sizeof (Image));
-	if(V5){
-		im_tmp->RGBA=true;
+	if(V5){	//ajout de cette condition pour donner a la structure Image l'information sur le type de format bitMap
+		im_tmp->RGBA=true;	//ici format V5 ou BITMAPV5HEADER
 	}
 	else{
-		im_tmp->RGBA=false;
+		im_tmp->RGBA=false;	//ici format V3 ou BITMAPINFOHEADER
 	}
 	free(pixels);
 	im_tmp->pixels = pixels2;

@@ -17,6 +17,11 @@
  * SOFTWARE.
  */
 
+/*------Ce code à été en partie modifié par Francois Cransveld en mai 2022-----
+	
+	-modification de ce fichier:
+		-L'ajout d'une variable booleen RGBA dans la structure Image 
+*/
 #ifndef IMAGE_LOADER_H_INCLUDED
 #define IMAGE_LOADER_H_INCLUDED
 #include <stdbool.h>
@@ -32,7 +37,7 @@ typedef struct Image_t {
 		unsigned char* pixels;
 		int width;
 		int height;
-		bool RGBA;
+		bool RGBA;//variable booleen ajoutée par Francois Cransveld pour gérer la différence de format avec entre les ancienne version bitmap et la Version BITMAPV5HEADER qui comprend 32 bits divisé en 4 canal R(rouge) G(vert) B(bleu) A(alpha)
 } Image;
 
 //Reads a bitmap image from file.

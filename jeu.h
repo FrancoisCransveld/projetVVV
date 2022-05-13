@@ -1,17 +1,17 @@
 #ifndef _JEU_H_
 #define _JEU_H_
-//#include "joueur.h"
-#include <stdbool.h>
-int score;
-bool MENU;
 
-struct coordonnee{
+#include <stdbool.h>
+int score;//variable globale qui contiendra le score pendant une partie
+bool MENU;//Variable globale qui indique qu'on est sur le MENU initiale du jeu
+
+struct coordonnee{	//structure coordonnee qui contient deux int x et y pour avoir la position sur un plan en deux dimensions des éléments du jeu dans une même structure
 	int x;
 	int y;
 };
 typedef struct coordonnee Coordonnee;
 
-enum direction{Up, Right, Down, Left, fin};
+enum direction{Up, Right, Down, Left, fin};	//variable énumération Direction qui sera utilisé pour garder et indiquer la direction des différents objets du jeu (joueur,ennemis,tirs)
 typedef enum direction Direction;
 
 Coordonnee coordonneeSouris;

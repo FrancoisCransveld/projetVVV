@@ -25,7 +25,7 @@ GLuint loadTexture(Image* image) {
 	glBindTexture(GL_TEXTURE_2D, textureId); //Tell OpenGL which texture to edit
 	//Map the image to the texture
 	
-	if(image->RGBA){
+	if(image->RGBA){//modification de la fonction initiale qui permet d'utiliser une texture en.bmp pour accepter le format 32bits RGBA
 		glTexImage2D(GL_TEXTURE_2D,                //Always GL_TEXTURE_2D
 				 0,                            //0 for now
 				 GL_RGBA,                       //Format OpenGL uses for image
@@ -36,7 +36,7 @@ GLuint loadTexture(Image* image) {
 				                   //as unsigned numbers
 				 image->pixels);               //The actual pixel data
 	}
-	else{
+	else{		//code de la fonction initiale sans changement pour la gestion des formats .bmp 24bits RGB
 	glTexImage2D(GL_TEXTURE_2D,                //Always GL_TEXTURE_2D
 				 0,                            //0 for now
 				 GL_RGB,                       //Format OpenGL uses for image
