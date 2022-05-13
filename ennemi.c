@@ -296,6 +296,35 @@ void modifier_pos_ennemi(ListeEnnemi* liste, int numero, Coordonnee pos){
 		actuel->e.pos=pos;
 	}
 };
+Direction dir_ennemi(ListeEnnemi* liste, int numero){
+	int i=0;
+	int decalage=numero;
+	bool SensCroissant=true;
+	Direction dir=4;
+	ElementEnnemi* actuel=NULL;
+	if(numero<liste->nombre){
+		if(numero<liste->nombre/2){
+			actuel=liste->premier;
+		}
+		else{
+			actuel=liste->dernier;
+			SensCroissant=false;
+			decalage=liste->nombre-numero-1;
+		}
+
+			while(i<decalage){
+				if(SensCroissant){
+					actuel=actuel->suivant;
+				}
+				else{
+					actuel=actuel->precedent;
+				}
+				i++;
+			}
+		dir=actuel->e.dir;
+	}
+	return dir;
+};
 //PRE:En argument la liste à modifier, la variation de Coordonnee pos
 //POST:On déplace tous les ennemis de la variation
 void modifier_pos_ennemis(ListeEnnemi* liste, Coordonnee variation){
