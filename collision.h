@@ -33,11 +33,13 @@ bool collision_tirs_ennemi(int ennemi,int tirs);
 /*PRE:prend en argument le numero de l'ennemi dans la ListeEnnemi liste (variable globale) à tester, la position du joueur se trouve dans j.pos (la variable Joueur j est une variable globale)
   POST:*/
 bool collision_joueur_ennemi(int ennemi);
+bool collision_ennemi_ennemi(int ennemi, int ennemi2);
 //PRE:
 //POST:
 bool collisionEnnemiJoueur();
 //PRE:
 //POST:
+bool collisionJoueurEnnemi();
 Coordonnee HitBoxEnnemi(int ennemi,Coordonnee* EnnemiActuel);
 //PRE:
 //POST:

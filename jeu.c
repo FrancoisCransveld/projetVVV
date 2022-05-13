@@ -33,8 +33,18 @@ void upDateKeyboard(int num){
 		DOWN=false;
 		SPACE=false;
 	}
-	glutTimerFunc(50, upDateKeyboard, 0);
+	glutTimerFunc(30, upDateKeyboard, 0);
 };
+
+void upDateInvulnerabilite(int num){
+	if(j.debutInvulnerabilite){
+		j.debutInvulnerabilite=false;
+		glutTimerFunc(2000, upDateInvulnerabilite, 5);
+	}
+	else{
+		j.invulnerable=false;
+	}
+}
 //PRE:
 //POST:
 void upDateTirs(int num){
@@ -84,7 +94,7 @@ void upDateEnnemi(int num){
 	}
 
 	if(colli){
-		glutTimerFunc(1000, upDateEnnemi,2);
+		glutTimerFunc(800, upDateEnnemi,2);
 	}
 	else{
 		glutTimerFunc(120, upDateEnnemi,2); 
@@ -225,6 +235,9 @@ void jeu()
 	if (j.hp<=0){
 		printf("mort\n");
 		mort();
+	}
+	if(j.invulnerable&&j.debutInvulnerabilite){
+		upDateInvulnerabilite(5);
 	}
 	glutPostRedisplay();
 };

@@ -49,14 +49,24 @@ void moveLeft(){		//la fonction va vérifier si on peut se déplacer vers la gau
 	
 	if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#')	//On vérifie que l'objet du décord à la position désirée autorise ce déplacement
 	{
-		
-		j.pos.x = x;		//on enregistre ce déplacement si oui dans la variable j.pos
-		if(autorisation_scroll( x, y,MapJ,j.dir)){	//condition vérifie si la camera doit suivre le déplacement du joueur (cette condition est vérifiée dans la fonction)
-			camera.x--;	//adaptation de la position de la camera
+		j.pos.x = x;	//on enregistre ce déplacement si oui dans la variable j.pos
+		if(!collisionJoueurEnnemi()){
+				
+			if(autorisation_scroll( x, y,MapJ,j.dir)){	//condition vérifie si la camera doit suivre le déplacement du joueur (cette condition est vérifiée dans la fonction)
+				camera.x--;	//adaptation de la position de la camera
+			}
+			switchMap();		//fonction qui va vérifier si on ne doit pas au regard de cette nouvelle position de j si on doit charger une nouvelle carte et passer currentMap à nextMap ou previousMap
+			supprimer_ennemi_hors_portee(liste);	//on supprime les ennemis qui sont trop loin du joueur
+			activer_ennemi_a_portee(liste);	//les ennemis qui sont suffisament proche de j sont activés et effectueront leurs actions
 		}
-		switchMap();		//fonction qui va vérifier si on ne doit pas au regard de cette nouvelle position de j si on doit charger une nouvelle carte et passer currentMap à nextMap ou previousMap
-		supprimer_ennemi_hors_portee(liste);	//on supprime les ennemis qui sont trop loin du joueur
-		activer_ennemi_a_portee(liste);	//les ennemis qui sont suffisament proche de j sont activés et effectueront leurs actions
+		else{
+			j.pos.x+=2;
+			if(!j.invulnerable){
+				j.hp--;
+				j.invulnerable=true;
+				j.debutInvulnerabilite=true;
+			}
+		}
 	}
 
 
@@ -77,14 +87,25 @@ void moveRight()		//la fonction va vérifier si on peut se déplacer vers la dro
 	
 	if (*(*(MapJ.c + MapJ.taille.y) + (MapJ.taille.x))!='#')	//On vérifie que l'objet du décord à la position désirée autorise ce déplacement
 	{
-
 		j.pos.x = x;		//on enregistre ce déplacement si oui dans la variable j.pos
-		if(autorisation_scroll( x, y,MapJ,j.dir)){	//condition vérifie si la camera doit suivre le déplacement du joueur (cette condition est vérifiée dans la fonction)
-			camera.x++;	//adaptation de la position de la camera
+		if(!collisionJoueurEnnemi()){
+			
+			if(autorisation_scroll( x, y,MapJ,j.dir)){	//condition vérifie si la camera doit suivre le déplacement du joueur (cette condition est vérifiée dans la fonction)
+				camera.x++;	//adaptation de la position de la camera
+			}
+			switchMap();		//fonction qui va vérifier si on ne doit pas au regard de cette nouvelle position de j si on doit charger une nouvelle carte et passer currentMap à nextMap ou previousMap
+			supprimer_ennemi_hors_portee(liste);	//on supprime les ennemis qui sont trop loin du joueur
+			activer_ennemi_a_portee(liste);	//les ennemis qui sont suffisament proche de j sont activés et effectueront leurs actions
 		}
-		switchMap();		//fonction qui va vérifier si on ne doit pas au regard de cette nouvelle position de j si on doit charger une nouvelle carte et passer currentMap à nextMap ou previousMap
-		supprimer_ennemi_hors_portee(liste);	//on supprime les ennemis qui sont trop loin du joueur
-		activer_ennemi_a_portee(liste);	//les ennemis qui sont suffisament proche de j sont activés et effectueront leurs actions
+		else{
+			j.pos.x-=2;
+			if(!j.invulnerable){
+				j.hp--;
+				j.invulnerable=true;
+				j.debutInvulnerabilite=true;
+			}
+		}
+		
 	}
 
 };
@@ -100,15 +121,24 @@ void moveUp()
 	 //variable pour le placement du joueur dans la carte sur lequel il se trouve (next, nextLR ou current).
 	replacement_joueur(x,y,&MapJ);	//fonction qui repassera les valeurs correcte de x et y pour le tableau de char** dans Map.taille.x/y et aussi la bonne carte sur laquel se trouve la joueur dans MapJ.c
 	if (*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='#'&&*(*(MapJ.c + MapJ.taille.y) + MapJ.taille.x)!='!'){//On vérifie que l'objet du décord à la position désirée autorise ce déplacement
-		
 		j.pos.y = y;		//on enregistre ce déplacement si oui dans la variable j.pos
-		if(autorisation_scroll( x, y,MapJ,j.dir)){	//condition vérifie si la camera doit suivre le déplacement du joueur (cette condition est vérifiée dans la fonction)
-			camera.y--;	//adaptation de la position de la camera
-		}
-		switchMap();		//fonction qui va vérifier si on ne doit pas au regard de cette nouvelle position de j si on doit charger une nouvelle carte et passer currentMap à nextMap ou previousMap
-		supprimer_ennemi_hors_portee(liste);	//on supprime les ennemis qui sont trop loin du joueur
-		activer_ennemi_a_portee(liste);	//les ennemis qui sont suffisament proche de j sont activés et effectueront leurs actions
+		if(!collisionJoueurEnnemi()){
 		
+			if(autorisation_scroll( x, y,MapJ,j.dir)){	//condition vérifie si la camera doit suivre le déplacement du joueur (cette condition est vérifiée dans la fonction)
+				camera.y--;	//adaptation de la position de la camera
+			}
+			switchMap();		//fonction qui va vérifier si on ne doit pas au regard de cette nouvelle position de j si on doit charger une nouvelle carte et passer currentMap à nextMap ou previousMap
+			supprimer_ennemi_hors_portee(liste);	//on supprime les ennemis qui sont trop loin du joueur
+			activer_ennemi_a_portee(liste);	//les ennemis qui sont suffisament proche de j sont activés et effectueront leurs actions
+		}
+		else{
+			j.pos.y+=2;
+			if(!j.invulnerable){
+				j.hp--;
+				j.invulnerable=true;
+				j.debutInvulnerabilite=true;
+			}
+		}
 	} 
 	
 };
@@ -125,14 +155,24 @@ void moveDown()
 	j.dir=2;	//on modifie j.dir avec la valeur qui correspond à bas 2 dans l'enum Direction
    if (*(*(MapJ.c + (MapJ.taille.y)) + MapJ.taille.x)!='#'&&*(*(MapJ.c + (MapJ.taille.y)) + MapJ.taille.x)!='!'){   
 		
-		j.pos.y = y;		//on enregistre ce déplacement si oui dans la variable j.pos	
-		if(autorisation_scroll( x, y,MapJ,j.dir)){	//condition vérifie si la camera doit suivre le déplacement du joueur (cette condition est vérifiée dans la fonction)
-			camera.y++;	//adaptation de la position de la camera
-		}
-		switchMap();		//fonction qui va vérifier si on ne doit pas au regard de cette nouvelle position de j si on doit charger une nouvelle carte et passer currentMap à nextMap ou previousMap
-		supprimer_ennemi_hors_portee(liste);	//on supprime les ennemis qui sont trop loin du joueur
-		activer_ennemi_a_portee( liste);	//les ennemis qui sont suffisament proche de j sont activés et effectueront leurs actions
 		
+		j.pos.y = y;		//on enregistre ce déplacement si oui dans la variable j.pos
+		if(!collisionJoueurEnnemi()){	
+			if(autorisation_scroll( x, y,MapJ,j.dir)){	//condition vérifie si la camera doit suivre le déplacement du joueur (cette condition est vérifiée dans la fonction)
+				camera.y++;	//adaptation de la position de la camera
+			}
+			switchMap();		//fonction qui va vérifier si on ne doit pas au regard de cette nouvelle position de j si on doit charger une nouvelle carte et passer currentMap à nextMap ou previousMap
+			supprimer_ennemi_hors_portee(liste);	//on supprime les ennemis qui sont trop loin du joueur
+			activer_ennemi_a_portee( liste);	//les ennemis qui sont suffisament proche de j sont activés et effectueront leurs actions
+		}
+		else{
+			j.pos.y-=2;
+			if(!j.invulnerable){
+				j.hp--;
+				j.invulnerable=true;
+				j.debutInvulnerabilite=true;
+			}
+		}
       }
 };
 //PRE: les argument sont la postion du joueur après le déplacement et la carte sur laquel il évolue.

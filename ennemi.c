@@ -449,10 +449,10 @@ void action_ennemi(ListeEnnemi* liste){
 		if(!actuel->e.attente){
 			switch(actuel->e.type){
 				case voiture:
-					action_voiture(&(actuel->e));
+					action_voiture(&(actuel->e),i);
 					break;
 				case moto:
-					action_moto(&(actuel->e));
+					action_moto(&(actuel->e),i);
 					break;
 				case camion:
 					
@@ -470,117 +470,203 @@ void action_ennemi(ListeEnnemi* liste){
 };
 //PRE:on envoie le pointeur de l'ennemi voiture dont le traitement est en cours dans action_ennemi
 //POST:fonction ou l'on retrouve les actions automatique d'un ennemi type voiture appelé par action_ennemi
-void action_voiture(Ennemi* voiture){
+void action_voiture(Ennemi* voiture,int numero){
 	int x=voiture->pos.x;
 	int y=voiture->pos.y;
 	if(voiture->pos.x-j.pos.x<0){
-		x++;
+		voiture->pos.x++;
 		voiture->dir=1;
 	}
 	else if(voiture->pos.x-j.pos.x>0){
-		x--;
+		voiture->pos.x--;
 		voiture->dir=3;
 	}
 	else{
 		if(voiture->pos.y-j.pos.y<0){
-			y++;
+			voiture->pos.y++;
 			voiture->dir=2;
 		}
 		else if(voiture->pos.y-j.pos.y>0){
-			y--;
+			voiture->pos.y--;
 			voiture->dir=0;
 		}
 	}
-	Map Emap;
-	bool DIFFERENTMAP;
-	replacement_ennemi(x,y,&Emap);
-	Coordonnee limiteBD;
-	limiteBD=HitBoxEnnemi_collision_decors(voiture->type,voiture->dir,Emap.taille,&DIFFERENTMAP);
-	if(!DIFFERENTMAP){
-		if(collision_ennemi_decor(Emap.taille,limiteBD,voiture->dir,Emap.c)){
-			voiture->pos.x=x;
-			voiture->pos.y=y;
+	bool collisionEnnemi=false;
+	for(int i=0;i<liste->nombre;i++){
+		if(i!=numero){
+			if(collision_ennemi_ennemi(i,numero)){
+				collisionEnnemi=true;
+				printf("collision e et e\n");
+			}
+		}
+	}
+	if(!collisionEnnemi){
+		Map Emap;
+		bool DIFFERENTMAP;
+		replacement_ennemi(voiture->pos.x,voiture->pos.y,&Emap);
+		Coordonnee limiteBD;
+		limiteBD=HitBoxEnnemi_collision_decors(voiture->type,voiture->dir,Emap.taille,&DIFFERENTMAP);
+		if(!DIFFERENTMAP){
+			if(collision_ennemi_decor(Emap.taille,limiteBD,voiture->dir,Emap.c)){
+				
+			}
+			else{
+				printf("Ennemi bloqué\n");
+				voiture->pos.x=x;
+				voiture->pos.y=y;
+			}
 		}
 		else{
-			printf("Ennemi bloqué\n");
+			if(voiture->dir==0){
+				if(collision_ennemi_decor(Emap.taille,limiteBD,voiture->dir,Emap.c)){
+					
+				}
+				else{
+					printf("Ennemi bloqué\n");
+					voiture->pos.x=x;
+					voiture->pos.y=y;
+				}
+			}
+			else if(voiture->dir==2){
+				if(y<0){
+					Emap.c=currentMap.c;
+				}
+				else if(y<64){
+					Emap.c=previousMap.c;
+				}
+				if(collision_ennemi_decor(Emap.taille,limiteBD,voiture->dir,Emap.c)){
+				
+				}
+				else{
+					printf("Ennemi bloqué\n");
+					voiture->pos.x=x;
+					voiture->pos.y=y;
+				}
+			}
+			else{
+				Map differentMap;
+				if(y<0){
+					differentMap=currentMap;
+				}
+				else if(y<64){
+					differentMap=previousMap;
+				}
+				if(collision_ennemi_decor_limiteMap(Emap.taille,limiteBD,voiture->dir,Emap.c,differentMap.c)){
+					
+				}
+				else{
+					printf("Ennemi bloqué\n");
+					voiture->pos.x=x;
+					voiture->pos.y=y;
+				}
+			}
 		}
 	}
 	else{
-		if(voiture->dir==0){
-			if(collision_ennemi_decor(Emap.taille,limiteBD,voiture->dir,Emap.c)){
-				voiture->pos.x=x;
-				voiture->pos.y=y;
-			}
-			else{
-				printf("Ennemi bloqué\n");
-			}
-		}
-		else if(voiture->dir==2){
-			if(y<0){
-				Emap.c=currentMap.c;
-			}
-			else if(y<64){
-				Emap.c=previousMap.c;
-			}
-			if(collision_ennemi_decor(Emap.taille,limiteBD,voiture->dir,Emap.c)){
-			voiture->pos.x=x;
-			voiture->pos.y=y;
-			}
-			else{
-				printf("Ennemi bloqué\n");
-			}
-		}
-		else{
-			Map differentMap;
-			if(y<0){
-				differentMap=currentMap;
-			}
-			else if(y<64){
-				differentMap=previousMap;
-			}
-			if(collision_ennemi_decor_limiteMap(Emap.taille,limiteBD,voiture->dir,Emap.c,differentMap.c)){
-				voiture->pos.x=x;
-				voiture->pos.y=y;
-			}
-			else{
-				printf("Ennemi bloqué\n");
-			}
-		}
+		voiture->pos.x=x;
+		voiture->pos.y=y;
 	}
 	
 };
 //PRE:on envoie le pointeur de l'ennemi moto dont le traitement est en cours dans action_ennemi
 //POST:fonction ou l'on retrouve les actions automatique d'un ennemi type moto appelé par action_ennemi
-void action_moto(Ennemi* moto){
+void action_moto(Ennemi* moto, int numero){
 	int x=moto->pos.x;
 	int y=moto->pos.y;
 	if((moto->pos.x-moto->pos.y)%2==0){
 		if(moto->pos.x-j.pos.x<0){
-			x++;
+			moto->pos.x++;
 			moto->dir=1;
 		}
 		else if(moto->pos.x-j.pos.x>0){
-			x--;
+			moto->pos.x--;
 			moto->dir=3;
 		}
 	}
 	else{
 		if(moto->pos.y-j.pos.y<0){
-			y++;
+			moto->pos.y++;
 			moto->dir=2;
 		}
 		else if(moto->pos.y-j.pos.y>0){
-			y--;
+			moto->pos.y--;
 			moto->dir=0;
 		}
 	}
 	
-	//moto->pos.x-j.pos.x
-	Map Emap;
-	replacement_ennemi(x,y,&Emap);
-	if(*(*(Emap.c+Emap.taille.y)+Emap.taille.x)!='#'){
+	bool collisionEnnemi=false;
+	for(int i=0;i<liste->nombre;i++){
+		if(i!=numero){
+			if(collision_ennemi_ennemi(i,numero)){
+				collisionEnnemi=true;
+			}
+		}
+	}
+	if(collisionEnnemi){
 		moto->pos.x=x;
 		moto->pos.y=y;
+	}
+	else{
+		Map Emap;
+		bool DIFFERENTMAP;
+		replacement_ennemi(moto->pos.x,moto->pos.y,&Emap);
+		Coordonnee limiteBD;
+		limiteBD=HitBoxEnnemi_collision_decors(moto->type,moto->dir,Emap.taille,&DIFFERENTMAP);
+		if(!DIFFERENTMAP){
+			if(collision_ennemi_decor(Emap.taille,limiteBD,moto->dir,Emap.c)){
+				
+			}
+			else{
+				printf("Ennemi bloqué\n");
+				moto->pos.x=x;
+				moto->pos.y=y;
+			}
+		}
+		else{
+			if(moto->dir==0){
+				if(collision_ennemi_decor(Emap.taille,limiteBD,moto->dir,Emap.c)){
+					
+				}
+				else{
+					printf("Ennemi bloqué\n");
+					moto->pos.x=x;
+					moto->pos.y=y;
+				}
+			}
+			else if(moto->dir==2){
+				if(y<0){
+					Emap.c=currentMap.c;
+				}
+				else if(y<64){
+					Emap.c=previousMap.c;
+				}
+				if(collision_ennemi_decor(Emap.taille,limiteBD,moto->dir,Emap.c)){
+				
+				}
+				else{
+					printf("Ennemi bloqué\n");
+					moto->pos.x=x;
+					moto->pos.y=y;
+				}
+			}
+			else{
+				Map differentMap;
+				if(y<0){
+					differentMap=currentMap;
+				}
+				else if(y<64){
+					differentMap=previousMap;
+				}
+				if(collision_ennemi_decor_limiteMap(Emap.taille,limiteBD,moto->dir,Emap.c,differentMap.c)){
+					
+				}
+				else{
+					printf("Ennemi bloqué\n");
+					moto->pos.x=x;
+					moto->pos.y=y;
+				}
+			}
+		}
 	}
 };
 //PRE: prend en argument la liste

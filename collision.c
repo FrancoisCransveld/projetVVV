@@ -224,6 +224,25 @@ Coordonnee hit_box_joueur(Direction dir,Coordonnee* hitBoxHG){
 	return hitBoxBD;
 	
 }
+bool collision_ennemi_ennemi(int ennemi, int ennemi2){
+	
+	bool COLLISION=false;
+	Coordonnee EnnemiActuel;
+	Coordonnee LimiteEnnemi=HitBoxEnnemi(ennemi,&EnnemiActuel);
+	Coordonnee Ennemi2Actuel;
+	Coordonnee LimiteEnnemi2=HitBoxEnnemi(ennemi2,&Ennemi2Actuel);
+	printf("coordonnee ennemi coin supérieur: (%d;%d) coin inférieur: (%d,%d),coordonnee ennemi2 coin supérieur: (%d;%d) coin inférieur: (%d,%d))\n",EnnemiActuel.x,EnnemiActuel.y,LimiteEnnemi.x,LimiteEnnemi.y,Ennemi2Actuel.x,Ennemi2Actuel.y,LimiteEnnemi2.x,LimiteEnnemi2.y);
+	
+	if((LimiteEnnemi2.y>=EnnemiActuel.y*2)&&(Ennemi2Actuel.y*2)<=(LimiteEnnemi.y)){ 
+		
+		if((Ennemi2Actuel.x*2<=(LimiteEnnemi.x))&&(LimiteEnnemi2.x>=(EnnemiActuel.x*2))){
+		
+			COLLISION=true;
+		}
+	}
+	
+	return COLLISION;
+}
 bool collision_joueur_ennemi(int ennemi){
 	
 	bool COLLISION=false;
@@ -307,7 +326,11 @@ bool collisionEnnemiJoueur(){
 	for(int i=0;i<liste->nombre;i++){
 				
 		if(collision_joueur_ennemi(i)){
-			j.hp--;
+			if(!j.invulnerable){
+				j.hp--;
+				j.invulnerable=true;
+				j.debutInvulnerabilite=true;
+			}
 				switch(j.dir){
 					case 0:
 						moveDown();
@@ -330,6 +353,17 @@ bool collisionEnnemiJoueur(){
 						moveDown();
 						break;
 				}
+			collis=true;
+			return collis;
+		}
+	}
+	return collis;
+}
+bool collisionJoueurEnnemi(){
+	bool collis=false;
+	for(int i=0;i<liste->nombre;i++){
+				
+		if(collision_joueur_ennemi(i)){
 			collis=true;
 			return collis;
 		}

@@ -22,6 +22,7 @@ void jeu( void );
 void upDateTirs(int num);
 void upDateEnnemi(int num);
 void upDateKeyboard(int i);
+void upDateInvulnerabilite(int num);
 void switchMap(void);
 void mort();
 void game_over();

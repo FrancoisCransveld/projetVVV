@@ -1,4 +1,4 @@
-T15
+T12
 P1 S82 Nzdqfq
 P2 S71 N francois
 P3 S53 Nmpe
@@ -10,7 +10,4 @@ P8 S29 Nmolfeq
 P9 S28 N666
 P10 S28 Ndffdsdfdf
 P11 S27 Nsf
-P12 S26 N       zzd
-P13 S25 N pome
-P14 S0 Nefes
-P15 S0 Nmike
+P12 S0 Npdkqzd

@@ -16,6 +16,8 @@ struct joueur{
 			//Tous les éléments de cette liste sont des tirs du joueur. 
 	int maxTirs;	//maxTirs correspond au maximum de d'élément tirs qui peuvent-être présent en même temps dans la liste tirs, et donc à l'écran. 
 			//cette variable dépend du type d'arme.
+	bool invulnerable;
+	bool debutInvulnerabilite;
 };
 typedef struct joueur Joueur; //redéfinition de la structure struct joueur en Joueur.
 Joueur j;		//déclaration de la variable globale j 
